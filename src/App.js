@@ -15,11 +15,9 @@ class App extends Component {
     
   }
 
+//changes display according to Nav item selected
   changeDisplay = (newDisplay)=>{
-    console.log(newDisplay)
-    console.log(typeof(newDisplay))
     this.setState({display : newDisplay})
-    
   }
   
 
