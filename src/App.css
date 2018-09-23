@@ -1,0 +1,13 @@
+body{
+  margin: 10px;
+}
+
+.tickets{
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+
+.ticketTitle{
+  background-color: grey;
+}
