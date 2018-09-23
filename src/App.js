@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Nav from './Nav.js';
 import './App.css';
 import Board from './Board.js';
+import Dashboard from './Dashboard.js';
 
 class App extends Component {
   constructor(){
@@ -10,7 +11,7 @@ class App extends Component {
     this.changeDisplay = this.changeDisplay.bind(this)
     
     this.state = {
-      display: 'Kanban'
+      display: 'Dashboard'
     }
     
   }
@@ -37,7 +38,7 @@ class App extends Component {
       <div className="App">
         <div className='header'>SHU Module 1 Assignment 2</div>
         <Nav parentEvent={this.changeDisplay}/>
-        <h2>This is a dashboard</h2>
+        <Dashboard />
       </div>
     );
   }

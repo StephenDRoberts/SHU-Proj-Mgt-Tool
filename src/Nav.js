@@ -5,7 +5,7 @@ import {Nav, NavItem} from 'react-bootstrap';
 class MainNav extends React.Component {
    constructor(props){
        super(props);
-       this.state = {activeKey: "1"}
+       this.state = {activeKey: "2"}
        
     }
    

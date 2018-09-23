@@ -48,3 +48,14 @@ h2{
 textarea{
   width: 100%;
 }
+
+/* Dashboard css */
+
+.pieContainer{
+  margin-top: 20px
+}
+
+h4{
+  text-align: center;
+  text-decoration: underline;
+}
