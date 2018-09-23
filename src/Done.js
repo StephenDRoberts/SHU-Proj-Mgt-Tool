@@ -1,6 +1,6 @@
 import React from 'react';
 import Ticket from './Ticket.js'; 
-import AddTicket from './AddTicket.js';
+
 let tasksAr = [
     {
         "user": "user1",
@@ -95,7 +95,7 @@ render(){
     <div>
         <h2>Done:</h2>
         {doneTicketsAr}
-        <AddTicket />
+       
     </div>
     )
 }

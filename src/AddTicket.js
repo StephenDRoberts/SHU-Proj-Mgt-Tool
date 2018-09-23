@@ -25,8 +25,8 @@ class AddTicket extends React.Component {
   render() {
     return (
       <div className='addTicket'>
-        <Button bsStyle="primary" onClick={this.handleShow}>
-          Add Ticket
+        <Button className='addSign'bsStyle="success" onClick={this.handleShow}>
+          +
                 </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>

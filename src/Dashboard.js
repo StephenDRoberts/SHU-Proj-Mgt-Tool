@@ -9,7 +9,7 @@ class Dashboard extends React.Component {
                 <Container>
                     <Row>
                         <Col md={5} className='indPies'>
-                            <h4>Actual Time</h4>
+                            <h4 className='timeTitle'>Actual Time</h4>
                             <VictoryPie
                                 data={[
                                     //y is absolute values
@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
                         </Col>
                         <Col md={2}></Col>
                         <Col md={5} className='indPies'>
-                        <h4>Planned Time</h4>
+                        <h4 className='timeTitle'>Planned Time</h4>
                             <VictoryPie
                                 data={[
                                     //y is absolute values
