@@ -1,5 +1,17 @@
 body{
-  margin: 10px;
+  
+}
+
+.header{
+  background: #105187;
+  font-size: 24px;
+  color: #F0F1D5;
+  height: 100%;
+  padding: 20px;
+}
+h2{
+  font-size: 16px;
+  text-decoration: underline;
 }
 
 .tickets{
@@ -8,7 +20,31 @@ body{
   border-radius: 5px;
 }
 
+/* Changing Title colours dependent on task Type */
 
-.ticketTitle{
+/* .ticketTitle{
   background-color: grey;
+} */
+
+.Chores{
+  background-color: #F19722;
+}
+.PersDev{
+  background-color: #2C8693
+}
+.Fun{
+  background-color: #6C6B99;
+  color: white;
+}
+.Tolive{
+  background-color: #FF9081;
+}
+
+
+
+.openTicket{
+  width: 100%;
+}
+textarea{
+  width: 100%;
 }

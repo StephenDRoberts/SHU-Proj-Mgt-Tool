@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Ticket from './Ticket.js';
 import AddTicket from './AddTicket.js';
 
@@ -83,7 +83,7 @@ for(var i=0; i<tasksAr.length; i++){
         todoAr.push(tasksAr[i])
     }
 }
-console.log(todoAr)
+
 
 let todoTicketsAr = [];
 todoTicketsAr = todoAr.map(function (obj, i) {
@@ -94,7 +94,7 @@ class Todo extends React.Component {
 render(){
     return (
     <div>
-        <h1>To do:</h1>
+        <h2>To do:</h2>
         {todoTicketsAr}
         <AddTicket />
     </div>

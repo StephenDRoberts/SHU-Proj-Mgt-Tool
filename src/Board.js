@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Todo from './Todo.js';
 import Doing from './Doing.js';
 import Done from './Done.js';
 import {Container, Row, Col} from 'react-grid-system';
+
 
 class Board extends React.Component {
 render(){

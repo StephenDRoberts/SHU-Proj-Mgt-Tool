@@ -25,7 +25,7 @@ class AddTicket extends React.Component {
   render() {
     return (
       <div className='addTicket'>
-        <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
+        <Button bsStyle="primary" onClick={this.handleShow}>
           Add Ticket
                 </Button>
 
@@ -35,21 +35,27 @@ class AddTicket extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <h4>Ticket name</h4>
-            <input></input>
+            <input id ='titleInput'></input>
 
             <hr />
 
             <h4>Description</h4>
-            <input></input>
+            <input id='descInput'></input>
 
             <hr />
 
             <h4>Estimated Hours</h4>
-            <input></input>
+            <input id='estHoursInput'></input>
+
+            <hr />
+
+            <h4>Type</h4>
+            <input id='typeInput'></input>
 
             <hr />
           </Modal.Body>
           <Modal.Footer>
+          <Button onClick={this.handleClose} bsStyle="primary">Submit</Button>
             <Button onClick={this.handleClose}>Close</Button>
           </Modal.Footer>
         </Modal>

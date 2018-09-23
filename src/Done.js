@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Ticket from './Ticket.js'; 
 import AddTicket from './AddTicket.js';
 let tasksAr = [
@@ -93,7 +93,7 @@ class Done extends React.Component {
 render(){
     return (
     <div>
-        <h1>Done:</h1>
+        <h2>Done:</h2>
         {doneTicketsAr}
         <AddTicket />
     </div>
