@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-
-
-
 class Ticket extends React.Component {
 
 

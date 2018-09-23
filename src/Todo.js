@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Ticket from './Ticket.js'; 
+import Ticket from './Ticket.js';
+import AddTicket from './AddTicket.js';
 
 let tasksAr = [
     {
@@ -78,7 +79,7 @@ let tasksAr = [
 let todoAr = [];
 
 for(var i=0; i<tasksAr.length; i++){
-    if(tasksAr[i].status=="To-Do"){
+    if(tasksAr[i].status==="To-Do"){
         todoAr.push(tasksAr[i])
     }
 }
@@ -95,6 +96,7 @@ render(){
     <div>
         <h1>To do:</h1>
         {todoTicketsAr}
+        <AddTicket />
     </div>
     )
 }
