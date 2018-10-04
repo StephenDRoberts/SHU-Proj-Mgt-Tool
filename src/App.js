@@ -1,11 +1,11 @@
 
 import React, { Component } from 'react';
-import Nav from './Nav.js';
+import Nav from './components/general/Nav.js';
 import './App.css';
-import Board from './Board.js';
-import Dashboard from './Dashboard.js';
-import AddTicket from './AddTicket.js';
-
+import Board from './components/kanban/Board.js';
+import Dashboard from './components//dashboard/Dashboard.js';
+import AddTicket from './components/kanban/AddTicket.js';
+import ProjectDropdown from './components/general/ProjectDropdown.js';
 
 class App extends Component {
   constructor(){
@@ -13,7 +13,8 @@ class App extends Component {
     this.changeDisplay = this.changeDisplay.bind(this)
     
     this.state = {
-      display: 'Kanban'
+      display: 'Kanban',
+      
     }
     
   }
@@ -31,6 +32,7 @@ class App extends Component {
       <div className="App">
         <div className='header'>SHU Module 1 Assignment 2</div>
         <Nav parentEvent={this.changeDisplay}/>
+        <ProjectDropdown/>
         <Board />
         <AddTicket />
       </div>

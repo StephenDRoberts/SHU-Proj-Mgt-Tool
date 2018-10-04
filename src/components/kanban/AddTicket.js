@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Glyphicon } from 'react-bootstrap';
 
 class AddTicket extends React.Component {
   constructor(props, context) {
@@ -26,9 +26,9 @@ class AddTicket extends React.Component {
     return (
       <div className='addTicket'>
         <Button className='addSign'bsStyle="success" onClick={this.handleShow}>
-          +
+        <Glyphicon className="glyphicon glyphicon-plus"/>
                 </Button>
-
+                
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Add Ticket</Modal.Title>
