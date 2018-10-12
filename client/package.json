@@ -1,0 +1,23 @@
+{
+  "name": "proj-mgt",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongodb": "^3.1.6",
+    "nodemon": "^1.18.4",
+    "react": "^16.5.2",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.5.2",
+    "react-draggable": "^3.0.5",
+    "react-grid-system": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "victory": "^30.3.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start-server": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "proxy": "http://localhost:3001"
+}
