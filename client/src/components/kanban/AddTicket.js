@@ -7,6 +7,7 @@ class AddTicket extends React.Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
 
     this.state = {
       show: false
@@ -21,6 +22,31 @@ class AddTicket extends React.Component {
   handleShow() {
     this.setState({ show: true });
   }
+
+  handleAdd(){
+    
+    
+let title = document.getElementById('titleInput').value
+let description = document.getElementById('descInput').value
+let estHours = document.getElementById('estHoursInput').value
+let actHours = '';
+let status = document.getElementById('status').value
+let type = document.getElementById('typeInput').value
+let priority = 2
+
+let data = {
+  "title": title,
+  "description": description,
+  "estHours": estHours,
+  "actHours": actHours,
+  "status": status,
+  "type": type,
+  "priority": priority
+}
+    this.props.addTicket(data)
+    this.setState({show: false})
+  }
+
 
   render() {
     return (
@@ -49,13 +75,22 @@ class AddTicket extends React.Component {
 
             <hr />
 
+            <h4>Status</h4>
+            <select id="status">
+              <option value="To-Do">To-Do</option>
+              <option value="Doing">Doing</option>
+              <option value="Done">Done</option>
+            </select>
+
+            <hr />
+
             <h4>Type</h4>
             <input id='typeInput'></input>
 
             <hr />
           </Modal.Body>
           <Modal.Footer>
-          <Button onClick={this.handleClose} bsStyle="primary">Submit</Button>
+          <Button onClick={this.handleAdd} bsStyle="primary">Submit</Button>
             <Button onClick={this.handleClose}>Close</Button>
           </Modal.Footer>
         </Modal>

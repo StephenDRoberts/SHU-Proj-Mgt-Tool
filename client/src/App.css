@@ -74,6 +74,27 @@ textarea, input {
   border-radius: 5px 20px 5px;
 }
 
+.saveSign{
+  background-color: #694A97;
+  color: white;
+  position: fixed;
+  right: 100px;
+  bottom: 10px;
+  height: 75px;
+  width: 75px;
+  font-size: 20px;
+  border-radius: 5px 20px 5px;
+}
+
+.saveSign:hover{
+  background-color: #563d7c;
+  color: white;
+}
+.saveSign:active{
+  background-color: #694A97;
+  color: white;
+}
+
 #projectDropdown{
   position: absolute;  
   right: 1em;
