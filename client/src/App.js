@@ -74,12 +74,13 @@ class App extends Component {
     let allData = this.state.data
     let projLocation = this.state.projLocation
     allData.projects[projLocation].tasks.push(data)
-    this.setState({data:data})
+    
+    this.setState({data: allData})
     
   }
 
   render() {
-    // console.log(this.state.data)
+    console.log(this.state.data)
     if (this.state.display === 'Kanban') {
       return (
         <div className="App">
