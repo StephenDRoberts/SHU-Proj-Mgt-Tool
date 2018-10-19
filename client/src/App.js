@@ -8,7 +8,7 @@ import Save from './components/kanban/Save.js';
 import ProjectDropdown from './components/general/ProjectDropdown.js';
 import store from './redux/store.js'
 import {Provider, connect} from 'react-redux'
-// import {fetchData} from './redux/dbCalls/fetchData.js'
+import {handleProjectToggle} from './redux/modules/changeProject.js'
 import {fetchData} from './redux/modules/redux_fetchData.js'
 
 class App extends Component {
@@ -35,10 +35,7 @@ class App extends Component {
   }
 
   handleProjectToggle = (num) => {
-    this.setState({
-      activeProject: this.state.data.projects[num],
-      activeTasks: this.state.data.projects[num].tasks
-    })
+    this.props.dispatch(handleProjectToggle(num))
   }
 
   handleAddTicket(data){
@@ -57,7 +54,9 @@ class App extends Component {
 
   render() {
     let data = this.props.data
+    let activeProject = this.props.projNumber
     let activeTasks = [];
+    console.log(this.props)
 
     if(data.length===0){
       data= data = [{
@@ -67,7 +66,7 @@ class App extends Component {
       }]
     } else {
       data = data[0]
-      activeTasks = data.projects[0].tasks
+      activeTasks = data.projects[activeProject].tasks
     }
 
     
@@ -102,21 +101,13 @@ class App extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  console.log(state.dataReducer)
+  console.log(state.changeProjectReducer)
   return{
     data: state.dataReducer.data,
     loading: state.dataReducer.loading,
-    error: state.dataReducer.error
+    error: state.dataReducer.error,
+    projNumber: state.changeProjectReducer.projNumber
   }
 }
-
-// const mapDispatchToProps = (dispatch)=>{
-//   return {
-//       addTicket: (ticket)=>{
-//           dispatch(addTicket(ticket))
-//       }
-//   }
-// }
-
 export default connect(mapStateToProps)(App)
 

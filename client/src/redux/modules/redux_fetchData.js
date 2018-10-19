@@ -25,10 +25,7 @@ const fetchDataFinal = data => ({
 
 //FETCH FUNCTION (THUNK???)
 export function fetchData() {
-  console.log('i think im fetching data')
-    return dispatch => {
-      console.log('trying to begin...')
-      
+    return dispatch => {      
       dispatch(fetchDataBegin());
       
       return fetch("/api/provideData")
@@ -36,14 +33,11 @@ export function fetchData() {
         .then(res => {
           console.log(res)
           if(res.ok){
-            console.log("we're ok")
             return res.json()
           }
           // return Promise.reject('Did not retrieve data')
         })
         .then(data => {
-          console.log('possible success???')
-          console.log(data)
           dispatch(fetchDataSuccess(data));
           console.log(data)
           return data;
@@ -53,7 +47,6 @@ export function fetchData() {
           return data
         })
         .catch(error => {
-          console.log('oopsie daze.....')
           dispatch(fetchDataError(error))
         });
     };

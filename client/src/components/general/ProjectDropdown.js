@@ -6,6 +6,7 @@ class ProjectDropdown extends React.Component {
     
     changeProject=(num)=>{
         this.props.changeProject(num)
+        
       }
 
     render() {
