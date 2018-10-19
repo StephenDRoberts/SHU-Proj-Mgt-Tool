@@ -6,7 +6,7 @@ import { Container, Row, Col } from 'react-grid-system';
 
 
 class Board extends React.Component {
-
+    
     componentDidMount(){
         
     }
@@ -42,13 +42,13 @@ class Board extends React.Component {
             <Container>
                 <Row>
                     <Col sm={4}>
-                        <Todo tasks={todoTasks}/>
+                        <Todo tasks={todoTasks} deleteTicket={this.props.deleteTicket}/>
                     </Col>
                     <Col sm={4}>
-                        <Doing tasks={doingTasks}/>
+                        <Doing tasks={doingTasks} deleteTicket={this.props.deleteTicket}/>
                     </Col>
                     <Col sm={4}>
-                        <Done tasks={doneTasks}/>
+                        <Done tasks={doneTasks} deleteTicket={this.props.deleteTicket}/>
                     </Col>
                 </Row>
             </Container>

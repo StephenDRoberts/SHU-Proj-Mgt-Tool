@@ -6,54 +6,26 @@ import Dashboard from './components/dashboard/Dashboard.js';
 import AddTicket from './components/kanban/AddTicket.js';
 import Save from './components/kanban/Save.js';
 import ProjectDropdown from './components/general/ProjectDropdown.js';
+import store from './redux/store.js'
+import {Provider, connect} from 'react-redux'
+// import {fetchData} from './redux/dbCalls/fetchData.js'
+import {fetchData} from './redux/modules/redux_fetchData.js'
 
 class App extends Component {
   constructor() {
     super();
     this.changeDisplay = this.changeDisplay.bind(this)
     this.handleAddTicket = this.handleAddTicket.bind(this)
+    this.handleDeleteTicket = this.handleDeleteTicket.bind(this)
     
     this.state = {
       display: 'Kanban',
-      data: '',
-      activeProject: '',
-      projLocation: 0,
-      activeTasks: '',
-      projectList: []
     }
 
   }
 
   componentDidMount() {
-    let self = this
-    fetch('/api/provideData', {
-      method: 'get',
-    })
-      .then(function (response) {
-        if (response.ok) {
-          return response.json()
-        }
-        return Promise.reject("Some Random Error");
-
-      })
-      .then(function (myData) {
-
-        self.setState({
-          data: myData[0],
-          // activeProject: myData[0].projects[0],
-          // activeTasks: myData[0].projects[0].tasks,
-          // projectList: myData[0].projects
-        })
-      }).then(function(){
-        //set the state of the individual components here so that when we update state later, we can just update
-        //the whole data object which will the update the individual sections automatically.
-        self.setState({
-          activeProject: self.state.data.projects[0],
-          activeTasks: self.state.data.projects[0].tasks,
-          projectList: self.state.data.projects
-        })
-      })
-
+    this.props.dispatch(fetchData());
   }
 
 
@@ -70,7 +42,6 @@ class App extends Component {
   }
 
   handleAddTicket(data){
-  
     let allData = this.state.data
     let projLocation = this.state.projLocation
     allData.projects[projLocation].tasks.push(data)
@@ -79,18 +50,42 @@ class App extends Component {
     
   }
 
+  handleDeleteTicket(data){
+    console.log(data)
+    
+  }
+
   render() {
-    console.log(this.state.data)
+    let data = this.props.data
+    let activeTasks = [];
+
+    if(data.length===0){
+      data= data = [{
+        id: '',
+        user: '',
+        projects: []
+      }]
+    } else {
+      data = data[0]
+      activeTasks = data.projects[0].tasks
+    }
+
+    
+    
     if (this.state.display === 'Kanban') {
       return (
+        <Provider store={store}>
+        
         <div className="App">
           <div className='header'>SHU Module 1 Assignment 2</div>
           <Nav parentEvent={this.changeDisplay} />
-          <ProjectDropdown projectList={this.state.data.projects} changeProject={this.handleProjectToggle} />
-          <Board tasks={this.state.activeTasks} />
+          <ProjectDropdown projectList={data.projects} changeProject={this.handleProjectToggle} />
+          <Board tasks={activeTasks} deleteTicket={this.handleDeleteTicket}/>
           <Save/>
-          <AddTicket addTicket={this.handleAddTicket} activeProject={this.state.activeProject} activeTasks={this.state.activeTasks}/>
+          <AddTicket/>
+          {/* <AddTicket addTicket={this.handleAddTicket} activeProject={this.state.activeProject} activeTasks={this.state.activeTasks}/> */}
         </div>
+        </Provider>
       );
 
     } else {
@@ -106,4 +101,22 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state)=>{
+  console.log(state.dataReducer)
+  return{
+    data: state.dataReducer.data,
+    loading: state.dataReducer.loading,
+    error: state.dataReducer.error
+  }
+}
+
+// const mapDispatchToProps = (dispatch)=>{
+//   return {
+//       addTicket: (ticket)=>{
+//           dispatch(addTicket(ticket))
+//       }
+//   }
+// }
+
+export default connect(mapStateToProps)(App)
+

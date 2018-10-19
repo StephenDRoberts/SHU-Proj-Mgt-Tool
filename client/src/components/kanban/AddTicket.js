@@ -1,5 +1,7 @@
 import React from 'react';
+import {connect} from 'react-redux'
 import { Button, Modal, Glyphicon } from 'react-bootstrap';
+import {addTicket} from '../../redux/modules/tickets.js'
 
 class AddTicket extends React.Component {
   constructor(props, context) {
@@ -43,8 +45,10 @@ let data = {
   "type": type,
   "priority": priority
 }
-    this.props.addTicket(data)
+    // this.props.addTicket(data)
     this.setState({show: false})
+    console.log('am I in redux???')
+    console.log(this.props)
   }
 
 
@@ -97,7 +101,19 @@ let data = {
       </div>
     )
   }
-
-
 }
-export default AddTicket
+
+const mapStateToProps = (state)=>{
+  return{tasks: state.data}
+}
+
+const mapDispatchToProps = (dispatch)=>{
+  return {
+      addTicket: (ticket)=>{
+          dispatch(addTicket(ticket))
+      }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTicket)
+

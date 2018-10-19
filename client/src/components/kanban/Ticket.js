@@ -6,14 +6,16 @@ class Ticket extends React.Component {
         super(props, context);
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
-
+        this.handleDelete = this.handleDelete.bind(this);
         this.state = {
             show: false,
             data: props.data            
         };
     }
 
-
+    handleDelete(){
+        this.props.deleteTicket('deleting')
+    }
     handleClose() {
         this.setState({ show: false });
     }
@@ -61,7 +63,7 @@ class Ticket extends React.Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleClose} bsStyle="primary">Submit</Button>
-                        <Button onClick={this.handleClose} bsStyle="danger">Delete</Button>
+                        <Button onClick={this.handleDelete} bsStyle="danger">Delete</Button>
                         <Button onClick={this.handleClose}>Close</Button>
                     </Modal.Footer>
                 </Modal>
