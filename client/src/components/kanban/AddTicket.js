@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import { Button, Modal, Glyphicon } from 'react-bootstrap';
-import {addTicket} from '../../redux/modules/tickets.js'
+import {handleAddTicket, addTicketFinished} from '../../redux/modules/redux_fetchData.js'
 
 class AddTicket extends React.Component {
   constructor(props, context) {
@@ -9,7 +9,8 @@ class AddTicket extends React.Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleAdd = this.handleAdd.bind(this);
+    this.handleAddTicket = this.handleAddTicket.bind(this);
+    
 
     this.state = {
       show: false
@@ -25,7 +26,7 @@ class AddTicket extends React.Component {
     this.setState({ show: true });
   }
 
-  handleAdd(){
+  handleAddTicket(){
     
     
 let title = document.getElementById('titleInput').value
@@ -47,12 +48,30 @@ let data = {
 }
     // this.props.addTicket(data)
     this.setState({show: false})
-    console.log('am I in redux???')
-    console.log(this.props)
+    let projNumber = this.props.projNumber
+    this.props.dispatch(handleAddTicket(data, projNumber))
+    this.props.dispatch(addTicketFinished())
   }
 
 
   render() {
+    let data = this.props.data
+    let activeProject = this.props.projNumber
+    let activeTasks = [];
+    
+    
+    if(data===undefined || data.length===0){
+      data = [{
+        id: '',
+        user: '',
+        projects: []
+      }]
+    } else {
+      data = data[0]
+      activeTasks = data.projects[activeProject].tasks
+    }
+    
+    
     return (
       <div className='addTicket'>
         <Button className='addSign'bsStyle="success" onClick={this.handleShow}>
@@ -94,7 +113,7 @@ let data = {
             <hr />
           </Modal.Body>
           <Modal.Footer>
-          <Button onClick={this.handleAdd} bsStyle="primary">Submit</Button>
+          <Button onClick={this.handleAddTicket} bsStyle="primary">Submit</Button>
             <Button onClick={this.handleClose}>Close</Button>
           </Modal.Footer>
         </Modal>
@@ -104,16 +123,11 @@ let data = {
 }
 
 const mapStateToProps = (state)=>{
-  return{tasks: state.data}
-}
-
-const mapDispatchToProps = (dispatch)=>{
-  return {
-      addTicket: (ticket)=>{
-          dispatch(addTicket(ticket))
-      }
+  return{
+    data: state.dataReducer.data,
+    projNumber: state.changeProjectReducer.projNumber
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTicket)
+export default connect(mapStateToProps)(AddTicket)
 

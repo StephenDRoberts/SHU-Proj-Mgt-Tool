@@ -1,5 +1,8 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import {connect} from 'react-redux'
+import {handleDeleteTicket} from '../../redux/modules/redux_fetchData.js'
+
 class Ticket extends React.Component {
 
     constructor(props, context) {
@@ -9,12 +12,14 @@ class Ticket extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.state = {
             show: false,
-            data: props.data            
+        
         };
     }
 
     handleDelete(){
-        this.props.deleteTicket('deleting')
+        let projNumber = this.props.projNumber
+        console.log(this.props)
+        this.props.dispatch(handleDeleteTicket(projNumber))
     }
     handleClose() {
         this.setState({ show: false });
@@ -25,15 +30,15 @@ class Ticket extends React.Component {
     }
     render() {
        //This is to make css stylings ok - will change when change 'Type' names
-        let trimmedType = this.props.data.type.replace(/\s+/g,'')
+       let trimmedType = this.props.dataset.type.replace(/\s+/g,'')
 
        
         return (
             <div className='tickets'>
                 <Button className='openTicket' onClick={this.handleShow}>
-                    <div className={trimmedType}>{this.props.data.title}</div>
-                    <p className='estHours'>Est hours: {this.props.data.estHours} hrs</p>
-                    <p className='taskType'>{this.props.data.type}</p>
+                    <div className={trimmedType}>{this.props.dataset.title}</div>
+                    <p className='estHours'>Est hours: {this.props.dataset.estHours} hrs</p>
+                    <p className='taskType'>{this.props.dataset.type}</p>
                 </Button>
 
                 <Modal show={this.state.show} onHide={this.handleClose}>
@@ -47,17 +52,17 @@ class Ticket extends React.Component {
                         <hr />
 
                         <h4>Description</h4>
-                        <textarea rows="4" id='descEdit' value={this.props.data.description}></textarea>
+                        <textarea rows="4" id='descEdit' value={this.props.dataset.description}></textarea>
 
                         <hr />
 
                         <h4>Estimated Hours</h4>
-                        <input id='estHoursEdit' value={this.props.data.estHours}></input>
+                        <input id='estHoursEdit' value={this.props.dataset.estHours}></input>
 
                         <hr />
 
                         <h4>Type</h4>
-                        <input id='typeEdit' value={this.props.data.type}></input>
+                        <input id='typeEdit' value={this.props.dataset.type}></input>
 
                         <hr />
                     </Modal.Body>
@@ -74,4 +79,11 @@ class Ticket extends React.Component {
 
 
 }
-export default Ticket
+const mapStateToProps = (state)=>{
+    return{
+      data: state.dataReducer.data,
+      projNumber: state.changeProjectReducer.projNumber
+    }
+  }
+  
+  export default connect(mapStateToProps)(Ticket)

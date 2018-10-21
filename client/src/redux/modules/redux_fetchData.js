@@ -3,6 +3,12 @@ const FETCH_DATA_BEGIN   = 'FETCH_DATA_BEGIN';
 const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 const FETCH_DATA_FINAL = 'FETCH_DATA_FINAL';
+
+export const ADD = 'ADD'
+export const DELETE = 'DELETE'
+export const FINISHED = 'FINISHED'
+
+
 // ACTION CREATORS
 const fetchDataBegin = () => ({
   type: FETCH_DATA_BEGIN
@@ -23,6 +29,27 @@ const fetchDataFinal = data => ({
 });
 
 
+const deleteTicket=(projNumber)=>{
+  return{
+      type: DELETE,
+      projNumber: projNumber
+  }
+}
+
+const addTicket=(ticket, projNumber)=>{
+  return{
+      type: ADD,
+      ticket: ticket,
+      projNumber : projNumber
+  }
+}
+
+const finished=()=>{
+  return{
+      type: FINISHED
+  }
+}
+
 //FETCH FUNCTION (THUNK???)
 export function fetchData() {
     return dispatch => {      
@@ -31,7 +58,6 @@ export function fetchData() {
       return fetch("/api/provideData")
         .then(handleErrors)
         .then(res => {
-          console.log(res)
           if(res.ok){
             return res.json()
           }
@@ -39,7 +65,6 @@ export function fetchData() {
         })
         .then(data => {
           dispatch(fetchDataSuccess(data));
-          console.log(data)
           return data;
         })
         .then(data=>{
@@ -60,6 +85,17 @@ export function fetchData() {
     return response;
   }
 
+
+export function handleAddTicket(data, projNumber){
+    return dispatch => dispatch(addTicket(data, projNumber))
+}
+export function addTicketFinished(){
+    return dispatch => dispatch(finished())
+}
+export function handleDeleteTicket(projNumber){
+  return dispatch => dispatch(deleteTicket(projNumber))
+}
+
 //REDUCER  
   const initialState = {
     data: [],
@@ -68,7 +104,7 @@ export function fetchData() {
   };
   
   export const dataReducer=(state = initialState, action)=>{
-    console.log(action)
+  
     
     switch(action.type) {
       case FETCH_DATA_BEGIN:
@@ -103,9 +139,24 @@ export function fetchData() {
         };
 
         case FETCH_DATA_FINAL:
-        console.log(state)
         return state;
         
+        case DELETE:
+             let deleteState = state
+             return deleteState
+             
+        case ADD:
+        let addState = state.data
+        addState[0].projects[action.projNumber].tasks.push(action.ticket)
+        
+        // addState.data[0].projects[action.projNumber].tasks.concat(action.ticket)
+        return {data: addState}
+        
+        //.concat(action.ticket)
+        case FINISHED:
+        console.log(state) 
+        return state
+
       default:
         // ALWAYS have a default case in a reducer
         return state;

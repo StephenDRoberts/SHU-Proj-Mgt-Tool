@@ -2,6 +2,7 @@
 // ACTION TYPE CONSTANTS
 export const ADD = 'ADD'
 export const DELETE = 'DELETE'
+export const FINISHED = 'FINISHED'
 
 // ACTION CREATORS
 export const deleteTicket=()=>{
@@ -11,14 +12,28 @@ export const deleteTicket=()=>{
 }
 
 export const addTicket=(ticket)=>{
+    console.log(ticket)
     return{
         type: ADD,
         ticket: ticket 
     }
 }
 
+export const finished=()=>{
+    return{
+        type: FINISHED
+    }
+}
+
+export function handleAddTicket(data){
+    return dispatch => dispatch(addTicket(data))
+}
+export function addTicketFinished(){
+    return dispatch => dispatch(finished())
+}
+
 // REDUCER
-const defaultState = {}
+const defaultState = []
 
 export const ticketReducer=(state=defaultState, action)=>{
     switch(action.type){
@@ -27,12 +42,17 @@ export const ticketReducer=(state=defaultState, action)=>{
              return deleteState
              
         case ADD:
-            let addState = state
-            console.log(state)
-            return addState
-            //.concat(action.ticket)
+        
+        return {...state,
+            data: state.concat(action.ticket)}
+
+        //.concat(action.ticket)
+        case FINISHED:
+        console.log(state) 
+        return state
+    
         default:
-             return state;
+            return state;
     }
 
 }

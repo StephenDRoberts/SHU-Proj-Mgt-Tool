@@ -13,7 +13,7 @@ render(){
         } else {
         
             doneTicketsAr = this.props.tasks.map(function (obj, i) {
-                return <Ticket key={i} data={obj}></Ticket>
+                return <Ticket key={i} dataset={obj}></Ticket>
             })
         }
 

@@ -15,8 +15,8 @@ class App extends Component {
   constructor() {
     super();
     this.changeDisplay = this.changeDisplay.bind(this)
-    this.handleAddTicket = this.handleAddTicket.bind(this)
-    this.handleDeleteTicket = this.handleDeleteTicket.bind(this)
+    // this.handleAddTicket = this.handleAddTicket.bind(this)
+    // this.handleDeleteTicket = this.handleDeleteTicket.bind(this)
     
     this.state = {
       display: 'Kanban',
@@ -38,25 +38,15 @@ class App extends Component {
     this.props.dispatch(handleProjectToggle(num))
   }
 
-  handleAddTicket(data){
-    let allData = this.state.data
-    let projLocation = this.state.projLocation
-    allData.projects[projLocation].tasks.push(data)
+  // handleDeleteTicket(data){
+  //   console.log(data)
     
-    this.setState({data: allData})
-    
-  }
-
-  handleDeleteTicket(data){
-    console.log(data)
-    
-  }
+  // }
 
   render() {
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
-    console.log(this.props)
 
     if(data.length===0){
       data= data = [{
@@ -65,11 +55,10 @@ class App extends Component {
         projects: []
       }]
     } else {
+      console.log(data)
       data = data[0]
       activeTasks = data.projects[activeProject].tasks
     }
-
-    
     
     if (this.state.display === 'Kanban') {
       return (
@@ -101,12 +90,14 @@ class App extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  console.log(state.changeProjectReducer)
+  
+  console.log(state.dataReducer)
+  
   return{
     data: state.dataReducer.data,
     loading: state.dataReducer.loading,
     error: state.dataReducer.error,
-    projNumber: state.changeProjectReducer.projNumber
+    projNumber: state.changeProjectReducer.projNumber,
   }
 }
 export default connect(mapStateToProps)(App)

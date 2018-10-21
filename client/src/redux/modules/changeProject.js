@@ -17,7 +17,7 @@ export function handleProjectToggle(num){
 
 // REDUCER
 const defaultState = {
-    projNumber : 1
+    projNumber : 0
 }
 
 export const changeProjectReducer=(state=defaultState, action)=>{

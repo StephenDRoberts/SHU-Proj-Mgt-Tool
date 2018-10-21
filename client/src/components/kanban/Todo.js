@@ -14,7 +14,7 @@ class Todo extends React.Component {
         } else {
         
             todoTicketsAr = this.props.tasks.map(function (obj, i) {
-                return <Ticket key={i} data={obj} ></Ticket>
+                return <Ticket key={i} dataset={obj} ></Ticket>
             })
         }
 
