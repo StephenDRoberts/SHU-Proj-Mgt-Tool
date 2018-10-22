@@ -8,6 +8,7 @@ class Todo extends React.Component {
 
 
     render() {
+        
         //on initial render, this.props = undefined or is set to be an empty array, so error checked for these values
         if (this.props===undefined || this.props.length===0 ){
         

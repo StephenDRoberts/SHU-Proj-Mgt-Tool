@@ -27,8 +27,7 @@ class AddTicket extends React.Component {
   }
 
   handleAddTicket(){
-    
-let entryNum = this.props.data[0].projects[this.props.projNumber].tasks.length +1   
+  
 let title = document.getElementById('titleInput').value
 let description = document.getElementById('descInput').value
 let estHours = document.getElementById('estHoursInput').value
@@ -45,7 +44,6 @@ let data = {
   "status": status,
   "type": type,
   "priority": priority,
-  "entryNumber": entryNum
 }
     // this.props.addTicket(data)
     this.setState({show: false})

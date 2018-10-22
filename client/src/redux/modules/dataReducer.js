@@ -5,6 +5,7 @@ const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 const FETCH_DATA_FINAL = 'FETCH_DATA_FINAL';
 
 export const ADD = 'ADD'
+export const EDIT = 'EDIT'
 export const DELETE = 'DELETE'
 export const FINISHED = 'FINISHED'
 
@@ -28,20 +29,28 @@ const fetchDataFinal = data => ({
   payload: { data }
 });
 
-
-const deleteTicket=(ticketNum,projNumber)=>{
-  return{
-      type: DELETE,
-      ticketNum, ticketNum,
-      projNumber: projNumber
-  }
-}
-
 const addTicket=(ticket, projNumber)=>{
   return{
       type: ADD,
       ticket: ticket,
       projNumber : projNumber
+  }
+}
+
+const editTicket=(ticket, ticketNum, projNumber)=>{
+  return{
+      type: EDIT,
+      ticket: ticket,
+      ticketNum: ticketNum,
+      projNumber : projNumber
+  }
+}
+
+const deleteTicket=(ticketNum,projNumber)=>{
+  return{
+      type: DELETE,
+      ticketNum: ticketNum,
+      projNumber: projNumber
   }
 }
 
@@ -93,9 +102,13 @@ export function handleAddTicket(data, projNumber){
 export function addTicketFinished(){
     return dispatch => dispatch(finished())
 }
+export function handleEditTicket(ticket, ticketNum, projNumber){
+  return dispatch => dispatch(editTicket(ticket, ticketNum, projNumber))
+}
 export function handleDeleteTicket(ticketNum, projNumber){
   return dispatch => dispatch(deleteTicket(ticketNum, projNumber))
 }
+
 
 //REDUCER  
   const initialState = {
@@ -142,15 +155,21 @@ export function handleDeleteTicket(ticketNum, projNumber){
         case FETCH_DATA_FINAL:
         return state;
         
-        case DELETE:
-        let deleteState = [...state.data]
-        deleteState[0].projects[action.projNumber].tasks.splice(action.ticketNum,1)
-        return {data:deleteState}
-
         case ADD:
         let addState = [...state.data]
         addState[0].projects[action.projNumber].tasks.push(action.ticket)
         return {data: addState}
+
+        case EDIT:
+        console.log(action.projNumber)
+        let editState = [...state.data]
+        editState[0].projects[action.projNumber].tasks[action.ticketNum] = action.ticket
+        return {data: editState}
+
+        case DELETE:
+        let deleteState = [...state.data]
+        deleteState[0].projects[action.projNumber].tasks.splice(action.ticketNum,1)
+        return {data:deleteState}
         
         case FINISHED:
         console.log(state.data[0].projects) 

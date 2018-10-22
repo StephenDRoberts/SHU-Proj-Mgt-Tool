@@ -13,7 +13,7 @@
                         "status": "To-Do",
                         "type": "Chores",
                         "priority": 1,
-                        "entryNumber": 1
+                        
                     },
                     {
                         "title": "Code",
@@ -23,7 +23,7 @@
                         "status": "Doing",
                         "type": "Pers Dev",
                         "priority": 1,
-                        "entryNumber": 2
+                        
                     },
                     {
                         "title": "Iron",
@@ -33,7 +33,7 @@
                         "status": "To-Do",
                         "type": "Chores",
                         "priority": 2,
-                        "entryNumber": 3
+                        
                     },
                     {
                         "title": "Play guitar",
@@ -43,7 +43,7 @@
                         "status": "Done",
                         "type": "Fun",
                         "priority": 1,
-                        "entryNumber": 4
+                        
                     },
                     {
                         "title": "Watch Everton",
@@ -53,7 +53,7 @@
                         "status": "To-Do",
                         "type": "Fun",
                         "priority": 3,
-                        "entryNumber": 5
+                        
                     },
                     {
                         "title": "Hoover",
@@ -63,7 +63,7 @@
                         "status": "Done",
                         "type": "Chores",
                         "priority": 2,
-                        "entryNumber": 6
+                        
                     },
                     {
                         "title": "Have lunch",
@@ -73,7 +73,7 @@
                         "status": "Doing",
                         "type": "To live",
                         "priority": 2,
-                        "entryNumber": 7
+                        
                     }
                 ] 
             },
@@ -88,7 +88,7 @@
                         "status": "To-Do",
                         "type": "Pers Dev",
                         "priority": 1,
-                        "entryNumber": 1
+                      
                     },
                     {
                         "title": "Learn Kotlin",
@@ -98,7 +98,7 @@
                         "status": "Doing",
                         "type": "Pers Dev",
                         "priority": 1,
-                        "entryNumber": 2
+                        
                     },
                     {
                         "title": "Learn Redux",
@@ -108,7 +108,7 @@
                         "status": "Doing",
                         "type": "Pers Dev",
                         "priority": 2,
-                        "entryNumber": 3
+                        
                     }
                 ] 
             }

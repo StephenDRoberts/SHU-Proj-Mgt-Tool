@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import {connect} from 'react-redux'
-import {handleDeleteTicket, addTicketFinished} from '../../redux/modules/dataReducer.js'
+import { connect } from 'react-redux'
+import { handleEditTicket, handleDeleteTicket, addTicketFinished } from '../../redux/modules/dataReducer.js'
 
 class Ticket extends React.Component {
 
@@ -10,13 +10,21 @@ class Ticket extends React.Component {
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.state = {
+            title: '',
+            description: '',
+            estHours: 0,
+            actHours: 0,
+            status: '',
+            type: '',
             show: false,
-        
+
         };
     }
 
-    handleDelete(){
+    handleDelete() {
         let projNumber = this.props.projNumber
         let ticketNum = this.findLocation()
         this.props.dispatch(handleDeleteTicket(ticketNum, projNumber))
@@ -27,23 +35,87 @@ class Ticket extends React.Component {
     }
 
     handleShow() {
-        this.setState({ show: true });
+        
+        this.setState({
+            title: this.props.dataset.title,
+            description: this.props.dataset.description,
+            estHours: parseInt(this.props.dataset.estHours),
+            status: this.props.dataset.status,
+            type: this.props.dataset.type,
+            show: true 
+        });
+        
     }
 
-    findLocation(){
+    handleChange(e) {
+        let title = document.getElementById('titleEdit').value
+        let description = document.getElementById('descEdit').value
+        let estHours = parseInt(document.getElementById('estHoursEdit').value)
+        let type = document.getElementById('typeEdit').value
+
+        
+        this.setState({
+            title: title,
+            description: description,
+            estHours: parseInt(estHours),
+            // actHours: actHours,
+            // status: status,
+            type: type,
+            // priority: priority,
+        })
+
+
+    }
+    //help on general edit handler: 
+    handleEdit() {
+        
+        let title = document.getElementById('titleEdit').value
+        let description = document.getElementById('descEdit').value
+        let estHours = parseInt(document.getElementById('estHoursEdit').value)
+        let status = document.getElementById('statusEdit').value
+        let type = document.getElementById('typeEdit').value
+
+        let data = {
+            "title": title,
+            "description": description,
+            "estHours": estHours,
+            "actHours": '',
+            "status": status,
+            "type": type,
+            "priority":1
+        }
+
+        let projNumber = this.props.projNumber
+        console.log(projNumber)
+        let ticketNum = this.findLocation()
+        this.props.dispatch(handleEditTicket(data, ticketNum, projNumber))
+        this.props.dispatch(addTicketFinished())
+
+        this.setState({ show: false });
+
+    }
+
+
+
+    findLocation() {
         let projNumber = this.props.projNumber
         let fullDataAr = this.props.data[0].projects[projNumber].tasks
         let titleAr = []
-        fullDataAr.map(function(obj){
+        fullDataAr.map(function (obj) {
             titleAr.push(obj['title'])
         })
-        
-        return titleAr.findIndex(title=>title===this.props.dataset["title"])
+
+        return titleAr.findIndex(title => title === this.props.dataset["title"])
     }
 
+
+    componentDidMount() {
+        
+        
+    }
     render() {
-       //This is to make css stylings ok - will change when change 'Type' names
-       let trimmedType = this.props.dataset.type.replace(/\s+/g,'')
+        //This is to make css stylings ok - will change when change 'Type' names
+        let trimmedType = this.props.dataset.type.replace(/\s+/g, '')
         
         return (
             <div className='tickets'>
@@ -59,28 +131,37 @@ class Ticket extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <h4>Ticket name</h4>
-                        <input id='titleEdit' value={this.props.dataset.title}></input>
+                        <input id='titleEdit' onChange={this.handleChange} value={this.state.title}></input>
 
                         <hr />
 
                         <h4>Description</h4>
-                        <textarea rows="4" id='descEdit' value={this.props.dataset.description}></textarea>
+                        <textarea rows="4" onChange={this.handleChange} id='descEdit' value={this.state.description}></textarea>
 
                         <hr />
 
                         <h4>Estimated Hours</h4>
-                        <input id='estHoursEdit' value={this.props.dataset.estHours}></input>
+                        <input id='estHoursEdit' onChange={this.handleChange} value={this.state.estHours}></input>
+
+                        <hr />
+
+                        <h4>Status</h4>
+                        <select id="statusEdit">
+                            <option value="To-Do">To-Do</option>
+                            <option value="Doing">Doing</option>
+                            <option value="Done">Done</option>
+                        </select>
 
                         <hr />
 
                         <h4>Type</h4>
-                        <input id='typeEdit' value={this.props.dataset.type}></input>
+                        <input id='typeEdit' onChange={this.handleChange} value={this.state.type}></input>
 
                         <hr />
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={this.handleClose} bsStyle="primary">Submit</Button>
-                        <Button key = {this.props.key} onClick={this.handleDelete} bsStyle="danger">Delete</Button>
+                        <Button onClick={this.handleEdit} bsStyle="primary">Submit</Button>
+                        <Button key={this.props.key} onClick={this.handleDelete} bsStyle="danger">Delete</Button>
                         <Button onClick={this.handleClose}>Close</Button>
                     </Modal.Footer>
                 </Modal>
@@ -91,11 +172,11 @@ class Ticket extends React.Component {
 
 
 }
-const mapStateToProps = (state)=>{
-    return{
-      data: state.dataReducer.data,
-      projNumber: state.changeProjectReducer.projNumber
+const mapStateToProps = (state) => {
+    return {
+        data: state.dataReducer.data,
+        projNumber: state.changeProjectReducer.projNumber
     }
-  }
-  
-  export default connect(mapStateToProps)(Ticket)
+}
+
+export default connect(mapStateToProps)(Ticket)

@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux'
 import Todo from './Todo.js';
 import Doing from './Doing.js';
 import Done from './Done.js';
@@ -7,11 +8,9 @@ import { Container, Row, Col } from 'react-grid-system';
 
 class Board extends React.Component {
     
-    componentDidMount(){
-        
-    }
+    
     render() {
-        
+        console.log(this.props.tasks)
         let todoTasks = [];
         let doingTasks = [];
         let doneTasks = [];
@@ -37,7 +36,8 @@ class Board extends React.Component {
                 }
             }
         }
-       
+       console.log(todoTasks)
+       console.log(doneTasks)
         return (
             <Container>
                 <Row>
@@ -57,4 +57,11 @@ class Board extends React.Component {
 
 
 }
-export default Board
+const mapStateToProps = (state) => {
+    return {
+        data: state.dataReducer.data,
+        projNumber: state.changeProjectReducer.projNumber
+    }
+}
+
+export default connect(mapStateToProps)(Board)
