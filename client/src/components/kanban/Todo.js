@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux'
 import Ticket from './Ticket.js';
 
 let todoTicketsAr = [];
@@ -29,4 +30,12 @@ class Todo extends React.Component {
 
 
 }
-export default Todo
+const mapStateToProps = (state)=>{
+    return{
+      data: state.dataReducer.data,
+    }
+  }
+  
+  export default connect(mapStateToProps)(Todo)
+  
+  

@@ -55,7 +55,7 @@ class App extends Component {
         projects: []
       }]
     } else {
-      console.log(data)
+      
       data = data[0]
       activeTasks = data.projects[activeProject].tasks
     }
@@ -90,9 +90,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  
-  console.log(state.dataReducer)
-  
   return{
     data: state.dataReducer.data,
     loading: state.dataReducer.loading,

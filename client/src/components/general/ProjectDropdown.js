@@ -5,6 +5,7 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 class ProjectDropdown extends React.Component {
     
     changeProject=(num)=>{
+        console.log(num)
         this.props.changeProject(num)
         
       }

@@ -29,9 +29,10 @@ const fetchDataFinal = data => ({
 });
 
 
-const deleteTicket=(projNumber)=>{
+const deleteTicket=(ticketNum,projNumber)=>{
   return{
       type: DELETE,
+      ticketNum, ticketNum,
       projNumber: projNumber
   }
 }
@@ -92,8 +93,8 @@ export function handleAddTicket(data, projNumber){
 export function addTicketFinished(){
     return dispatch => dispatch(finished())
 }
-export function handleDeleteTicket(projNumber){
-  return dispatch => dispatch(deleteTicket(projNumber))
+export function handleDeleteTicket(ticketNum, projNumber){
+  return dispatch => dispatch(deleteTicket(ticketNum, projNumber))
 }
 
 //REDUCER  
@@ -142,19 +143,17 @@ export function handleDeleteTicket(projNumber){
         return state;
         
         case DELETE:
-             let deleteState = state
-             return deleteState
-             
+        let deleteState = [...state.data]
+        deleteState[0].projects[action.projNumber].tasks.splice(action.ticketNum,1)
+        return {data:deleteState}
+
         case ADD:
-        let addState = state.data
+        let addState = [...state.data]
         addState[0].projects[action.projNumber].tasks.push(action.ticket)
-        
-        // addState.data[0].projects[action.projNumber].tasks.concat(action.ticket)
         return {data: addState}
         
-        //.concat(action.ticket)
         case FINISHED:
-        console.log(state) 
+        console.log(state.data[0].projects) 
         return state
 
       default:
