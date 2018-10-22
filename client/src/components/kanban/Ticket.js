@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import {connect} from 'react-redux'
-import {handleDeleteTicket, addTicketFinished} from '../../redux/modules/redux_fetchData.js'
+import {handleDeleteTicket, addTicketFinished} from '../../redux/modules/dataReducer.js'
 
 class Ticket extends React.Component {
 
@@ -20,7 +20,6 @@ class Ticket extends React.Component {
         let projNumber = this.props.projNumber
         let ticketNum = this.findLocation()
         this.props.dispatch(handleDeleteTicket(ticketNum, projNumber))
-        this.props.dispatch(addTicketFinished())
         this.setState({ show: false });
     }
     handleClose() {
@@ -45,7 +44,6 @@ class Ticket extends React.Component {
     render() {
        //This is to make css stylings ok - will change when change 'Type' names
        let trimmedType = this.props.dataset.type.replace(/\s+/g,'')
-       let self = this
         
         return (
             <div className='tickets'>
@@ -82,7 +80,7 @@ class Ticket extends React.Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleClose} bsStyle="primary">Submit</Button>
-                        <Button key = {this.props.key} onClick={self.handleDelete} bsStyle="danger">Delete</Button>
+                        <Button key = {this.props.key} onClick={this.handleDelete} bsStyle="danger">Delete</Button>
                         <Button onClick={this.handleClose}>Close</Button>
                     </Modal.Footer>
                 </Modal>

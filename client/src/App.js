@@ -9,7 +9,7 @@ import ProjectDropdown from './components/general/ProjectDropdown.js';
 import store from './redux/store.js'
 import {Provider, connect} from 'react-redux'
 import {handleProjectToggle} from './redux/modules/changeProject.js'
-import {fetchData} from './redux/modules/redux_fetchData.js'
+import {fetchData} from './redux/modules/dataReducer.js'
 
 class App extends Component {
   constructor() {

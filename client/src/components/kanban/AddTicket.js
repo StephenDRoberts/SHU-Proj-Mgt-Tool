@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import { Button, Modal, Glyphicon } from 'react-bootstrap';
-import {handleAddTicket, addTicketFinished} from '../../redux/modules/redux_fetchData.js'
+import {handleAddTicket, addTicketFinished} from '../../redux/modules/dataReducer.js'
 
 class AddTicket extends React.Component {
   constructor(props, context) {
