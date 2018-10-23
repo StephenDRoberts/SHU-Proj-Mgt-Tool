@@ -6,5 +6,25 @@ module.exports = {
             }
             res.json(docs)
         })
+    },
+
+    saveData: function (app, req, res) {
+        let data = req.body
+        // console.log(data)
+        // console.log(data[0])
+        app.get('myDb').collection('projects').updateOne(
+            {'user': 'user1'},
+            {$set: {
+                'projects':data.projects
+            },
+        },
+        {upsert:true},
+        function(err,dbresp){
+            if(err){
+                console.error(err)
+            }
+        })
+        
     }
+
 }

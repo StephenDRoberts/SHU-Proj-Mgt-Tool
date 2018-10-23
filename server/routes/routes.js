@@ -7,6 +7,9 @@ router = function(app){
     app.route('/api/provideData')
     .get((req,res)=>{myControllers.provideData(app,req,res);})
 
+    app.route('/api/saveData')
+    .put((req,res)=>{myControllers.saveData(app,req,res);})
+
 }
 
 module.exports = router

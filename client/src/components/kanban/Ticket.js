@@ -7,11 +7,13 @@ class Ticket extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+        this.myRef = React.createRef();
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+
         this.state = {
             title: '',
             description: '',
@@ -35,29 +37,28 @@ class Ticket extends React.Component {
     }
 
     handleShow() {
-        
+       
         this.setState({
             title: this.props.dataset.title,
             description: this.props.dataset.description,
-            estHours: parseInt(this.props.dataset.estHours),
+            estHours: parseInt(this.props.dataset.estHours,10),
             status: this.props.dataset.status,
             type: this.props.dataset.type,
-            show: true 
-        });
-        
+            show: true
+        }); 
     }
-
+    
     handleChange(e) {
         let title = document.getElementById('titleEdit').value
         let description = document.getElementById('descEdit').value
-        let estHours = parseInt(document.getElementById('estHoursEdit').value)
+        let estHours = parseInt(document.getElementById('estHoursEdit').value,10)
         let type = document.getElementById('typeEdit').value
 
-        
+
         this.setState({
             title: title,
             description: description,
-            estHours: parseInt(estHours),
+            estHours: parseInt(estHours,10),
             // actHours: actHours,
             // status: status,
             type: type,
@@ -68,10 +69,10 @@ class Ticket extends React.Component {
     }
     //help on general edit handler: 
     handleEdit() {
-        
+
         let title = document.getElementById('titleEdit').value
         let description = document.getElementById('descEdit').value
-        let estHours = parseInt(document.getElementById('estHoursEdit').value)
+        let estHours = parseInt(document.getElementById('estHoursEdit').value,10)
         let status = document.getElementById('statusEdit').value
         let type = document.getElementById('typeEdit').value
 
@@ -82,7 +83,7 @@ class Ticket extends React.Component {
             "actHours": '',
             "status": status,
             "type": type,
-            "priority":1
+            "priority": 1
         }
 
         let projNumber = this.props.projNumber
@@ -111,12 +112,38 @@ class Ticket extends React.Component {
 
     componentDidMount() {
         
+       
+        // console.log(document.getElementById('To-Do').value)
         
+        // if (document.getElementById('ToDo') !== null) {
+
+        //     let selectedStatus = this.props.dataset.status
+        //     console.log(selectedStatus==='To-Do')
+        //     switch (selectedStatus) {
+        //         case 'To-Do':
+        //             console.log('to-do')
+        //             document.getElementById('ToDo').selected = true
+        //             break;
+        //         case 'Doing':
+        //         console.log('doing')
+        //             document.getElementById('Doing').selected = true
+        //             break;
+        //         case 'Done':
+        //         console.log('done')
+        //             document.getElementById('Done').selected = true
+        //             break;
+        //         default:
+        //         console.log('error')
+        //             document.getElementById('To-Do').selected = true
+        //             break;
+        //     }
+        // }
     }
     render() {
         //This is to make css stylings ok - will change when change 'Type' names
         let trimmedType = this.props.dataset.type.replace(/\s+/g, '')
-        
+        console.log(this.props.dataset.status)
+        // console.log(document.getElementById('Doing').value)
         return (
             <div className='tickets'>
                 <Button className='openTicket' onClick={this.handleShow}>
@@ -145,11 +172,11 @@ class Ticket extends React.Component {
 
                         <hr />
 
-                        <h4>Status</h4>
+                        <h4 value="Status">Status</h4>
                         <select id="statusEdit">
-                            <option value="To-Do">To-Do</option>
-                            <option value="Doing">Doing</option>
-                            <option value="Done">Done</option>
+                            <option id="ToDo" value="To-Do">To-Do</option>
+                            <option id="Doing" value="Doing">Doing</option>
+                            <option id="Done" value="Done">Done</option>
                         </select>
 
                         <hr />
