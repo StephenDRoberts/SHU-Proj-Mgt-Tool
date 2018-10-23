@@ -21,10 +21,11 @@ const defaultState = {
 }
 
 export const changeProjectReducer=(state=defaultState, action)=>{
+    let changeProjState = [...state]
     switch(action.type){
         case CHANGE:
              return {
-                 ...state,
+                changeProjState,
                 projNumber: action.projNumber}
 
         default:

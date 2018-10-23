@@ -4,10 +4,14 @@ const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 const FETCH_DATA_FINAL = 'FETCH_DATA_FINAL';
 
-export const ADD = 'ADD'
-export const EDIT = 'EDIT'
-export const DELETE = 'DELETE'
-export const FINISHED = 'FINISHED'
+//TICKET ACTION CONSTANTS
+const ADD = 'ADD'
+const EDIT = 'EDIT'
+const DELETE = 'DELETE'
+const FINISHED = 'FINISHED'
+
+const ADD_PROJECT = 'ADD_PROJECT'
+const DELETE_PROJECT = 'DELETE_PROJECT'
 
 
 // ACTION CREATORS
@@ -60,6 +64,20 @@ const finished=()=>{
   }
 }
 
+const addProject=()=>{
+  return{
+      type: ADD_PROJECT,
+  }
+}
+
+const deleteProject=(projNumber)=>{
+  return{
+      type: DELETE_PROJECT,
+      projNumber: projNumber
+  }
+}
+
+
 //FETCH FUNCTION (THUNK???)
 export function fetchData() {
     return dispatch => {      
@@ -108,7 +126,12 @@ export function handleEditTicket(ticket, ticketNum, projNumber){
 export function handleDeleteTicket(ticketNum, projNumber){
   return dispatch => dispatch(deleteTicket(ticketNum, projNumber))
 }
-
+export function handleAddProject(){
+  return dispatch => dispatch(addProject())
+}
+export function handleDeleteProject(projNumber){
+  return dispatch => dispatch(deleteProject(projNumber))
+}
 
 //REDUCER  
   const initialState = {
@@ -174,6 +197,16 @@ export function handleDeleteTicket(ticketNum, projNumber){
         case FINISHED:
         console.log(state.data[0].projects) 
         return state
+
+        case ADD_PROJECT:
+        let addProjState = [...state.data]
+        // addProjState[0].projects[action.projNumber].tasks.push(action.ticket)
+        return {data: addState}
+
+        case DELETE_PROJECT:
+        let deleteProjState = [...state.data]
+        deleteProjState[0].projects.splice(action.projNumber,1)
+        return {data: deleteProjState}
 
       default:
         // ALWAYS have a default case in a reducer

@@ -34,20 +34,11 @@ class App extends Component {
     this.setState({ display: newDisplay })
   }
 
-  handleProjectToggle = (num) => {
-    this.props.dispatch(handleProjectToggle(num))
-  }
-
-  // handleDeleteTicket(data){
-  //   console.log(data)
-    
-  // }
-
   render() {
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
-
+    console.log(this.props.projNumber)
     if(data.length===0){
       data= data = [{
         id: '',
@@ -55,7 +46,6 @@ class App extends Component {
         projects: []
       }]
     } else {
-      
       data = data[0]
       activeTasks = data.projects[activeProject].tasks
     }
@@ -67,7 +57,7 @@ class App extends Component {
         <div className="App">
           <div className='header'>SHU Module 1 Assignment 2</div>
           <Nav parentEvent={this.changeDisplay} />
-          <ProjectDropdown projectList={data.projects} changeProject={this.handleProjectToggle} />
+          <ProjectDropdown projectList={data.projects}/>
           <Board tasks={activeTasks} deleteTicket={this.handleDeleteTicket}/>
           <Save/>
           <AddTicket/>
