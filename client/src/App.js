@@ -71,7 +71,8 @@ class App extends Component {
         <div className="App">
           <div className='header'>SHU Module 1 Assignment 2</div>
           <Nav parentEvent={this.changeDisplay} />
-          <Dashboard />
+          <ProjectDropdown projectList={data.projects}/>
+          <Dashboard tasks={activeTasks}/>
         </div>
       );
     }

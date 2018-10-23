@@ -168,7 +168,7 @@ class Ticket extends React.Component {
                         <hr />
 
                         <h4>Estimated Hours</h4>
-                        <input id='estHoursEdit' onChange={this.handleChange} value={this.state.estHours}></input>
+                        <input type="number" id='estHoursEdit' onChange={this.handleChange} value={this.state.estHours}></input>
 
                         <hr />
 

@@ -64,9 +64,10 @@ const finished=()=>{
   }
 }
 
-const addProject=()=>{
+const addProject=(projName)=>{
   return{
       type: ADD_PROJECT,
+      projName: projName
   }
 }
 
@@ -126,8 +127,8 @@ export function handleEditTicket(ticket, ticketNum, projNumber){
 export function handleDeleteTicket(ticketNum, projNumber){
   return dispatch => dispatch(deleteTicket(ticketNum, projNumber))
 }
-export function handleAddProject(){
-  return dispatch => dispatch(addProject())
+export function handleAddProject(projName){
+  return dispatch => dispatch(addProject(projName))
 }
 export function handleDeleteProject(projNumber){
   return dispatch => dispatch(deleteProject(projNumber))
@@ -200,8 +201,11 @@ export function handleDeleteProject(projNumber){
 
         case ADD_PROJECT:
         let addProjState = [...state.data]
-        // addProjState[0].projects[action.projNumber].tasks.push(action.ticket)
-        return {data: addState}
+        addProjState[0].projects.push({
+          projTitle: action.projName,
+          tasks: []
+        })
+        return {data: addProjState}
 
         case DELETE_PROJECT:
         let deleteProjState = [...state.data]

@@ -3,7 +3,22 @@ import { VictoryPie } from 'victory';
 import { Container, Row, Col } from 'react-grid-system';
 
 class Dashboard extends React.Component {
+    
+    
     render() {
+
+        let allTickets = []
+        this.props.tasks.map(function (obj, i) {
+            console.log(obj,i)
+        })
+        
+        let allData = [
+            //y is absolute values
+            { x: "Chores", y: 30 },
+            { x: "Pers Dev", y: 10 },
+            { x: "Fun", y: 10 },
+            { x: "To live", y: 10 }
+        ]
         return (
             <div className='pieContainer'>
                 <Container>
@@ -11,13 +26,7 @@ class Dashboard extends React.Component {
                         <Col md={5} className='indPies'>
                             <h4 className='timeTitle'>Actual Time</h4>
                             <VictoryPie
-                                data={[
-                                    //y is absolute values
-                                    { x: "Chores", y: 10 },
-                                    { x: "Pers Dev", y: 10 },
-                                    { x: "Fun", y: 10 },
-                                    { x: "To live", y: 10 }
-                                ]}
+                                data={allData}
                                 colorScale={['#F19722', '#2C8693', '#6C6B99', '#FF9081']}
                             />
                         </Col>
