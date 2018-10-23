@@ -142,8 +142,6 @@ class Ticket extends React.Component {
     render() {
         //This is to make css stylings ok - will change when change 'Type' names
         let trimmedType = this.props.dataset.type.replace(/\s+/g, '')
-        console.log(this.props.dataset.status)
-        // console.log(document.getElementById('Doing').value)
         return (
             <div className='tickets'>
                 <Button className='openTicket' onClick={this.handleShow}>

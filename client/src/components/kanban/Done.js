@@ -5,7 +5,6 @@ let doneTicketsAr = [];
 
 class Done extends React.Component {
 render(){
-    
      //on initial render, this.props = undefined or is set to be an empty array, so error checked for these values
      if (this.props===undefined || this.props.length===0 ){
         
@@ -13,7 +12,6 @@ render(){
         } else {
         
             doneTicketsAr = this.props.tasks.map(function (obj, i) {
-                console.log(obj)
                 return <Ticket key={i} dataset={obj}></Ticket>
             })
         }

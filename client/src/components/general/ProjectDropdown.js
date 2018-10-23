@@ -25,7 +25,6 @@ class ProjectDropdown extends React.Component {
 
 
     changeProject = (num) => {
-        console.log(num)
         //100 code = Add Project, 101 code = Delete project.
         //Otherwise all other numbers below 100 are individual projects
         if (num == 100) {
@@ -61,8 +60,6 @@ class ProjectDropdown extends React.Component {
     }
 
     render() {
-
-        console.log(this.state)
         //receives project list from App.js prop
         let projectList = this.props.projectList
         let projectListAr = []

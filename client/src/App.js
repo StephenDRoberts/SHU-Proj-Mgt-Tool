@@ -38,7 +38,6 @@ class App extends Component {
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
-    console.log(this.props.projNumber)
     if(data.length===0){
       data= data = [{
         id: '',

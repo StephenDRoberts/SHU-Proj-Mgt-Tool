@@ -36,7 +36,6 @@ class Save extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className='addTicket'>
                 <Button className='saveSign' onClick={this.handleSave} data={this.props.data}>

@@ -10,7 +10,6 @@ class Board extends React.Component {
     
     
     render() {
-        console.log(this.props.tasks)
         let todoTasks = [];
         let doingTasks = [];
         let doneTasks = [];
@@ -36,8 +35,6 @@ class Board extends React.Component {
                 }
             }
         }
-       console.log(todoTasks)
-       console.log(doneTasks)
         return (
             <Container>
                 <Row>
