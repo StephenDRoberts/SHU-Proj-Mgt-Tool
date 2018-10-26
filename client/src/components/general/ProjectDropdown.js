@@ -8,16 +8,19 @@ class ProjectDropdown extends React.Component {
 
     constructor(props) {
         super(props)
+        this.myRef = React.createRef()
+
         this.handleAddClose = this.handleAddClose.bind(this)
         this.handleDeleteClose = this.handleDeleteClose.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
         this.changeProject = this.changeProject.bind(this)
-
+       
         this.state = {
             deleteShow: false,
             addShow: false,
-            addProjName: ''
+            addProjName: '',
+            deleteProjShow: true
         }
 
     }
@@ -58,6 +61,8 @@ class ProjectDropdown extends React.Component {
     handleDeleteClose() {
         this.setState({ deleteShow: false })
     }
+    
+    
 
     render() {
         //receives project list from App.js prop
@@ -71,15 +76,20 @@ class ProjectDropdown extends React.Component {
             projectListAr = projectList.map(function (obj, i) {
                 return <MenuItem eventKey={i} key={i} onSelect={self.changeProject}>{obj.projTitle}</MenuItem>
             })
-        }
 
+            if(projectList.length==0 && this.myRef.current!==null){
+                console.log(this.myRef.current.props)
+                    this.myRef.current.disabled = true;                
+            }
+        }
+        
         return (
             <div id='projectDropdown'>
                 <DropdownButton title='Project' pullRight id='projdropdown'>
                     {projectListAr}
                     <MenuItem divider />
                     <MenuItem eventKey="100" onSelect={self.changeProject}>Add Project</MenuItem>
-                    <MenuItem eventKey="101" onSelect={self.changeProject}>Delete Project</MenuItem>
+                    <MenuItem eventKey="101" disabled={this.state.deleteDisabled} onSelect={self.changeProject} ref={this.myRef}>Delete Project</MenuItem>
                 </DropdownButton>
 
                 {/* Add project modal */}

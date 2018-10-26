@@ -10,9 +10,11 @@ class Ticket extends React.Component {
         this.myRef = React.createRef();
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleDoneClose = this.handleDoneClose.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.changeStatus = this.changeStatus.bind(this);
 
         this.state = {
             title: '',
@@ -22,7 +24,7 @@ class Ticket extends React.Component {
             status: '',
             type: '',
             show: false,
-
+            doneShow: false
         };
     }
 
@@ -36,6 +38,9 @@ class Ticket extends React.Component {
         this.setState({ show: false });
     }
 
+    handleDoneClose() {
+        this.setState({ doneShow: false });
+    }
     handleShow() {
        
         this.setState({
@@ -96,7 +101,11 @@ class Ticket extends React.Component {
 
     }
 
-
+changeStatus(ev){
+    if(ev.target.value=='Done'){
+        this.setState({doneShow:true})
+    }
+}
 
     findLocation() {
         let projNumber = this.props.projNumber
@@ -150,6 +159,7 @@ class Ticket extends React.Component {
                     <p className='taskType'>{this.props.dataset.type}</p>
                 </Button>
 
+                {/* EDIT TICKET MODAL */}
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Ticket</Modal.Title>
@@ -170,8 +180,13 @@ class Ticket extends React.Component {
 
                         <hr />
 
+                        <div id='actHoursDisplay'></div>
+                        <h4>Actual Hours</h4>
+                        <input type="number" id='actualHoursEdit' onChange={this.handleChange} value={this.state.actHours}></input>
+                        <hr />
+
                         <h4 value="Status">Status</h4>
-                        <select id="statusEdit">
+                        <select id="statusEdit" onChange={this.changeStatus}>
                             <option id="ToDo" value="To-Do">To-Do</option>
                             <option id="Doing" value="Doing">Doing</option>
                             <option id="Done" value="Done">Done</option>
@@ -190,7 +205,6 @@ class Ticket extends React.Component {
                         <Button onClick={this.handleClose}>Close</Button>
                     </Modal.Footer>
                 </Modal>
-
             </div>
         )
     }

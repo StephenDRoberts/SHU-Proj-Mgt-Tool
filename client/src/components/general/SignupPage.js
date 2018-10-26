@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
-class LoginPage extends React.Component {
+class SignupPage extends React.Component {
 
     render() {
         return (
@@ -15,10 +14,11 @@ class LoginPage extends React.Component {
                         <img id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
                         <input placeholder='Email Address' className='loginInput' id='emailInput'></input>
                         <input placeholder='Password' className='loginInput' id='passwordInput'></input>
-                        <Button bsStyle="success" className='loginInput' id='loginButton'>Log In</Button>
+                        <input placeholder='Confirm password' className='loginInput' id='passwordConfirmInput'></input>
+                        <Button bsStyle="primary" className='loginInput' id='loginButton'>Sign Up</Button>
 
                     </div>
-                    <Link to='/signup'>New user? Sign up here</Link>
+
                 </div>
             </div>
         )
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
         accountState: state.loginReducer,
     }
 }
-export default connect(mapStateToProps)(LoginPage)
+export default connect(mapStateToProps)(SignupPage)
 
 
 

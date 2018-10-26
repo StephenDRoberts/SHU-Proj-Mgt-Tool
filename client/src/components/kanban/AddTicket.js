@@ -65,6 +65,10 @@ let data = {
         user: '',
         projects: []
       }]
+    } else if (data[0].projects.length==0){
+      
+      data = data[0]
+      activeTasks = []
     } else {
       data = data[0]
       activeTasks = data.projects[activeProject].tasks
