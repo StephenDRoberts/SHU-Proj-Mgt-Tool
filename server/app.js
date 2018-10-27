@@ -4,18 +4,24 @@ var routes = require('./routes/routes');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
+app.use(require('body-parser').urlencoded({ extended: true }));
 
-// app.use(express.static("./super6-react/build"));
 
 routes(app)
 
-var MongoClient = require('mongodb').MongoClient
+var mongoose = require('mongoose')
 
-MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true }, function (err, client) {
+mongoose.connect('mongodb://localhost:27017/projMgt',
+    {
+        useNewUrlParser: true,
+        useCreateIndex: true
+    })
+var db = mongoose.connection;
 
-    app.set('myDb', client.db('projMgt'));
-
-})
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    //we're connected
+});
 
 const PORT = process.env.PORT || 3001;
 

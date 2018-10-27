@@ -13,12 +13,12 @@ class LoginPage extends React.Component {
                     <div className="login">
 
                         <img id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
-                        <input placeholder='Email Address' className='loginInput' id='emailInput'></input>
-                        <input placeholder='Password' className='loginInput' id='passwordInput'></input>
-                        <Button bsStyle="success" className='loginInput' id='loginButton'>Log In</Button>
+                        <input placeholder='Username' className='loginInput' id='userInput'></input>
+                        <input placeholder='Password' type='password' className='loginInput' id='passwordInput'></input>
+                        <Button bsStyle="success" className='loginInputButton' id='loginButton'>Log In</Button>
 
                     </div>
-                    <Link to='/signup'>New user? Sign up here</Link>
+                    <Link to='/signup' className='prompt' id='signupPrompt'>New user? Sign up here</Link>
                 </div>
             </div>
         )

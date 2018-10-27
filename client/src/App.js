@@ -62,17 +62,6 @@ class App extends Component {
 
     // RENDER ELEMENTS
 
-    // if (this.state.loggedIn == false) {
-    //   return (
-    //     <Provider store={store}>
-    //       <div className="App">
-    //         <div className='header'>SHU Module 1 Assignment 2</div>
-    //         <LoginPage />
-    //       </div>
-    //     </Provider>
-    //   )
-    // }
-    // els
      if (data[0].projects.length == 0) {
       return (
         <Provider store={store}>

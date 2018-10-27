@@ -15,15 +15,15 @@ export const signup=()=>{
 export function handleSignup(){
     return dispatch => dispatch(signup())
 }
-export function handleLogin(user, pass){
-    return dispatch => dispatch(login(user, pass))
-}
-export function handleLogout(){
-    return dispatch => dispatch(logout())
-}
-export function handleDeleteAccount(){
-    return dispatch => dispatch(deleteAccount())
-}
+// export function handleLogin(user, pass){
+//     return dispatch => dispatch(login(user, pass))
+// }
+// export function handleLogout(){
+//     return dispatch => dispatch(logout())
+// }
+// export function handleDeleteAccount(){
+//     return dispatch => dispatch(deleteAccount())
+// }
 
 
 // REDUCER
@@ -32,7 +32,7 @@ const defaultState = {
     loggedIn: false
 }
 
-export const changeProjectReducer=(state=defaultState, action)=>{
+export const loginReducer=(state=defaultState, action)=>{
     let accountState = [...state]
     switch(action.type){
         case SIGNUP:
