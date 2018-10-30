@@ -3,10 +3,10 @@ var express = require('express')
 
 module.exports = {
     provideData: function (app, req, res) {
-        
+
         let user = req.body.user
-        
-        app.get('myDb').collection('projects').find({"user":user}).toArray(function (err, docs) {
+
+        app.get('myDb').collection('projects').find({ "user": user }).toArray(function (err, docs) {
             if (err) {
                 console.error(err)
             }
@@ -62,13 +62,29 @@ module.exports = {
                 if (err) {
                     console.error(err)
                 }
-                return res.json({ 'msg': 'succesful' })
+                return res.json(docs)
             })
         }
-    },
+        },
+        
+        setupAccount: function (app, req, res){
+                let templateData =
+                {
+                    "user": req.body.user,
+                    "projects": []
+                }
 
+                app.get('myDb').collection('projects').insertOne(templateData, function (err, docs) {
+                    if (err) {
+                        console.error(err)
+                    }
+                    return res.json(docs)
+                }
+                )
+            },
+    
     login: function (app, req, res) {
-
+        console.log(req.bodyuser)
         let user = req.body.user
         let password = req.body.password
 
@@ -76,7 +92,6 @@ module.exports = {
             "user": user,
             "password": password,
         }
-
         app.get('myDb').collection('users').find(userData).toArray(function (err, docs) {
             if (err) {
                 console.error(err)
@@ -86,11 +101,8 @@ module.exports = {
     },
 
     deleteAccount: function (app, req, res) {
-
         let user = req.body.user
-    
-
-        app.get('myDb').collection('users').deleteMany({"user": user}, function (err, docs) {
+        app.get('myDb').collection('users').deleteMany({ "user": user }, function (err, docs) {
             if (err) {
                 console.error(err)
             }

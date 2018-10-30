@@ -78,7 +78,6 @@ class ProjectDropdown extends React.Component {
             })
 
             if(projectList.length==0 && this.myRef.current!==null){
-                console.log(this.myRef.current.props)
                     this.myRef.current.disabled = true;                
             }
         }

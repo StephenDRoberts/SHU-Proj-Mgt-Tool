@@ -9,6 +9,7 @@ class Header extends React.Component {
         super(props);
         this.handleLogout = this.handleLogout.bind(this)
         this.handleLogin = this.handleLogin.bind(this)
+        this.handleSignup = this.handleSignup.bind(this)
         this.handleDeleteAccount = this.handleDeleteAccount.bind(this)
         this.handleShowDelete = this.handleShowDelete.bind(this)
         this.handleCloseDelete = this.handleCloseDelete.bind(this)
@@ -25,6 +26,11 @@ class Header extends React.Component {
     handleLogin() {
         this.props.history.push('/');
     }
+
+    handleSignup() {
+        this.props.history.push('/signup');
+    }
+
     handleDeleteAccount() {
         let user = this.props.accountState.user
 
@@ -102,6 +108,8 @@ class Header extends React.Component {
                     <img className="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <li role="presentation"><a role="menuitem" tabindex="-1" onClick={this.handleLogin}>Log In</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" onClick={this.handleSignup}>Sign up</a></li>
                     </ul>
                 </div>
             </div>
@@ -109,15 +117,11 @@ class Header extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         if (this.props.accountState.user == "") {
             return (this.loggedOutRender())
         } else {
             return (this.loggedInRender())
         }
-
-
-
     }
 }
 

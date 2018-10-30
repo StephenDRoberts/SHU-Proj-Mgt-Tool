@@ -2,50 +2,79 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import {withRouter} from 'react-router'
 import { Button } from 'react-bootstrap';
-import { Link, Redirect, withRouter} from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import Header from './Header.js';
+import { fetchData } from '../../redux/modules/dataReducer.js'
 
 class SignupPage extends React.Component {
-    constructor(){
+    constructor() {
         super()
         this.handleSubmit = this.handleSubmit.bind(this)
-    
+
     }
-    handleSubmit(){
-        let email= document.getElementById('emailInput').value
+
+    setupAccount() {
+        let endpoint = '/api/setupAccount'
+        let user = document.getElementById('usernameInput').value
+        let self = this;
+
+        fetch(endpoint, {
+            method: 'post',
+            body: JSON.stringify({
+                user: user,
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            console.log('setup endpoint')
+            if (response.ok) {
+                return response.json()
+            }
+            alert('Something when wrong setting up your account. Please try again')
+        }).then(function(data){
+            return data
+        })
+    }
+
+
+
+
+    handleSubmit() {
+        let email = document.getElementById('emailInput').value
         let user = document.getElementById('usernameInput').value
         let password = document.getElementById('passwordInput').value
         let confPassword = document.getElementById('passwordConfirmInput').value
 
-        let endpoint ='/api/signup'
+        let endpoint = '/api/signup'
         let self = this
-        
+        console.log('im from signup page')
         fetch(endpoint, {
             method: 'post',
             body: JSON.stringify({
-              email: email,
-              user: user,
-              password: password,
-              confPassword: confPassword
+                email: email,
+                user: user,
+                password: password,
+                confPassword: confPassword
             }),
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
-          }).then(function (response) {
-            if(response.ok){
-            return response
+        }).then(function (response) {
+            if (response.ok) {
+                return response.json()
             }
             alert('Your login details were incorrect, please try again')
-            
-            
-          }).then(function (myJson) {
-            console.log(myJson)
-            self.props.history.push('/main')
-            
-        })
-        }
 
-       
+        }).then(function () {
+            self.setupAccount()
+        }).then(function () {
+            console.log(user)
+            self.props.history.push('/main')
+        })
+    }
+
+
     render() {
         return (
             <div className="App">
@@ -71,6 +100,7 @@ class SignupPage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         accountState: state.loginReducer,
+        data: state.dataReducer.data,
     }
 }
 export default connect(mapStateToProps)(SignupPage)

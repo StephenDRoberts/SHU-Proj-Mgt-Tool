@@ -19,6 +19,9 @@ router = function(app){
     app.route('/api/deleteAccount')
     .post((req,res)=>{myControllers.deleteAccount(app,req,res);})
 
+    app.route('/api/setupAccount')
+    .post((req,res)=>{myControllers.setupAccount(app,req,res);})
+
 }
 
 module.exports = router

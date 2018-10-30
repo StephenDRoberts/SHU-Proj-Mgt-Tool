@@ -82,6 +82,7 @@ const deleteProject = (projNumber) => {
 //FETCH FUNCTION (THUNK???)
 export function fetchData(user) {
   return dispatch => {
+    console.log('begin')
     dispatch(fetchDataBegin());
 
     return fetch("/api/provideData", {
@@ -96,15 +97,19 @@ export function fetchData(user) {
       .then(handleErrors)
       .then(res => {
         if (res.ok) {
+          console.log('we are ok')
           return res.json()
         }
         // return Promise.reject('Did not retrieve data')
       })
       .then(data => {
+        console.log('success')
+        console.log(data)
         dispatch(fetchDataSuccess(data));
         return data;
       })
       .then(data => {
+        console.log('final')
         dispatch(fetchDataFinal(data));
         return data
       })
@@ -156,17 +161,20 @@ export const dataReducer = (state = initialState, action) => {
     case FETCH_DATA_BEGIN:
       // Mark the state as "loading" so we can show a spinner or something
       // Also, reset any errors. We're starting fresh.
+      let beginState = [...state]
       return {
-        ...state,
+        beginState,
         loading: true,
-        error: null
+        error: null,
+        data: []
       };
 
     case FETCH_DATA_SUCCESS:
       // All done: set loading "false".
       // Also, replace the items with the ones from the server
+      let successState = [...state]
       return {
-        ...state,
+        successState,
         loading: false,
         data: action.payload.data
       };
@@ -177,8 +185,9 @@ export const dataReducer = (state = initialState, action) => {
       // Since it failed, we don't have items to display anymore, so set it empty.
       // This is up to you and your app though: maybe you want to keep the items
       // around! Do whatever seems right.
+      let failureState =[...state]
       return {
-        ...state,
+        failureState,
         loading: false,
         error: action.payload.error,
         data: []
@@ -208,7 +217,9 @@ export const dataReducer = (state = initialState, action) => {
       return state
 
     case ADD_PROJECT:
-      let addProjState = [...state.data]
+    console.log(state)  
+    let addProjState = [...state.data]
+    console.log(addProjState)
       addProjState[0].projects.push({
         projTitle: action.projName,
         tasks: []
