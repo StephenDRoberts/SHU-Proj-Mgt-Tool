@@ -53,14 +53,14 @@ class LoginPage extends React.Component {
             <div className="App">
                 <Header />
                 <div className='loginWrapper'>
-                    <div className="login">
+                    <form className="login">
 
                         <img id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
                         <input placeholder='Username' className='loginInput' id='userInput'></input>
                         <input placeholder='Password' type='password' className='loginInput' id='passwordInput'></input>
                         <Button bsStyle="success" className='loginInputButton' id='loginButton' onClick={this.handleSubmit}>Log In</Button>
 
-                    </div>
+                    </form>
                     <Link to='/signup' className='prompt' id='signupPrompt'>New user? Sign up here</Link>
                 </div>
             </div>

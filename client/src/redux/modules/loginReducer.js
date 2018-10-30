@@ -3,6 +3,7 @@
 const SIGNUP = 'SIGNUP'
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
+const DELETE = 'DELETE'
 
 // ACTION CREATORS
 const signup = () => {
@@ -22,6 +23,12 @@ const logout = () => {
         type: LOGOUT,
     }
 }
+const deleteAccount=(user)=>{
+    return {
+        type: DELETE,
+        user: user
+    }
+}
 
 export function handleSignup() {
     return dispatch => dispatch(signup())
@@ -32,9 +39,9 @@ export function handleLogin(user) {
 export function handleLogout(){
     return dispatch => dispatch(logout())
 }
-// export function handleDeleteAccount(){
-//     return dispatch => dispatch(deleteAccount())
-// }
+export function handleDeleteAccount(user){
+    return dispatch => dispatch(deleteAccount(user))
+}
 
 
 // REDUCER
@@ -59,8 +66,15 @@ export const loginReducer = (state = defaultState, action) => {
                 loggedIn: true,
                 user: action.user
             }
-            
+
         case LOGOUT:
+        return {
+            accountState,
+            loggedIn: false,
+            user: ''
+        }
+
+        case DELETE:
         return {
             accountState,
             loggedIn: false,

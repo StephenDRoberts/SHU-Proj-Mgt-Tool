@@ -83,6 +83,19 @@ module.exports = {
             }
             res.json(docs)
         })
+    },
+
+    deleteAccount: function (app, req, res) {
+
+        let user = req.body.user
+    
+
+        app.get('myDb').collection('users').deleteMany({"user": user}, function (err, docs) {
+            if (err) {
+                console.error(err)
+            }
+            res.json(docs)
+        })
     }
 
 }

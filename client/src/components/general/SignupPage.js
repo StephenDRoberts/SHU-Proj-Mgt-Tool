@@ -51,7 +51,7 @@ class SignupPage extends React.Component {
             <div className="App">
                 <Header />
                 <div className='loginWrapper'>
-                    <div className="login">
+                    <form className="login">
 
                         <img id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
                         <input placeholder='Email Address' className='loginInput' id='emailInput'></input>
@@ -60,7 +60,7 @@ class SignupPage extends React.Component {
                         <input placeholder='Confirm password' type='password' className='loginInput' id='passwordConfirmInput'></input>
                         <Button bsStyle="primary" className='loginInputButton' id='loginButton' onClick={this.handleSubmit}>Sign Up</Button>
 
-                    </div>
+                    </form>
                     <Link to='/' className='prompt' id='loginPrompt'>Already registered? Log in here</Link>
                 </div>
             </div>
