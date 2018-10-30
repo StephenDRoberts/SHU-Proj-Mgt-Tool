@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchData());
+    this.props.dispatch(fetchData(this.props.user));
   }
 
 
@@ -38,6 +38,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props.user)
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
@@ -114,6 +115,7 @@ const mapStateToProps = (state) => {
     loading: state.dataReducer.loading,
     error: state.dataReducer.error,
     projNumber: state.changeProjectReducer.projNumber,
+    user: state.loginReducer.user
   }
 }
 export default connect(mapStateToProps)(App)

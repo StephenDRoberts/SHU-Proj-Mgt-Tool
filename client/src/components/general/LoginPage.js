@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import {handleLogin} from '../../redux/modules/loginReducer.js'
 
 class LoginPage extends React.Component {
 
@@ -14,17 +15,15 @@ class LoginPage extends React.Component {
         let user = document.getElementById('userInput').value
         let password = document.getElementById('passwordInput').value
         
-        console.log(user)
         let endpoint ='/api/login'
         let self = this
         
-        
-        console.log('loggin in')
         fetch(endpoint, {
-            method: 'get',
-            // body: JSON.stringify({
-            //     user: user
-            // }),
+            method: 'post',
+            body: JSON.stringify({
+                user: user,
+                password: password
+            }),
             headers:{
                 'Content-Type':'application/json'
             }
@@ -36,8 +35,13 @@ class LoginPage extends React.Component {
             alert('Your login details were incorrect, please try again')
             
           }).then(function (myJson) {
-            console.log(myJson)
-            self.props.history.push('/')
+            if(myJson.length!==0){self.props.history.push('/main');
+            self.props.dispatch(handleLogin(myJson[0]))
+        } else {
+            alert('Your login details were incorrect. Please try again.')
+        }
+
+            
             
         })
         }

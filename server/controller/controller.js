@@ -3,7 +3,10 @@ var express = require('express')
 
 module.exports = {
     provideData: function (app, req, res) {
-        app.get('myDb').collection('projects').find({}).toArray(function (err, docs) {
+        
+        let user = req.body.user
+        
+        app.get('myDb').collection('projects').find({"user":user}).toArray(function (err, docs) {
             if (err) {
                 console.error(err)
             }
@@ -65,18 +68,16 @@ module.exports = {
     },
 
     login: function (app, req, res) {
-        console.log('heres the request')
-        console.log(req.user)
-        
+
         let user = req.body.user
         let password = req.body.password
 
         let userData = {
             "user": user,
-            // "password": password,
+            "password": password,
         }
-        console.log(userData)
-        app.get('myDb').collection('users').find().toArray(function (err, docs) {
+
+        app.get('myDb').collection('users').find(userData).toArray(function (err, docs) {
             if (err) {
                 console.error(err)
             }
