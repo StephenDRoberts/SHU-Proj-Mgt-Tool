@@ -57,6 +57,13 @@ h2{
   margin-top: 20px;
   text-align: center;
 }
+#smallAvatar{
+  width: 55px;
+  display: inline;
+  position: absolute;
+  right: 0.5em;
+  top: -37px;
+}
 
 /* Changing Title colours dependent on task Type */
 

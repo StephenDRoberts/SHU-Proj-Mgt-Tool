@@ -8,6 +8,7 @@ import Save from './components/kanban/Save.js';
 import ProjectDropdown from './components/general/ProjectDropdown.js';
 import EmptyDisplay from './components/general/EmptyDisplay.js';
 import LoginPage from './components/general/LoginPage.js'
+import Header from './components/general/Header.js'
 import store from './redux/store.js'
 import { Provider, connect } from 'react-redux'
 import { fetchData } from './redux/modules/dataReducer.js'
@@ -28,6 +29,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.user)
     this.props.dispatch(fetchData(this.props.user));
   }
 
@@ -68,7 +70,7 @@ class App extends Component {
         <Provider store={store}>
 
           <div className="App">
-            <div className='header'>SHU Module 1 Assignment 2</div>
+            <Header />
             <Nav parentEvent={this.changeDisplay} />
             <ProjectDropdown projectList={data[0].projects} />
             <EmptyDisplay />
@@ -84,7 +86,7 @@ class App extends Component {
         <Provider store={store}>
 
           <div className="App">
-            <div className='header'>SHU Module 1 Assignment 2</div>
+            <Header />
             <Nav parentEvent={this.changeDisplay} />
             <ProjectDropdown projectList={data[0].projects} />
             <Board tasks={activeTasks} deleteTicket={this.handleDeleteTicket} />
@@ -98,7 +100,7 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <div className='header'>SHU Module 1 Assignment 2</div>
+          <Header />
           <Nav parentEvent={this.changeDisplay} />
           <ProjectDropdown projectList={data[0].projects} />
           <Dashboard tasks={activeTasks} />

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {handleLogin} from '../../redux/modules/loginReducer.js'
+import Header from './Header.js';
 
 class LoginPage extends React.Component {
 
@@ -35,8 +36,9 @@ class LoginPage extends React.Component {
             alert('Your login details were incorrect, please try again')
             
           }).then(function (myJson) {
-            if(myJson.length!==0){self.props.history.push('/main');
-            self.props.dispatch(handleLogin(myJson[0]))
+            if(myJson.length!==0){
+                self.props.dispatch(handleLogin(myJson[0].user))
+                self.props.history.push('/main');
         } else {
             alert('Your login details were incorrect. Please try again.')
         }
@@ -49,7 +51,7 @@ class LoginPage extends React.Component {
     render() {
         return (
             <div className="App">
-                <div className='header'>SHU Module 1 Assignment 2</div>
+                <Header />
                 <div className='loginWrapper'>
                     <div className="login">
 

@@ -2,7 +2,7 @@
 // ACTION TYPE CONSTANTS
 const SIGNUP = 'SIGNUP'
 const LOGIN = 'LOGIN'
-const LOGGEDOUT = 'LOGGEDOUT'
+const LOGOUT = 'LOGOUT'
 
 // ACTION CREATORS
 const signup = () => {
@@ -15,7 +15,11 @@ const login = (user) => {
     return {
         type: LOGIN,
         user: user
-
+    }
+}
+const logout = () => {
+    return {
+        type: LOGOUT,
     }
 }
 
@@ -25,9 +29,9 @@ export function handleSignup() {
 export function handleLogin(user) {
     return dispatch => dispatch(login(user))
 }
-// export function handleLogout(){
-//     return dispatch => dispatch(logout())
-// }
+export function handleLogout(){
+    return dispatch => dispatch(logout())
+}
 // export function handleDeleteAccount(){
 //     return dispatch => dispatch(deleteAccount())
 // }
@@ -55,6 +59,13 @@ export const loginReducer = (state = defaultState, action) => {
                 loggedIn: true,
                 user: action.user
             }
+            
+        case LOGOUT:
+        return {
+            accountState,
+            loggedIn: false,
+            user: ''
+        }
 
         default:
             return state;

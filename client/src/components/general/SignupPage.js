@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 // import {withRouter} from 'react-router'
 import { Button } from 'react-bootstrap';
 import { Link, Redirect, withRouter} from 'react-router-dom';
+import Header from './Header.js';
 
 class SignupPage extends React.Component {
     constructor(){
@@ -48,7 +49,7 @@ class SignupPage extends React.Component {
     render() {
         return (
             <div className="App">
-                <div className='header'>SHU Module 1 Assignment 2</div>
+                <Header />
                 <div className='loginWrapper'>
                     <div className="login">
 
