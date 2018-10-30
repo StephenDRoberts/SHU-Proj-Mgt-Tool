@@ -1,6 +1,7 @@
 body{
   margin-bottom: 100px;
 }
+.container{width: 100%}
 
 .header{
   background: #105187;
@@ -38,15 +39,23 @@ h2{
   margin-top: 30px;
 }
 
-.loginInput{
+.loginInput, .loginInputButton{
   display: block;
   margin: 0 auto;
   margin-top: 10px;
-
 }
 
+.loginInput {
+  width: 80%;
+}
 #loginButton{
   margin-bottom: 30px;
+}
+.prompt{
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
 }
 
 /* Changing Title colours dependent on task Type */

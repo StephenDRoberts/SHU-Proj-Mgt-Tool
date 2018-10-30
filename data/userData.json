@@ -1,0 +1,14 @@
+[{
+    "email": "user1",
+    "user": "user1",
+    "password":"user1",
+    "confPassword":"user1"
+},
+{
+    "email": "user2",
+    "user": "user2",
+    "password":"user2",
+    "confPassword":"user2"
+}
+
+]

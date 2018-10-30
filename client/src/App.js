@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchData());
+    this.props.dispatch(fetchData(this.props.user));
   }
 
 
@@ -38,6 +38,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props.user)
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
@@ -62,17 +63,6 @@ class App extends Component {
 
     // RENDER ELEMENTS
 
-    // if (this.state.loggedIn == false) {
-    //   return (
-    //     <Provider store={store}>
-    //       <div className="App">
-    //         <div className='header'>SHU Module 1 Assignment 2</div>
-    //         <LoginPage />
-    //       </div>
-    //     </Provider>
-    //   )
-    // }
-    // els
      if (data[0].projects.length == 0) {
       return (
         <Provider store={store}>
@@ -125,6 +115,7 @@ const mapStateToProps = (state) => {
     loading: state.dataReducer.loading,
     error: state.dataReducer.error,
     projNumber: state.changeProjectReducer.projNumber,
+    user: state.loginReducer.user
   }
 }
 export default connect(mapStateToProps)(App)

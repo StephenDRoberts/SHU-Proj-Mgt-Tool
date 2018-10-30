@@ -1,48 +1,63 @@
 
 // ACTION TYPE CONSTANTS
 const SIGNUP = 'SIGNUP'
-const LOGGEDIN = 'LOGGEDIN'
+const LOGIN = 'LOGIN'
 const LOGGEDOUT = 'LOGGEDOUT'
 
 // ACTION CREATORS
-export const signup=()=>{
-    return{
+const signup = () => {
+    return {
         type: SIGNUP,
-        
+
     }
 }
-                
-export function handleSignup(){
+const login = (user) => {
+    return {
+        type: LOGIN,
+        user: user
+
+    }
+}
+
+export function handleSignup() {
     return dispatch => dispatch(signup())
 }
-export function handleLogin(user, pass){
-    return dispatch => dispatch(login(user, pass))
+export function handleLogin(user) {
+    return dispatch => dispatch(login(user))
 }
-export function handleLogout(){
-    return dispatch => dispatch(logout())
-}
-export function handleDeleteAccount(){
-    return dispatch => dispatch(deleteAccount())
-}
+// export function handleLogout(){
+//     return dispatch => dispatch(logout())
+// }
+// export function handleDeleteAccount(){
+//     return dispatch => dispatch(deleteAccount())
+// }
 
 
 // REDUCER
 const defaultState = {
     signedUp: false,
-    loggedIn: false
+    loggedIn: false,
+    user: ''
 }
 
-export const changeProjectReducer=(state=defaultState, action)=>{
+export const loginReducer = (state = defaultState, action) => {
     let accountState = [...state]
-    switch(action.type){
+    switch (action.type) {
         case SIGNUP:
-             return {
+            return {
                 accountState,
                 signedUp: true
             }
 
+        case LOGIN:
+            return {
+                accountState,
+                loggedIn: true,
+                user: action.user
+            }
+
         default:
-             return state;
+            return state;
     }
 
 }
