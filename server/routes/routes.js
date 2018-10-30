@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 var myControllers = require('../controller/controller.js')
 
-
 router = function(app){
 
     app.route('/api/provideData')
@@ -13,6 +12,9 @@ router = function(app){
 
     app.route('/api/signup')
     .post((req,res)=>{myControllers.signup(app,req,res);})
+
+    app.route('/api/login')
+    .get((req,res)=>{myControllers.login(app,req,res);})
 
 }
 

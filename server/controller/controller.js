@@ -31,6 +31,7 @@ module.exports = {
 
     signup: function (app, req, res) {
 
+
         let email = req.body.email;
         let user = req.body.user
         let password = req.body.password
@@ -48,26 +49,39 @@ module.exports = {
 
             let err = new Error('Passwords do not match');
             err.status = 400;
-            return next(err);
+            return console.log(err);
         }
 
         if (email && user && password && confPassword) {
             console.log('trying to create a new user...')
-            User.create(userData, function (err, user) {
+
+            app.get('myDb').collection('users').insertOne(userData, function (err, docs) {
                 if (err) {
-                    return console.log(err)
-                } else {
-                    console.log('all the inputs are ok!!! now what???')
-
-                    return res.json({ 'msg': 'succesful' })
-
+                    console.error(err)
                 }
-            });
-
-
-
-
+                return res.json({ 'msg': 'succesful' })
+            })
         }
+    },
+
+    login: function (app, req, res) {
+        console.log('heres the request')
+        console.log(req.user)
+        
+        let user = req.body.user
+        let password = req.body.password
+
+        let userData = {
+            "user": user,
+            // "password": password,
+        }
+        console.log(userData)
+        app.get('myDb').collection('users').find().toArray(function (err, docs) {
+            if (err) {
+                console.error(err)
+            }
+            res.json(docs)
+        })
     }
 
 }

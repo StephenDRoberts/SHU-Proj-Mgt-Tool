@@ -18,6 +18,7 @@ class SignupPage extends React.Component {
 
         let endpoint ='/api/signup'
         let self = this
+        
         fetch(endpoint, {
             method: 'post',
             body: JSON.stringify({
@@ -34,9 +35,10 @@ class SignupPage extends React.Component {
             return response
             }
             alert('Your login details were incorrect, please try again')
-            return Promise.reject("Not logged in");
-      
+            
+            
           }).then(function (myJson) {
+            console.log(myJson)
             self.props.history.push('/main')
             
         })

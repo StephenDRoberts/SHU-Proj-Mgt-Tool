@@ -6,22 +6,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(require('body-parser').urlencoded({ extended: true }));
 
-
 routes(app)
 
-var mongoose = require('mongoose')
+var MongoClient = require('mongodb').MongoClient
 
-mongoose.connect('mongodb://localhost:27017/projMgt',
-    {
-        useNewUrlParser: true,
-        useCreateIndex: true
-    })
-var db = mongoose.connection;
+MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true }, function (err, client) {
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-    //we're connected
-});
+    app.set('myDb', client.db('projMgt'));
+
+})
 
 const PORT = process.env.PORT || 3001;
 
