@@ -161,9 +161,9 @@ export const dataReducer = (state = initialState, action) => {
     case FETCH_DATA_BEGIN:
       // Mark the state as "loading" so we can show a spinner or something
       // Also, reset any errors. We're starting fresh.
-      let beginState = [...state]
+      // let beginState = [...state]
       return {
-        beginState,
+        ...state,
         loading: true,
         error: null,
         data: []
@@ -172,9 +172,9 @@ export const dataReducer = (state = initialState, action) => {
     case FETCH_DATA_SUCCESS:
       // All done: set loading "false".
       // Also, replace the items with the ones from the server
-      let successState = [...state]
+      //let successState = [...state]
       return {
-        successState,
+        ...state,
         loading: false,
         data: action.payload.data
       };
@@ -185,9 +185,9 @@ export const dataReducer = (state = initialState, action) => {
       // Since it failed, we don't have items to display anymore, so set it empty.
       // This is up to you and your app though: maybe you want to keep the items
       // around! Do whatever seems right.
-      let failureState =[...state]
+      // let failureState =[...state]
       return {
-        failureState,
+        ...state,
         loading: false,
         error: action.payload.error,
         data: []

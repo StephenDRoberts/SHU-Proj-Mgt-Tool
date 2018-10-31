@@ -11,14 +11,16 @@ class ProjectDropdown extends React.Component {
         this.myRef = React.createRef()
 
         this.handleAddClose = this.handleAddClose.bind(this)
+        this.handleShareClose = this.handleShareClose.bind(this)
         this.handleDeleteClose = this.handleDeleteClose.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
         this.changeProject = this.changeProject.bind(this)
        
         this.state = {
-            deleteShow: false,
             addShow: false,
+            shareShow: false,
+            deleteShow: false,
             addProjName: '',
             deleteProjShow: true
         }
@@ -34,6 +36,10 @@ class ProjectDropdown extends React.Component {
             //ADD PROJECT
             this.setState({ addShow: true, })
         } else if (num == 101) {
+            //SHARE PROJECT
+            this.setState({ shareShow: true })
+    
+        } else if (num == 102) {
             //DELETE PROJECT
             this.setState({ deleteShow: true })
         } else {
@@ -49,6 +55,7 @@ class ProjectDropdown extends React.Component {
         })
     }
 
+    
 
     handleDelete() {
         this.props.dispatch(handleDeleteProject(this.props.projNumber))
@@ -57,6 +64,9 @@ class ProjectDropdown extends React.Component {
     }
     handleAddClose() {
         this.setState({ addShow: false })
+    }
+    handleShareClose() {
+        this.setState({shareShow: false })
     }
     handleDeleteClose() {
         this.setState({ deleteShow: false })
@@ -88,11 +98,12 @@ class ProjectDropdown extends React.Component {
                     {projectListAr}
                     <MenuItem divider />
                     <MenuItem eventKey="100" onSelect={self.changeProject}>Add Project</MenuItem>
-                    <MenuItem eventKey="101" disabled={this.state.deleteDisabled} onSelect={self.changeProject} ref={this.myRef}>Delete Project</MenuItem>
+                    <MenuItem eventKey="101" onSelect={self.changeProject}>Share Project</MenuItem>
+                    <MenuItem eventKey="102" onSelect={self.changeProject} ref={this.myRef}>Delete Project</MenuItem>
                 </DropdownButton>
 
                 {/* Add project modal */}
-                <Modal show={this.state.addShow} onHide={this.handleClose}>
+                <Modal show={this.state.addShow} onHide={this.handleAddClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>What would you like to name your project?</Modal.Title>
                     </Modal.Header>
@@ -105,8 +116,22 @@ class ProjectDropdown extends React.Component {
                     </Modal.Footer>
                 </Modal>
 
+                {/* Share project modal */}
+                <Modal show={this.state.shareShow} onHide={this.handleShareClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Who would you like to share your project with?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <input id='shareProjInput' placeholder="Username"></input>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button key={this.props.key} onClick={this.handleShare} bsStyle="primary">Share Project</Button>
+                        <Button onClick={this.handleShareClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+
                 {/* Delete project modal */}
-                <Modal show={this.state.deleteShow} onHide={this.handleClose}>
+                <Modal show={this.state.deleteShow} onHide={this.handleDeleteClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Are you sure you want to delete this project?</Modal.Title>
                     </Modal.Header>

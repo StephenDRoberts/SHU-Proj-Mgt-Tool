@@ -29,8 +29,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.user)
-    console.log('im from component did mount in App')
     this.props.dispatch(fetchData(this.props.user));
   }
 
@@ -41,9 +39,10 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props)
-    console.log('i might be from App???')
+    
     let data = this.props.data
+    console.log(data)
+    console.log(this.props)
     let activeProject = this.props.projNumber
     let activeTasks = [];
 
@@ -60,8 +59,6 @@ class App extends Component {
 
       activeTasks = []
     } else {
-
-
       activeTasks = data[0].projects[activeProject].tasks
     }
 
