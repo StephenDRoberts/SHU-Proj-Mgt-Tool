@@ -14,21 +14,24 @@ class Save extends React.Component {
         }
     }
     handleSave() {
-        
+        let self = this
         let endPoint = '/api/saveData';
         fetch(endPoint, {
             method:'put',
-            body: JSON.stringify(this.props.data[0]),
+            body: JSON.stringify({
+                data: self.props.data[0],
+                user: self.props.accountState.user
+            }),
             headers:{
                 'Content-Type':'application/json'
             }
         }).then(function(response){
             if(response.ok){
+                self.setState({show:true})
                 return response.json()
             }
-            return Promise.reject("something went wrong in save")
-        })
-        this.setState({show:true})
+            return Promise.reject("Oops. Something went wrong trying to save. Please try again.")
+        })  
     }
 
     handleClose() {
@@ -62,6 +65,7 @@ class Save extends React.Component {
 }
 const mapStateToProps = (state)=>{
     return{
+        accountState: state.loginReducer,
       data: state.dataReducer.data,
     }
   }

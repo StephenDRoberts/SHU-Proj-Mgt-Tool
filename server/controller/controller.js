@@ -15,9 +15,13 @@ module.exports = {
     },
 
     saveData: function (app, req, res) {
-        let data = req.body
+        let data = req.body.data
+        let user = req.body.user
+        console.log(req.body)
+        //console.log(data)
+        //console.log(user)
         app.get('myDb').collection('projects').updateOne(
-            { 'user': 'user1' },
+            { 'user': user },
             {
                 $set: {
                     'projects': data.projects
@@ -28,12 +32,12 @@ module.exports = {
                 if (err) {
                     console.error(err)
                 }
+                res.json({"msg":"save succesful"})
             })
 
     },
 
     signup: function (app, req, res) {
-
 
         let email = req.body.email;
         let user = req.body.user
@@ -107,6 +111,17 @@ module.exports = {
                 console.error(err)
             }
             res.json(docs)
+        })
+    },
+    shareCheck: function (app, req, res) {
+
+        let user = req.body.user
+
+        app.get('myDb').collection('projects').find({ "user": user }).toArray(function (err, docs) {
+            if (err) {
+                console.error(err)
+            }
+                res.json(docs)
         })
     }
 

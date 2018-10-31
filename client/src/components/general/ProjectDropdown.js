@@ -16,7 +16,7 @@ class ProjectDropdown extends React.Component {
         this.handleDelete = this.handleDelete.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
         this.changeProject = this.changeProject.bind(this)
-       
+
         this.state = {
             addShow: false,
             shareShow: false,
@@ -38,7 +38,7 @@ class ProjectDropdown extends React.Component {
         } else if (num == 101) {
             //SHARE PROJECT
             this.setState({ shareShow: true })
-    
+
         } else if (num == 102) {
             //DELETE PROJECT
             this.setState({ deleteShow: true })
@@ -48,14 +48,46 @@ class ProjectDropdown extends React.Component {
         }
     }
     handleAdd() {
-         this.props.dispatch(handleAddProject(document.getElementById('addProjInput').value))
-         this.props.dispatch(handleProjectToggle(this.props.projectList.length-1))
+        this.props.dispatch(handleAddProject(document.getElementById('addProjInput').value))
+        this.props.dispatch(handleProjectToggle(this.props.projectList.length - 1))
         this.setState({
             addShow: false,
         })
     }
 
-    
+    handleShare() {
+        //first check to see if the user entered is a valid user
+        let targetUser = document.getElementById('shareProjInput').value
+        
+        let self = this
+        let endpoint = '/api/shareCheck'
+
+        fetch(endpoint, {
+            method: 'post',
+            body: JSON.stringify({
+                user: targetUser,
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                return response.json()
+            }
+            alert("Something went wrong. Please try again.");
+            // self.setState({shareShow: false})
+            return [];
+
+        }).then(function (myJson) {
+            console.log(myJson)
+            if (myJson.length !== 0) {
+                //successfully found user
+                console.log(myJson)
+            } else {
+                alert("I'm sorry, we couldn't find that user. Please try again.")
+            }
+        })
+    }
 
     handleDelete() {
         this.props.dispatch(handleDeleteProject(this.props.projNumber))
@@ -66,13 +98,13 @@ class ProjectDropdown extends React.Component {
         this.setState({ addShow: false })
     }
     handleShareClose() {
-        this.setState({shareShow: false })
+        this.setState({ shareShow: false })
     }
     handleDeleteClose() {
         this.setState({ deleteShow: false })
     }
-    
-    
+
+
 
     render() {
         //receives project list from App.js prop
@@ -87,11 +119,11 @@ class ProjectDropdown extends React.Component {
                 return <MenuItem eventKey={i} key={i} onSelect={self.changeProject}>{obj.projTitle}</MenuItem>
             })
 
-            if(projectList.length==0 && this.myRef.current!==null){
-                    this.myRef.current.disabled = true;                
+            if (projectList.length == 0 && this.myRef.current !== null) {
+                this.myRef.current.disabled = true;
             }
         }
-        
+
         return (
             <div id='projectDropdown'>
                 <DropdownButton title='Project' pullRight id='projdropdown'>

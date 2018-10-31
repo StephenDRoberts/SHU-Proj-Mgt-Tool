@@ -22,6 +22,9 @@ router = function(app){
     app.route('/api/setupAccount')
     .post((req,res)=>{myControllers.setupAccount(app,req,res);})
 
+    app.route('/api/shareCheck')
+    .post((req,res)=>{myControllers.shareCheck(app,req,res);})
+
 }
 
 module.exports = router
