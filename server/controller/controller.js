@@ -10,16 +10,22 @@ module.exports = {
             if (err) {
                 console.error(err)
             }
+            console.log('im in provideData:')
+            console.log(docs)
             res.json(docs)
         })
     },
 
     saveData: function (app, req, res) {
         let data = req.body.data
+        
         let user = req.body.user
+        console.log('im in saveData. Here is your attempted data save:')
+        console.log(`user: ${user}, projects: ${data}`)
+        console.log('here is that breakdown, body/else')
         console.log(req.body)
-        //console.log(data)
-        //console.log(user)
+        
+        
         app.get('myDb').collection('projects').updateOne(
             { 'user': user },
             {
@@ -60,7 +66,6 @@ module.exports = {
         }
 
         if (email && user && password && confPassword) {
-            console.log('trying to create a new user...')
 
             app.get('myDb').collection('users').insertOne(userData, function (err, docs) {
                 if (err) {
@@ -88,7 +93,7 @@ module.exports = {
             },
     
     login: function (app, req, res) {
-        console.log(req.bodyuser)
+        
         let user = req.body.user
         let password = req.body.password
 
@@ -121,6 +126,9 @@ module.exports = {
             if (err) {
                 console.error(err)
             }
+            if(docs[0].projects== null){
+                docs[0].projects = []
+            } 
                 res.json(docs)
         })
     }

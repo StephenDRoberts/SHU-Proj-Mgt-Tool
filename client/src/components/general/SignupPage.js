@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import Header from './Header.js';
 import { fetchData } from '../../redux/modules/dataReducer.js'
+import { handleSignup } from '../../redux/modules/loginReducer.js'
 
 class SignupPage extends React.Component {
     constructor() {
@@ -17,7 +18,7 @@ class SignupPage extends React.Component {
         let endpoint = '/api/setupAccount'
         let user = document.getElementById('usernameInput').value
         let self = this;
-
+        
         fetch(endpoint, {
             method: 'post',
             body: JSON.stringify({
@@ -60,15 +61,16 @@ class SignupPage extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(function (response) {
+        }).then((response)=>{
             if (response.ok) {
                 return response.json()
             }
             alert('Your login details were incorrect, please try again')
 
-        }).then(function () {
+        }).then(()=>{
             self.setupAccount()
-        }).then(function () {
+            this.props.dispatch(handleSignup(user))
+        }).then(()=>{
             console.log(user)
             self.props.history.push('/main')
         })

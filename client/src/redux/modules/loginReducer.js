@@ -6,10 +6,10 @@ const LOGOUT = 'LOGOUT'
 const DELETE = 'DELETE'
 
 // ACTION CREATORS
-const signup = () => {
+const signup = (user) => {
     return {
         type: SIGNUP,
-
+        user: user
     }
 }
 const login = (user) => {
@@ -30,8 +30,8 @@ const deleteAccount=(user)=>{
     }
 }
 
-export function handleSignup() {
-    return dispatch => dispatch(signup())
+export function handleSignup(user) {
+    return dispatch => dispatch(signup(user))
 }
 export function handleLogin(user) {
     return dispatch => dispatch(login(user))
@@ -57,7 +57,8 @@ export const loginReducer = (state = defaultState, action) => {
         case SIGNUP:
             return {
                 accountState,
-                signedUp: true
+                signedUp: true,
+                user: action.user
             }
 
         case LOGIN:

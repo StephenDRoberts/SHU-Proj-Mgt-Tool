@@ -15,6 +15,7 @@ class ProjectDropdown extends React.Component {
         this.handleDeleteClose = this.handleDeleteClose.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
+        this.handleShare = this.handleShare.bind(this)
         this.changeProject = this.changeProject.bind(this)
 
         this.state = {
@@ -26,8 +27,6 @@ class ProjectDropdown extends React.Component {
         }
 
     }
-
-
 
     changeProject = (num) => {
         //100 code = Add Project, 101 code = Delete project.
@@ -58,11 +57,9 @@ class ProjectDropdown extends React.Component {
     handleShare() {
         //first check to see if the user entered is a valid user
         let targetUser = document.getElementById('shareProjInput').value
-        
-        let self = this
         let endpoint = '/api/shareCheck'
 
-        fetch(endpoint, {
+       fetch(endpoint, {
             method: 'post',
             body: JSON.stringify({
                 user: targetUser,
@@ -70,19 +67,57 @@ class ProjectDropdown extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(function (response) {
+        }).then((response)=>{
             if (response.ok) {
                 return response.json()
             }
             alert("Something went wrong. Please try again.");
-            // self.setState({shareShow: false})
             return [];
 
-        }).then(function (myJson) {
-            console.log(myJson)
+        }).then((myJson)=>{
+            console.log('The original data from other user')
+            
             if (myJson.length !== 0) {
-                //successfully found user
-                console.log(myJson)
+            //     //successfully found user -> go to save the target user's workspace
+            
+                let otherUsersData = myJson[0]
+                let ourDataToShare = this.props.data[0].projects[this.props.projNumber]
+                // let newData =[]
+                
+                // if(otherUsersData.length==0){
+                //     newData = [ourDataToShare]
+                // } else {
+                //     newData = otherUsersData.concat(ourDataToShare)
+                // }
+                console.log(otherUsersData.projects)
+                console.log(ourDataToShare)
+                console.log(otherUsersData.projects.push(ourDataToShare))
+                console.log(otherUsersData)
+                otherUsersData.projects.concat(ourDataToShare)
+                // console.log(this.props.data)
+                // console.log(otherUsersData)
+                let endPoint = '/api/saveData';
+
+
+                // console.log('here is what im sending to the DB to save:')
+                // console.log(`user : ${targetUser}, projects: ${otherUsersData}`)
+                fetch(endPoint, {
+                    method:'put',
+                    body: JSON.stringify({
+                        data: otherUsersData,
+                        user: targetUser
+                    }),
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }).then((response)=>{
+                    if(response.ok){
+                        this.setState({shareShow:false})
+                        return response.json()
+                    }
+                    return Promise.reject("Oops. Something went wrong trying to save. Please try again.")
+                })  
+
             } else {
                 alert("I'm sorry, we couldn't find that user. Please try again.")
             }

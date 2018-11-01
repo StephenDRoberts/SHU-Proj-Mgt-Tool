@@ -72,7 +72,7 @@ class Header extends React.Component {
     // RENDER OPTIONS
     loggedInRender() {
         return (
-            <div className='header'>SHU Module 1 Assignment 2
+            <div className='header'>SHU Mod 1 Asgmt 2
 
            <div className="dropdown">
 
@@ -102,7 +102,7 @@ class Header extends React.Component {
 
     loggedOutRender() {
         return (
-            <div className='header'>SHU Module 1 Assignment 2
+            <div className='header'>SHU Mod 1 Asgmt 2
 
            <div className="dropdown">
                     <img className="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>

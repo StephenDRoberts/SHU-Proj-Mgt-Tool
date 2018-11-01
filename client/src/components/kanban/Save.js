@@ -16,6 +16,7 @@ class Save extends React.Component {
     handleSave() {
         let self = this
         let endPoint = '/api/saveData';
+        console.log(self.props.data[0])
         fetch(endPoint, {
             method:'put',
             body: JSON.stringify({
