@@ -47,6 +47,15 @@ class SignupPage extends React.Component {
         let password = document.getElementById('passwordInput').value
         let confPassword = document.getElementById('passwordConfirmInput').value
 
+        //Validation check - passwords match
+        if(password !== confPassword){
+            alert("Your passwords don't match. Please try again")
+            return;
+        }
+
+        //Validation check - username already exists
+        
+
         let endpoint = '/api/signup'
         let self = this
         console.log('im from signup page')

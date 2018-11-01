@@ -27,7 +27,7 @@ class Dashboard extends React.Component {
             for (var i = 0; i < data.length; i++) {
 
                 if (data[i].type == uniqueTypeNames[j]) {
-                    hoursSubTotal += parseInt(data[i].estHours, 10)
+                    hoursSubTotal += parseInt(data[i].hours, 10)
                 }
                 if (i == data.length - 1) {
                     let typeName = uniqueTypeNames[j]

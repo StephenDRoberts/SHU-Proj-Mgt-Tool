@@ -59,7 +59,7 @@ class ProjectDropdown extends React.Component {
         let targetUser = document.getElementById('shareProjInput').value
         let endpoint = '/api/shareCheck'
 
-       fetch(endpoint, {
+        fetch(endpoint, {
             method: 'post',
             body: JSON.stringify({
                 user: targetUser,
@@ -67,23 +67,23 @@ class ProjectDropdown extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((response)=>{
+        }).then((response) => {
             if (response.ok) {
                 return response.json()
             }
             alert("Something went wrong. Please try again.");
             return [];
 
-        }).then((myJson)=>{
+        }).then((myJson) => {
             console.log('The original data from other user')
-            
+
             if (myJson.length !== 0) {
-            //     //successfully found user -> go to save the target user's workspace
-            
+                //     //successfully found user -> go to save the target user's workspace
+
                 let otherUsersData = myJson[0]
                 let ourDataToShare = this.props.data[0].projects[this.props.projNumber]
                 // let newData =[]
-                
+
                 // if(otherUsersData.length==0){
                 //     newData = [ourDataToShare]
                 // } else {
@@ -102,21 +102,21 @@ class ProjectDropdown extends React.Component {
                 // console.log('here is what im sending to the DB to save:')
                 // console.log(`user : ${targetUser}, projects: ${otherUsersData}`)
                 fetch(endPoint, {
-                    method:'put',
+                    method: 'put',
                     body: JSON.stringify({
                         data: otherUsersData,
                         user: targetUser
                     }),
-                    headers:{
-                        'Content-Type':'application/json'
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
-                }).then((response)=>{
-                    if(response.ok){
-                        this.setState({shareShow:false})
+                }).then((response) => {
+                    if (response.ok) {
+                        this.setState({ shareShow: false })
                         return response.json()
                     }
                     return Promise.reject("Oops. Something went wrong trying to save. Please try again.")
-                })  
+                })
 
             } else {
                 alert("I'm sorry, we couldn't find that user. Please try again.")

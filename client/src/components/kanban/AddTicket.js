@@ -30,8 +30,7 @@ class AddTicket extends React.Component {
   
 let title = document.getElementById('titleInput').value
 let description = document.getElementById('descInput').value
-let estHours = parseInt(document.getElementById('estHoursInput').value,10)
-let actHours = '';
+let hours = parseInt(document.getElementById('hoursInput').value,10)
 let status = document.getElementById('status').value
 let type = document.getElementById('typeInput').value
 let priority = 2
@@ -39,8 +38,7 @@ let priority = 2
 let data = {
   "title": title,
   "description": description,
-  "estHours": parseInt(estHours,10),
-  "actHours": actHours,
+  "hours": parseInt(hours,10),
   "status": status,
   "type": type,
   "priority": priority,
@@ -96,8 +94,8 @@ let data = {
 
             <hr />
 
-            <h4>Estimated Hours</h4>
-            <input type="number" id='estHoursInput'></input>
+            <h4>Estimated/Actual Hours</h4>
+            <input type="number" id='hoursInput'></input>
 
             <hr />
 

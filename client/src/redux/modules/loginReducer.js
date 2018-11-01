@@ -23,10 +23,9 @@ const logout = () => {
         type: LOGOUT,
     }
 }
-const deleteAccount=(user)=>{
+const deleteAccount=()=>{
     return {
         type: DELETE,
-        user: user
     }
 }
 

@@ -1,5 +1,6 @@
 var User = require('../mongoose/userSchema.js');
 var express = require('express')
+var bcrypt = require('bcryptjs')
 
 module.exports = {
     provideData: function (app, req, res) {
@@ -18,14 +19,14 @@ module.exports = {
 
     saveData: function (app, req, res) {
         let data = req.body.data
-        
+
         let user = req.body.user
         console.log('im in saveData. Here is your attempted data save:')
         console.log(`user: ${user}, projects: ${data}`)
         console.log('here is that breakdown, body/else')
         console.log(req.body)
-        
-        
+
+
         app.get('myDb').collection('projects').updateOne(
             { 'user': user },
             {
@@ -38,7 +39,7 @@ module.exports = {
                 if (err) {
                     console.error(err)
                 }
-                res.json({"msg":"save succesful"})
+                res.json({ "msg": "save succesful" })
             })
 
     },
@@ -50,13 +51,6 @@ module.exports = {
         let password = req.body.password
         let confPassword = req.body.confPassword
 
-        let userData = {
-            email: email,
-            user: user,
-            password: password,
-            confPassword: confPassword
-        }
-
         // If passwords don't match - return an error
         if (password !== confPassword) {
 
@@ -67,46 +61,79 @@ module.exports = {
 
         if (email && user && password && confPassword) {
 
-            app.get('myDb').collection('users').insertOne(userData, function (err, docs) {
-                if (err) {
-                    console.error(err)
-                }
-                return res.json(docs)
-            })
-        }
-        },
-        
-        setupAccount: function (app, req, res){
-                let templateData =
-                {
-                    "user": req.body.user,
-                    "projects": []
-                }
-
-                app.get('myDb').collection('projects').insertOne(templateData, function (err, docs) {
-                    if (err) {
-                        console.error(err)
+            bcrypt.genSalt(10, function (err, salt) {
+                bcrypt.hash(password, salt, function (err, hash) {
+                    let userData = {
+                        email: email,
+                        user: user,
+                        hash: hash,
                     }
-                    return res.json(docs)
-                }
-                )
-            },
-    
-    login: function (app, req, res) {
-        
-        let user = req.body.user
-        let password = req.body.password
 
-        let userData = {
-            "user": user,
-            "password": password,
+                    app.get('myDb').collection('users').insertOne(userData, function (err, docs) {
+                        if (err) {
+                            console.error(err)
+                        }
+                        return res.json(docs)
+                    })
+                })
+            })
+
+
         }
-        app.get('myDb').collection('users').find(userData).toArray(function (err, docs) {
+    },
+
+    setupAccount: function (app, req, res) {
+        let templateData =
+        {
+            "user": req.body.user,
+            "projects": []
+        }
+
+        app.get('myDb').collection('projects').insertOne(templateData, function (err, docs) {
             if (err) {
                 console.error(err)
             }
-            res.json(docs)
+            return res.json(docs)
+        }
+        )
+    },
+
+    login: function (app, req, res) {
+
+        let user = req.body.user
+        let password = req.body.password
+
+        //get hash
+        app.get('myDb').collection('users').find({ "user": user }).toArray(function (err, docs) {
+            if (err) {
+                console.error(err)
+            }
+            if (docs.length !== 0) {
+
+                let hash = docs[0].hash
+                let response = false
+
+                bcrypt.compare(password, hash).then(function (res) {
+
+                    // res == true
+                    if (res == true) {
+                        console.log('hurray!!!')
+                        response = true
+                    } else {
+                        console.log('boo')
+
+                    }
+                }).then(function () {
+                    if (response == true) {
+                        res.json(docs)
+                    } else {
+                        res.json([])
+                    }
+
+                })
+            } else {res.json(docs)}
         })
+
     },
 
     deleteAccount: function (app, req, res) {
@@ -126,10 +153,10 @@ module.exports = {
             if (err) {
                 console.error(err)
             }
-            if(docs[0].projects== null){
+            if (docs[0].projects == null) {
                 docs[0].projects = []
-            } 
-                res.json(docs)
+            }
+            res.json(docs)
         })
     }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { DropdownButton, MenuItem, Button, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { handleLogout, handleDeleteAccount } from '../../redux/modules/loginReducer.js'
 import { withRouter } from 'react-router-dom';
 
@@ -51,10 +51,10 @@ class Header extends React.Component {
             }
             alert('Something went wrong, please try again')
 
-        }).then(
-
+        }).then(()=>{
+            // this.props.dispatch(handleDeleteAccount())
             alert("Your account has been deleted")
-
+        }
         )
         this.props.history.push('/signup')
     }

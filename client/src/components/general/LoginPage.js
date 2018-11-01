@@ -36,6 +36,8 @@ class LoginPage extends React.Component {
             alert('Your login details were incorrect, please try again')
             
           }).then(function (myJson) {
+            
+            console.log(myJson)
             if(myJson.length!==0){
                 self.props.dispatch(handleLogin(myJson[0].user))
                 self.props.history.push('/main');

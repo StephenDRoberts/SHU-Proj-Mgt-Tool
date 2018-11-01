@@ -19,8 +19,7 @@ class Ticket extends React.Component {
         this.state = {
             title: '',
             description: '',
-            estHours: 0,
-            actHours: 0,
+            hours: 0,
             status: '',
             type: '',
             show: false,
@@ -46,7 +45,7 @@ class Ticket extends React.Component {
         this.setState({
             title: this.props.dataset.title,
             description: this.props.dataset.description,
-            estHours: parseInt(this.props.dataset.estHours,10),
+            hours: parseInt(this.props.dataset.hours,10),
             status: this.props.dataset.status,
             type: this.props.dataset.type,
             show: true
@@ -56,18 +55,15 @@ class Ticket extends React.Component {
     handleChange(e) {
         let title = document.getElementById('titleEdit').value
         let description = document.getElementById('descEdit').value
-        let estHours = parseInt(document.getElementById('estHoursEdit').value,10)
+        let hours = parseInt(document.getElementById('hoursEdit').value,10)
         let type = document.getElementById('typeEdit').value
 
 
         this.setState({
             title: title,
             description: description,
-            estHours: parseInt(estHours,10),
-            // actHours: actHours,
-            // status: status,
+            hours: parseInt(hours,10),
             type: type,
-            // priority: priority,
         })
 
 
@@ -77,15 +73,14 @@ class Ticket extends React.Component {
 
         let title = document.getElementById('titleEdit').value
         let description = document.getElementById('descEdit').value
-        let estHours = parseInt(document.getElementById('estHoursEdit').value,10)
+        let hours = parseInt(document.getElementById('hoursEdit').value,10)
         let status = document.getElementById('statusEdit').value
         let type = document.getElementById('typeEdit').value
 
         let data = {
             "title": title,
             "description": description,
-            "estHours": estHours,
-            "actHours": '',
+            "hours": hours,
             "status": status,
             "type": type,
             "priority": 1
@@ -118,44 +113,14 @@ changeStatus(ev){
         return titleAr.findIndex(title => title === this.props.dataset["title"])
     }
 
-
-    componentDidMount() {
-        
-       
-        // console.log(document.getElementById('To-Do').value)
-        
-        // if (document.getElementById('ToDo') !== null) {
-
-        //     let selectedStatus = this.props.dataset.status
-        //     console.log(selectedStatus==='To-Do')
-        //     switch (selectedStatus) {
-        //         case 'To-Do':
-        //             console.log('to-do')
-        //             document.getElementById('ToDo').selected = true
-        //             break;
-        //         case 'Doing':
-        //         console.log('doing')
-        //             document.getElementById('Doing').selected = true
-        //             break;
-        //         case 'Done':
-        //         console.log('done')
-        //             document.getElementById('Done').selected = true
-        //             break;
-        //         default:
-        //         console.log('error')
-        //             document.getElementById('To-Do').selected = true
-        //             break;
-        //     }
-        // }
-    }
     render() {
         //This is to make css stylings ok - will change when change 'Type' names
         let trimmedType = this.props.dataset.type.replace(/\s+/g, '')
         return (
             <div className='tickets'>
-                <Button className='openTicket' onClick={this.handleShow}>
+                <Button draggable className='openTicket' onClick={this.handleShow}>
                     <div className={trimmedType}>{this.props.dataset.title}</div>
-                    <p className='estHours'>Est hours: {this.props.dataset.estHours} hrs</p>
+                    <p className='hours'>Hours: {this.props.dataset.hours} hrs</p>
                     <p className='taskType'>{this.props.dataset.type}</p>
                 </Button>
 
@@ -175,14 +140,9 @@ changeStatus(ev){
 
                         <hr />
 
-                        <h4>Estimated Hours</h4>
-                        <input type="number" id='estHoursEdit' onChange={this.handleChange} value={this.state.estHours}></input>
+                        <h4>Estimated/Actual Hours</h4>
+                        <input type="number" id='hoursEdit' onChange={this.handleChange} value={this.state.hours}></input>
 
-                        <hr />
-
-                        <div id='actHoursDisplay'></div>
-                        <h4>Actual Hours</h4>
-                        <input type="number" id='actualHoursEdit' onChange={this.handleChange} value={this.state.actHours}></input>
                         <hr />
 
                         <h4 value="Status">Status</h4>
