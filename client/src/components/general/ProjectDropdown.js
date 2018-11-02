@@ -78,29 +78,11 @@ class ProjectDropdown extends React.Component {
             console.log('The original data from other user')
 
             if (myJson.length !== 0) {
-                //     //successfully found user -> go to save the target user's workspace
-
+                //successfully found user -> go to save the target user's workspace
                 let otherUsersData = myJson[0]
                 let ourDataToShare = this.props.data[0].projects[this.props.projNumber]
-                // let newData =[]
-
-                // if(otherUsersData.length==0){
-                //     newData = [ourDataToShare]
-                // } else {
-                //     newData = otherUsersData.concat(ourDataToShare)
-                // }
-                console.log(otherUsersData.projects)
-                console.log(ourDataToShare)
-                console.log(otherUsersData.projects.push(ourDataToShare))
-                console.log(otherUsersData)
-                otherUsersData.projects.concat(ourDataToShare)
-                // console.log(this.props.data)
-                // console.log(otherUsersData)
+               
                 let endPoint = '/api/saveData';
-
-
-                // console.log('here is what im sending to the DB to save:')
-                // console.log(`user : ${targetUser}, projects: ${otherUsersData}`)
                 fetch(endPoint, {
                     method: 'put',
                     body: JSON.stringify({

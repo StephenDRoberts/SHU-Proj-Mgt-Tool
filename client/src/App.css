@@ -20,6 +20,9 @@ h2{
   margin-bottom: 10px;
   border-radius: 5px;
 }
+.droppable {
+  height: 100%
+}
 
 /* LOGIN SECTION */
 .login{

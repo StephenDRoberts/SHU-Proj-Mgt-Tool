@@ -82,7 +82,6 @@ const deleteProject = (projNumber) => {
 //FETCH FUNCTION (THUNK???)
 export function fetchData(user) {
   return dispatch => {
-    console.log('begin')
     dispatch(fetchDataBegin());
 
     return fetch("/api/provideData", {
@@ -97,19 +96,15 @@ export function fetchData(user) {
       .then(handleErrors)
       .then(res => {
         if (res.ok) {
-          console.log('we are ok')
           return res.json()
         }
-        // return Promise.reject('Did not retrieve data')
       })
       .then(data => {
-        console.log('success')
-        console.log(data)
         dispatch(fetchDataSuccess(data));
         return data;
       })
       .then(data => {
-        console.log('final')
+
         dispatch(fetchDataFinal(data));
         return data
       })
@@ -202,7 +197,6 @@ export const dataReducer = (state = initialState, action) => {
       return { data: addState }
 
     case EDIT:
-      console.log(action.projNumber)
       let editState = [...state.data]
       editState[0].projects[action.projNumber].tasks[action.ticketNum] = action.ticket
       return { data: editState }
@@ -213,13 +207,10 @@ export const dataReducer = (state = initialState, action) => {
       return { data: deleteState }
 
     case FINISHED:
-      console.log(state.data[0].projects)
       return state
 
     case ADD_PROJECT:
-    console.log(state)  
     let addProjState = [...state.data]
-    console.log(addProjState)
       addProjState[0].projects.push({
         projTitle: action.projName,
         tasks: []
@@ -232,7 +223,6 @@ export const dataReducer = (state = initialState, action) => {
       return { data: deleteProjState }
 
     default:
-      // ALWAYS have a default case in a reducer
       return state;
   }
 }

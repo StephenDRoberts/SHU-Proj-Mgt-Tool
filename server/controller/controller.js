@@ -73,6 +73,8 @@ module.exports = {
                         if (err) {
                             console.error(err)
                         }
+                        // sets a cookie with user's info
+                        req.session.user = user;
                         return res.json(docs)
                     })
                 })
@@ -118,6 +120,9 @@ module.exports = {
                     // res == true
                     if (res == true) {
                         console.log('hurray!!!')
+                        // sets a cookie with user's info
+                        req.session.user = user;
+                        console.log(req.session.user)
                         response = true
                     } else {
                         console.log('boo')

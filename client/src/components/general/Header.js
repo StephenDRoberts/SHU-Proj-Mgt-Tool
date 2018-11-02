@@ -79,10 +79,10 @@ class Header extends React.Component {
                     <img className="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
 
 
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" onClick={this.handleLogout}>Log Out</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" onClick={this.handleShowDelete}>Delete Account</a></li>
+                    <ul className="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <li role="presentation"><a role="menuitem" tabIndex="-1" onClick={this.handleLogout}>Log Out</a></li>
+                        <li role="presentation" className="divider"></li>
+                        <li role="presentation"><a role="menuitem" tabIndex="-1" onClick={this.handleShowDelete}>Delete Account</a></li>
                     </ul>
                 </div>
                 <Modal show={this.state.showDelete} onHide={this.handleCloseDelete}>
@@ -106,10 +106,10 @@ class Header extends React.Component {
 
            <div className="dropdown">
                     <img className="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" onClick={this.handleLogin}>Log In</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" onClick={this.handleSignup}>Sign up</a></li>
+                    <ul className="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <li role="presentation"><a role="menuitem" tabIndex="-1" onClick={this.handleLogin}>Log In</a></li>
+                        <li role="presentation" className="divider"></li>
+                        <li role="presentation"><a role="menuitem" tabIndex="-1" onClick={this.handleSignup}>Sign up</a></li>
                     </ul>
                 </div>
             </div>

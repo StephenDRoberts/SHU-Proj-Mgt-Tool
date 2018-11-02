@@ -15,7 +15,6 @@ class Dashboard extends React.Component {
 
         let allTypeNames = []
 
-
         for (var i = 0; i < data.length; i++) {
             allTypeNames.push(data[i].type)
         }
