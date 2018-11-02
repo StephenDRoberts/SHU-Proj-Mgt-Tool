@@ -1,7 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Button, Modal, Glyphicon } from 'react-bootstrap';
-import {handleAddTicket, addTicketFinished} from '../../redux/modules/dataReducer.js'
+import { handleAddTicket, addTicketFinished } from '../../redux/modules/dataReducer.js'
+import { SliderPicker } from 'react-color'
 
 class AddTicket extends React.Component {
   constructor(props, context) {
@@ -10,8 +11,7 @@ class AddTicket extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleAddTicket = this.handleAddTicket.bind(this);
-    
-
+   
     this.state = {
       show: false
     };
@@ -26,28 +26,29 @@ class AddTicket extends React.Component {
     this.setState({ show: true });
   }
 
-  handleAddTicket(){
-  
-let title = document.getElementById('titleInput').value
-let description = document.getElementById('descInput').value
-let hours = parseInt(document.getElementById('hoursInput').value,10)
-let status = document.getElementById('status').value
-let type = document.getElementById('typeInput').value
-let priority = 2
+  handleAddTicket() {
 
-let data = {
-  "title": title,
-  "description": description,
-  "hours": parseInt(hours,10),
-  "status": status,
-  "type": type,
-  "priority": priority,
-}
+    let title = document.getElementById('titleInput').value
+    let description = document.getElementById('descInput').value
+    let hours = parseInt(document.getElementById('hoursInput').value, 10)
+    let status = document.getElementById('status').value
+    let type = document.getElementById('typeInput').value
+    let priority = 2
+
+    let data = {
+      "title": title,
+      "description": description,
+      "hours": parseInt(hours, 10),
+      "status": status,
+      "type": type,
+      "priority": priority,
+    }
     // this.props.addTicket(data)
-    this.setState({show: false})
+    this.setState({ show: false })
     let projNumber = this.props.projNumber
     this.props.dispatch(handleAddTicket(data, projNumber))
     this.props.dispatch(addTicketFinished())
+
   }
 
 
@@ -55,37 +56,37 @@ let data = {
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
-    
-    
-    if(data===undefined || data.length===0){
+
+
+    if (data === undefined || data.length === 0) {
       data = [{
         id: '',
         user: '',
         projects: []
       }]
-    } else if (data[0].projects.length==0){
-      
+    } else if (data[0].projects.length == 0) {
+
       data = data[0]
       activeTasks = []
     } else {
       data = data[0]
       activeTasks = data.projects[activeProject].tasks
     }
-    
-    
+
+
     return (
       <div className='addTicket'>
-        <Button className='addSign'bsStyle="success" onClick={this.handleShow}>
-        <Glyphicon className="glyphicon glyphicon-plus" glyph=""/>
-                </Button>
-                
+        <Button className='addSign' bsStyle="success" onClick={this.handleShow}>
+          <Glyphicon className="glyphicon glyphicon-plus" glyph="" />
+        </Button>
+
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Add Ticket</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <h4>Ticket name</h4>
-            <input id ='titleInput'></input>
+            <input id='titleInput'></input>
 
             <hr />
 
@@ -112,9 +113,13 @@ let data = {
             <input id='typeInput'></input>
 
             <hr />
+
+            <SliderPicker />
+
+
           </Modal.Body>
           <Modal.Footer>
-          <Button onClick={this.handleAddTicket} bsStyle="primary">Submit</Button>
+            <Button onClick={this.handleAddTicket} bsStyle="primary">Submit</Button>
             <Button onClick={this.handleClose}>Close</Button>
           </Modal.Footer>
         </Modal>
@@ -123,8 +128,8 @@ let data = {
   }
 }
 
-const mapStateToProps = (state)=>{
-  return{
+const mapStateToProps = (state) => {
+  return {
     data: state.dataReducer.data,
     projNumber: state.changeProjectReducer.projNumber
   }

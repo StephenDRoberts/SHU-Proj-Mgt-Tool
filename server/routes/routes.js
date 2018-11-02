@@ -4,6 +4,7 @@ var myControllers = require('../controller/controller.js')
 
 function requireLogin(req,res,next){
     if(!req.user){
+        console.log('trying to redirect')
         res.redirect('/');
     } else {
         next()

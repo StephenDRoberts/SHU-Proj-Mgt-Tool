@@ -101,7 +101,7 @@ module.exports = {
     },
 
     login: function (app, req, res) {
-
+        console.log('i might be trying to log in....')
         let user = req.body.user
         let password = req.body.password
 

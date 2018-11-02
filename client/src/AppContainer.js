@@ -10,8 +10,6 @@ const AppContainer = () => (
             <Route path='/main' component={App} />
             <Route path='/signup' component={SignupPage} />
             <Route path='/' component={LoginPage} />
-
-
         </Switch>
     </main>
 );

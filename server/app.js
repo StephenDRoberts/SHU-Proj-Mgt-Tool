@@ -17,6 +17,8 @@ app.use(session({
 }))
 
 app.use(function (req, res, next) {
+    console.log('tyring to garther session data:')
+    console.log(req.session.user)
     if (req.session && req.session.user) {
 
         app.get('myDb').collection('users').find({ "user": req.session.user }).toArray(function (err, docs) {
@@ -31,6 +33,8 @@ app.use(function (req, res, next) {
                 res.locals.user = docs[0].user;
             }
             // finishing processing the middleware and run the route
+            console.log('did we get user data???')
+            console.log(req.session.user)
             next()
         })
     } else {

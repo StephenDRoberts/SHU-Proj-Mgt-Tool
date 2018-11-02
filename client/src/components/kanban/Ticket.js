@@ -135,7 +135,6 @@ class Ticket extends React.Component {
     }
 
     render() {
-        console.log(this.state.status=="Doing")
         //This is to make css stylings ok - will change when change 'Type' names
         let trimmedType = this.props.dataset.type.replace(/\s+/g, '')
         return (
@@ -168,7 +167,7 @@ class Ticket extends React.Component {
                         <input type="number" id='hoursEdit' onChange={this.handleChange} value={this.state.hours}></input>
 
                         <hr />
-                        {/* defaultValue={this.state.type} */}
+                
                         <h4 value="Status">Status</h4>
                         <select id="statusEdit" onChange={this.changeStatus} defaultValue={this.state.status}>
                             <option id="ToDo" value="To-Do">To-Do</option>
