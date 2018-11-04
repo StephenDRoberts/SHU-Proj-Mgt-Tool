@@ -27,7 +27,7 @@ class Ticket extends React.Component {
             type: '',
             show: false,
             doneShow: false,
-            styles: ''
+            styles: [{'backgroundColor':'ffffff'}]
         };
     }
 
@@ -125,7 +125,17 @@ class Ticket extends React.Component {
 
 
     onChangeColor = (color) => {
-        this.setState({ background: color.hex })
+        let styles = {"backgroundColor":color.hex}
+        this.setState({ styles:styles})
+    }
+
+    getContrastYIQ(hexcolor){
+        var r = parseInt(hexcolor.substr(1,2),16);
+        var g = parseInt(hexcolor.substr(3,2),16);
+        var b = parseInt(hexcolor.substr(5,2),16);
+        var yiq = ((r*299)+(g*587)+(b*114))/1000;
+        return (yiq >= 128) ? {backgroundColor:hexcolor, color:'black'} : {backgroundColor:hexcolor, color:'white'};   
+        
     }
 
     componentDidMount() {
@@ -137,6 +147,10 @@ class Ticket extends React.Component {
             type: this.props.dataset.type,
             styles: this.props.data[0].styles[this.props.dataset.type]
         });
+        // this.getContrastYIQ(this.state.styles[0])
+        // if(this.props.data[0].styles[this.props.dataset.type]==!undefined){
+        //     this.setState({styles:this.props.data[0].styles[this.props.dataset.type]})
+        // }
     }
 
     render() {
@@ -147,7 +161,7 @@ class Ticket extends React.Component {
                 <Button draggable id="ticketDrag" className='openTicket' onClick={this.handleShow}
                     onDragStart={(e) => this.onDragStart(e)}>
 
-                    <div className={trimmedType} style={this.state.styles[0]} >{this.props.dataset.title}</div>
+                    <div className={trimmedType} style={this.getContrastYIQ(this.state.styles[0].backgroundColor)}>{this.props.dataset.title}</div>
                     <p className='hours'>Hours: {this.props.dataset.hours} hrs</p>
                     <p className='taskType'>{this.props.dataset.type}</p>
                 </Button>

@@ -2,10 +2,10 @@
     {
         "user": "user1",
         "styles":{
-            "Chores":[{"background-color": "#F19722"}],
-            "Pers_Dev":[{"background-color": "#2C8693"}],
-              "Fun":[{"background-color": "#6C6B99"}],
-              "To_live":[{"background-color": "#FF9081"}]
+            "Chores":[{"backgroundColor": "#F19722"}],
+            "Pers_Dev":[{"backgroundColor": "#2C8693"}],
+              "Fun":[{"backgroundColor": "#6C6B99"}],
+              "To_live":[{"backgroundColor": "#FF9081"}]
         },
         "projects": [
             {
