@@ -10,6 +10,7 @@ class Board extends React.Component {
     
     
     render() {
+        
         let todoTasks = [];
         let doingTasks = [];
         let doneTasks = [];

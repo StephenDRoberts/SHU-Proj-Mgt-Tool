@@ -130,6 +130,7 @@ class Ticket extends React.Component {
     }
 
     getContrastYIQ(hexcolor){
+        console.log(hexcolor)
         var r = parseInt(hexcolor.substr(1,2),16);
         var g = parseInt(hexcolor.substr(3,2),16);
         var b = parseInt(hexcolor.substr(5,2),16);
@@ -139,6 +140,7 @@ class Ticket extends React.Component {
     }
 
     componentDidMount() {
+        
         this.setState({
             title: this.props.dataset.title,
             description: this.props.dataset.description,
@@ -151,17 +153,23 @@ class Ticket extends React.Component {
         // if(this.props.data[0].styles[this.props.dataset.type]==!undefined){
         //     this.setState({styles:this.props.data[0].styles[this.props.dataset.type]})
         // }
+        
     }
 
     render() {
-        //This is to make css stylings ok - will change when change 'Type' names
+        // Defines styles for each ticket - couldnt do in componentDidMount
+        // as changing project number didn't create a compDiDMount call.
+        // Possible mutability issue with changeProj reducer???
+        let styles = this.getContrastYIQ(this.props.data[0].styles[this.props.dataset.type][0].backgroundColor)
+   
+       //This is to make css stylings ok - will change when change 'Type' names
         let trimmedType = this.props.dataset.type.replace(/\s+/g, '')
         return (
             <div className='tickets'>
                 <Button draggable id="ticketDrag" className='openTicket' onClick={this.handleShow}
-                    onDragStart={(e) => this.onDragStart(e)}>
+                    onDragStart={(e) => this.onDragStart(e)} data = {this.state.projNumber}>
 
-                    <div className={trimmedType} style={this.getContrastYIQ(this.state.styles[0].backgroundColor)}>{this.props.dataset.title}</div>
+                    <div className={trimmedType} style={styles}>{this.props.dataset.title}</div>
                     <p className='hours'>Hours: {this.props.dataset.hours} hrs</p>
                     <p className='taskType'>{this.props.dataset.type}</p>
                 </Button>

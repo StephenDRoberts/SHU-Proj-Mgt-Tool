@@ -1,3 +1,4 @@
+import produce from 'immer';
 
 // ACTION TYPE CONSTANTS
 export const CHANGE = 'CHANGE'
@@ -21,12 +22,15 @@ const defaultState = {
 }
 
 export const changeProjectReducer=(state=defaultState, action)=>{
-    let changeProjState = [...state]
+    
+    let newState = produce(state, draftState => {
+      draftState.projNumber = action.projNumber
+      
+    })
+    
     switch(action.type){
         case CHANGE:
-             return {
-                changeProjState,
-                projNumber: action.projNumber}
+             return newState
 
         default:
              return state;

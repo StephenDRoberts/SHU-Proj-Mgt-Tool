@@ -54,7 +54,7 @@ class App extends Component {
     }
     // else {console.log(data[0].projects.length)}
     else if (data[0].projects.length == 0) {
-      console.log(data[0].projects.length)
+      
 
       activeTasks = []
     } else {
@@ -65,7 +65,7 @@ class App extends Component {
 
      if (data[0].projects.length == 0) {
       return (
-        <Provider store={store}>
+        // <Provider store={store}>
 
           <div className="App">
             <Header />
@@ -76,12 +76,12 @@ class App extends Component {
 
 
           </div>
-        </Provider>
+        // </Provider>
       )
     }
     else if (this.state.display === 'Kanban') {
       return (
-        <Provider store={store}>
+        // <Provider store={store}>
 
           <div className="App">
             <Header />
@@ -92,7 +92,7 @@ class App extends Component {
             <AddTicket />
             {/* <AddTicket addTicket={this.handleAddTicket} activeProject={this.state.activeProject} activeTasks={this.state.activeTasks}/> */}
           </div>
-        </Provider>
+        // </Provider>
       );
 
     } else {
