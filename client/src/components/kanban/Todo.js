@@ -25,6 +25,8 @@ class Todo extends React.Component {
         }
         // dispatches to redux store to edit ticket and re-render application
         this.props.dispatch(handleEditTicket(data, ticketNum, projNumber))
+        
+    
     }
     render() {
         

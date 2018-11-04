@@ -1,6 +1,12 @@
 [
     {
         "user": "user1",
+        "styles":{
+            "Chores":[{"background-color": "#F19722"}],
+            "Pers_Dev":[{"background-color": "#2C8693"}],
+              "Fun":[{"background-color": "#6C6B99"}],
+              "To_live":[{"background-color": "#FF9081"}]
+        },
         "projects": [
             {
                 "projTitle": "Home",
@@ -8,72 +14,58 @@
                     {
                         "title": "Washing Up",
                         "description": "To do the washing up",
-                        "hours": 1,
-                        
+                        "hours": 1,   
                         "status": "To-Do",
                         "type": "Chores",
-                        "priority": 1,
-                        
+                        "priority": 1
                     },
                     {
                         "title": "Code",
                         "description": "Learn Kotlin",
                         "hours": 5,
-                        
                         "status": "Doing",
-                        "type": "Pers Dev",
-                        "priority": 1,
-                        
+                        "type": "Pers_Dev",
+                        "priority": 1
                     },
                     {
                         "title": "Iron",
                         "description": "Iron my clothes",
                         "hours": 1,
-                        
                         "status": "To-Do",
                         "type": "Chores",
-                        "priority": 2,
-                        
+                        "priority": 2
                     },
                     {
                         "title": "Play guitar",
                         "description": "Don't fear the reaper",
                         "hours": 1,
-                        
                         "status": "Done",
                         "type": "Fun",
-                        "priority": 1,
-                        
+                        "priority": 1
                     },
                     {
                         "title": "Watch Everton",
                         "description": "Arsenal vs Everton",
                         "hours": 3,
-                        
                         "status": "To-Do",
                         "type": "Fun",
-                        "priority": 3,
-                        
+                        "priority": 3
                     },
                     {
                         "title": "Hoover",
                         "description": "Hoover the house",
                         "hours": 1,
-                        
                         "status": "Done",
                         "type": "Chores",
-                        "priority": 2,
-                        
+                        "priority": 2
                     },
                     {
                         "title": "Have lunch",
                         "description": "",
                         "hours": 1,
-                        
                         "status": "Doing",
-                        "type": "To live",
-                        "priority": 2,
-                        
+                        "type": "To_live",
+                        "priority": 2
                     }
                 ] 
             },
@@ -84,31 +76,25 @@
                         "title": "Learn React",
                         "description": "Learn React",
                         "hours": 1,
-                        
                         "status": "To-Do",
-                        "type": "Pers Dev",
-                        "priority": 1,
-                      
+                        "type": "Pers_Dev",
+                        "priority": 1
                     },
                     {
                         "title": "Learn Kotlin",
                         "description": "Learn Kotlin",
                         "hours": 5,
-                        
                         "status": "Doing",
-                        "type": "Pers Dev",
-                        "priority": 1,
-                        
+                        "type": "Pers_Dev",
+                        "priority": 1
                     },
                     {
                         "title": "Learn Redux",
                         "description": "Learn Redux",
                         "hours": 7,
-                        
                         "status": "Doing",
-                        "type": "Pers Dev",
-                        "priority": 2,
-                        
+                        "type": "Pers_Dev",
+                        "priority": 2
                     }
                 ] 
             }

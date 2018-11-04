@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { handleEditTicket, handleDeleteTicket, addTicketFinished } from '../../redux/modules/dataReducer.js'
+import { SliderPicker } from 'react-color'
+import { unwatchFile } from 'fs';
 
 class Ticket extends React.Component {
 
@@ -15,6 +17,7 @@ class Ticket extends React.Component {
         this.handleEdit = this.handleEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
+        this.onChangeColor = this.onChangeColor.bind(this);
 
         this.state = {
             title: '',
@@ -23,7 +26,8 @@ class Ticket extends React.Component {
             status: '',
             type: '',
             show: false,
-            doneShow: false
+            doneShow: false,
+            styles: ''
         };
     }
 
@@ -119,18 +123,19 @@ class Ticket extends React.Component {
         ev.dataTransfer.setData('ticketNum', ticketNum)
     }
 
-    // onDrop=(ev, cat)=>{
-    //     let id = ev.dataTransfer.getData('id')
-    //     console.log('ive been dropped')
 
-    // }
-    componentDidMount(){
+    onChangeColor = (color) => {
+        this.setState({ background: color.hex })
+    }
+
+    componentDidMount() {
         this.setState({
             title: this.props.dataset.title,
             description: this.props.dataset.description,
             hours: parseInt(this.props.dataset.hours, 10),
             status: this.props.dataset.status,
             type: this.props.dataset.type,
+            styles: this.props.data[0].styles[this.props.dataset.type]
         });
     }
 
@@ -142,7 +147,7 @@ class Ticket extends React.Component {
                 <Button draggable id="ticketDrag" className='openTicket' onClick={this.handleShow}
                     onDragStart={(e) => this.onDragStart(e)}>
 
-                    <div className={trimmedType}>{this.props.dataset.title}</div>
+                    <div className={trimmedType} style={this.state.styles[0]} >{this.props.dataset.title}</div>
                     <p className='hours'>Hours: {this.props.dataset.hours} hrs</p>
                     <p className='taskType'>{this.props.dataset.type}</p>
                 </Button>
@@ -167,7 +172,7 @@ class Ticket extends React.Component {
                         <input type="number" id='hoursEdit' onChange={this.handleChange} value={this.state.hours}></input>
 
                         <hr />
-                
+
                         <h4 value="Status">Status</h4>
                         <select id="statusEdit" onChange={this.changeStatus} defaultValue={this.state.status}>
                             <option id="ToDo" value="To-Do">To-Do</option>
@@ -181,6 +186,8 @@ class Ticket extends React.Component {
                         <input id='typeEdit' onChange={this.handleChange} defaultValue={this.state.type}></input>
 
                         <hr />
+
+                        <SliderPicker color={this.state.background} onChangeComplete={this.onChangeColor} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleEdit} bsStyle="primary">Submit</Button>

@@ -13,7 +13,8 @@ class AddTicket extends React.Component {
     this.handleAddTicket = this.handleAddTicket.bind(this);
    
     this.state = {
-      show: false
+      show: false,
+      typeColor: '000000'
     };
   }
 
@@ -49,6 +50,7 @@ class AddTicket extends React.Component {
     this.props.dispatch(handleAddTicket(data, projNumber))
     this.props.dispatch(addTicketFinished())
 
+
   }
 
 
@@ -73,8 +75,12 @@ class AddTicket extends React.Component {
       activeTasks = data.projects[activeProject].tasks
     }
 
-
+    let typeStyle = {
+      color: this.state.typeColor
+    }
+    
     return (
+      
       <div className='addTicket'>
         <Button className='addSign' bsStyle="success" onClick={this.handleShow}>
           <Glyphicon className="glyphicon glyphicon-plus" glyph="" />
@@ -111,10 +117,11 @@ class AddTicket extends React.Component {
 
             <h4>Type</h4>
             <input id='typeInput'></input>
+            
 
             <hr />
 
-            <SliderPicker />
+            <SliderPicker id="slider" color={this.state.typeColor}/>
 
 
           </Modal.Body>
