@@ -37,6 +37,10 @@ class AddTicket extends React.Component {
     let hours = parseInt(document.getElementById('hoursInput').value, 10)
     let status = document.getElementById('status').value
     let type = document.getElementById('typeInput').value
+    // trimmedType used to make sure that if user inputs a space in their type name 
+    // that the style will still come through 
+    let trimmedType = type.replace(/\s+/g, '')
+    
     let priority = 2
 
     let data = {
@@ -45,6 +49,7 @@ class AddTicket extends React.Component {
       "hours": parseInt(hours, 10),
       "status": status,
       "type": type,
+      "trimmedType": trimmedType,
       "priority": priority,
     }
     
@@ -56,7 +61,8 @@ class AddTicket extends React.Component {
     let projNumber = this.props.projNumber
     this.props.dispatch(handleAddTicket(data, projNumber))
     this.props.dispatch(addTicketFinished())
-    this.props.dispatch(handleChangeStyle(type, this.state.styles[0].backgroundColor))
+    
+    this.props.dispatch(handleChangeStyle(trimmedType, this.state.styles[0].backgroundColor))
 
   }
   onChangeColor = (color) => {

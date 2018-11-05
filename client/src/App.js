@@ -38,7 +38,6 @@ class App extends Component {
   }
 
   render() {
-    
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];

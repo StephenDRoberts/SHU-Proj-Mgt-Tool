@@ -25,6 +25,7 @@ class Ticket extends React.Component {
             hours: 0,
             status: '',
             type: '',
+            trimmedType: '',
             show: false,
             doneShow: false,
             styles: [{'backgroundColor':'#ffffff'}],
@@ -53,6 +54,7 @@ class Ticket extends React.Component {
             hours: parseInt(this.props.dataset.hours, 10),
             status: this.props.dataset.status,
             type: this.props.dataset.type,
+            trimmedType: this.props.dataset.trimmedType,
             show: true
         });
     }
@@ -62,13 +64,14 @@ class Ticket extends React.Component {
         let description = document.getElementById('descEdit').value
         let hours = parseInt(document.getElementById('hoursEdit').value, 10)
         let type = document.getElementById('typeEdit').value
-
+        let trimmedType = type.replace(/\s+/g, '')
 
         this.setState({
             title: title,
             description: description,
             hours: parseInt(hours, 10),
             type: type,
+            trimmedType: trimmedType
         })
 
         this.setState({
@@ -88,13 +91,17 @@ class Ticket extends React.Component {
         let hours = parseInt(document.getElementById('hoursEdit').value, 10)
         let status = document.getElementById('statusEdit').value
         let type = document.getElementById('typeEdit').value
-
+        // trimmedType used to make sure that if user inputs a space in their type name 
+        // that the style will still come through
+        let trimmedType = type.replace(/\s+/g, '')
+        
         let data = {
             "title": title,
             "description": description,
             "hours": hours,
             "status": status,
             "type": type,
+            "trimmedType":trimmedType,
             "priority": 1
         }
 
@@ -102,7 +109,8 @@ class Ticket extends React.Component {
         let ticketNum = this.findLocation()
         this.props.dispatch(handleEditTicket(data, ticketNum, projNumber))
         this.props.dispatch(addTicketFinished())
-        this.props.dispatch(handleChangeStyle(this.state.type, this.state.styles[0].backgroundColor))
+        
+        this.props.dispatch(handleChangeStyle(trimmedType, this.state.styles[0].backgroundColor))
         // console.log(this.onChangeColor())
         this.setState({ show: false });
     }
@@ -157,17 +165,16 @@ class Ticket extends React.Component {
             hours: parseInt(this.props.dataset.hours, 10),
             status: this.props.dataset.status,
             type: this.props.dataset.type,
-            styles: this.props.data[0].styles[this.props.dataset.type]
+            trimmedType: this.props.dataset.trimmedType,
+            styles: this.props.data[0].styles[this.props.dataset.trimmedType]
         });        
     }
 
     render() {
-        let anotherRef = React.createRef()
-        // console.log(this.anotherRef)
         // Defines styles for each ticket - couldnt do in componentDidMount
         // as changing project number didn't create a compDiDMount call.
         // Possible mutability issue with changeProj reducer???
-        let styles = this.getContrastYIQ(this.props.data[0].styles[this.props.dataset.type][0].backgroundColor)
+        let styles = this.getContrastYIQ(this.props.data[0].styles[this.props.dataset.trimmedType][0].backgroundColor)
    
        //This is to make css stylings ok - will change when change 'Type' names
         let trimmedType = this.props.dataset.type.replace(/\s+/g, '')
