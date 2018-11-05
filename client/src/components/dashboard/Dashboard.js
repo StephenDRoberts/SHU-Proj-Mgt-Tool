@@ -11,16 +11,22 @@ class Dashboard extends React.Component {
         return self.indexOf(value) === index;
     }
 
-    allDataHoursSummary(data) {
-
+    getUniqueNames(data){
         let allTypeNames = []
 
         for (var i = 0; i < data.length; i++) {
             allTypeNames.push(data[i].type)
         }
         let uniqueTypeNames = allTypeNames.filter(this.onlyUnique)
-        let allSummaryObject = []
+        return uniqueTypeNames
+    }
+    allDataHoursSummary(data) {
 
+        let uniqueTypeNames = this.getUniqueNames(data)
+        let allSummaryObject = []
+        let colorArray = [];
+
+        
         for (var j = 0; j < uniqueTypeNames.length; j++) {
             let hoursSubTotal = 0
             for (var i = 0; i < data.length; i++) {
@@ -39,6 +45,19 @@ class Dashboard extends React.Component {
         return allSummaryObject
     }
 
+    colors(data){
+        let uniqueTypeNames = this.getUniqueNames(data)
+        let colors = []
+        
+        for(var i =0; i<uniqueTypeNames.length; i++){
+            let toTrim = uniqueTypeNames[i]
+            let trimmedType = toTrim.replace(/\s+/g, '')
+            
+            let color = this.props.data[0].styles[trimmedType][0].backgroundColor            
+            colors.push(color)
+        }
+        return colors
+    }
     render() {
         let fullData = this.props.data[0].projects[this.props.projNumber].tasks
         let doneData = []
@@ -50,6 +69,9 @@ class Dashboard extends React.Component {
         let fullDataSummary = this.allDataHoursSummary(fullData)
         let doneDataSummary = this.allDataHoursSummary(doneData)
 
+        let fullDataColors = this.colors(fullData)
+        let doneDataColors = this.colors(doneData)
+        
         return (
             <div className='pieContainer'>
                 <Container>
@@ -58,7 +80,7 @@ class Dashboard extends React.Component {
                             <h4 className='timeTitle'>Actual Time</h4>
                             <VictoryPie
                                 data={doneDataSummary}
-                                colorScale={['#F19722', '#2C8693', '#6C6B99', '#FF9081']}
+                                colorScale={doneDataColors}
                             />
                         </Col>
                         <Col md={2}></Col>
@@ -66,7 +88,7 @@ class Dashboard extends React.Component {
                             <h4 className='timeTitle'>Planned Time</h4>
                             <VictoryPie
                                 data={fullDataSummary}
-                                colorScale={['#F19722', '#2C8693', '#6C6B99', '#FF9081']}
+                                colorScale={fullDataColors}
                             />
                         </Col>
                     </Row>

@@ -76,8 +76,9 @@ handleChange(event) {
     input: event.target.value
   });
   // Checks to see if Type has already been entered before and picks up that color
-  if(this.props.data[0].styles[event.target.value]!==undefined){
-    this.setState({styles: this.props.data[0].styles[event.target.value]})
+  let trimmedInput = event.target.value.replace(/\s+/g, '')
+  if(this.props.data[0].styles[trimmedInput]!==undefined){
+    this.setState({styles: this.props.data[0].styles[trimmedInput]})
   }
   
 }
