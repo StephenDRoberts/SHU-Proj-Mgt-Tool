@@ -71,24 +71,28 @@ class Dashboard extends React.Component {
 
         let fullDataColors = this.colors(fullData)
         let doneDataColors = this.colors(doneData)
+        let padding = {top: 60, bottom: 60}
+        let animation = {duration: 500}
         
         return (
             <div className='pieContainer'>
                 <Container>
                     <Row>
+                    <Col md={5} className='indPies'>
+                            <h4 className='timeTitle'>Planned Time</h4>
+                            <VictoryPie
+                                data={fullDataSummary}
+                                colorScale={fullDataColors}
+                                labelRadius={80}
+                            />
+                        </Col>
+                        <Col md={2}></Col>
                         <Col md={5} className='indPies'>
                             <h4 className='timeTitle'>Actual Time</h4>
                             <VictoryPie
                                 data={doneDataSummary}
                                 colorScale={doneDataColors}
-                            />
-                        </Col>
-                        <Col md={2}></Col>
-                        <Col md={5} className='indPies'>
-                            <h4 className='timeTitle'>Planned Time</h4>
-                            <VictoryPie
-                                data={fullDataSummary}
-                                colorScale={fullDataColors}
+                                labelRadius={80}
                             />
                         </Col>
                     </Row>

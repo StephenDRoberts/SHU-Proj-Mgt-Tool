@@ -137,7 +137,7 @@ module.exports = {
                     }
 
                 })
-            } else {res.json(docs)}
+            } else { res.json(docs) }
         })
 
     },
@@ -159,10 +159,16 @@ module.exports = {
             if (err) {
                 console.error(err)
             }
-            if (docs[0].projects == null) {
+            console.log('heres the breakdown')
+            console.log(docs)
+            console.log(docs[0])
+            if (docs.length == 0) {
+                
+            } else if (docs[0].projects == null) {
                 docs[0].projects = []
-            }
-            res.json(docs)
+            } 
+                res.json(docs)
+            
         })
     }
 
