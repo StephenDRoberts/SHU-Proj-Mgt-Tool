@@ -38,9 +38,6 @@ class MainNav extends React.Component {
           <NavItem eventKey="2">
             Dashboard
           </NavItem>
-          <NavItem eventKey="3" >
-            Other
-          </NavItem>
         </Nav>
     );
   }
