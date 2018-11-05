@@ -7,10 +7,8 @@ import AddTicket from './components/kanban/AddTicket.js';
 import Save from './components/kanban/Save.js';
 import ProjectDropdown from './components/general/ProjectDropdown.js';
 import EmptyDisplay from './components/general/EmptyDisplay.js';
-import LoginPage from './components/general/LoginPage.js'
 import Header from './components/general/Header.js'
-import store from './redux/store.js'
-import { Provider, connect } from 'react-redux'
+import { connect } from 'react-redux'
 import { fetchData } from './redux/modules/dataReducer.js'
 
 class App extends Component {

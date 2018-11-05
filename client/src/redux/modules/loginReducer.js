@@ -3,7 +3,7 @@
 const SIGNUP = 'SIGNUP'
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
-const DELETE = 'DELETE'
+const DELETE_ACCOUNT = 'DELETE_ACCOUNT'
 
 // ACTION CREATORS
 const signup = (user) => {
@@ -25,7 +25,7 @@ const logout = () => {
 }
 const deleteAccount=()=>{
     return {
-        type: DELETE,
+        type: DELETE_ACCOUNT,
     }
 }
 
@@ -74,7 +74,7 @@ export const loginReducer = (state = defaultState, action) => {
             user: ''
         }
 
-        case DELETE:
+        case DELETE_ACCOUNT:
         return {
             accountState,
             loggedIn: false,

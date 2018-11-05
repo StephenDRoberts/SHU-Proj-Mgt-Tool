@@ -117,6 +117,7 @@ class Header extends React.Component {
     }
 
     render() {
+        
         if (this.props.accountState.user == "") {
             return (this.loggedOutRender())
         } else {

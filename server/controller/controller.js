@@ -19,8 +19,8 @@ module.exports = {
 
     saveData: function (app, req, res) {
         let data = req.body.data
-
-        let user = req.body.user
+        console.log(req.body)
+        let user = req.body.data.user
         console.log('im in saveData. Here is your attempted data save:')
         console.log(`user: ${user}, projects: ${data}`)
         console.log('here is that breakdown, body/else')
@@ -31,7 +31,8 @@ module.exports = {
             { 'user': user },
             {
                 $set: {
-                    'projects': data.projects
+                    'projects': data.projects,
+                    'styles': data.styles
                 },
             },
             { upsert: true },

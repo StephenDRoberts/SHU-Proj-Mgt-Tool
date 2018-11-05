@@ -1,15 +1,15 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { handleEditTicket, handleDeleteTicket, addTicketFinished } from '../../redux/modules/dataReducer.js'
+import { handleEditTicket, handleDeleteTicket, addTicketFinished, handleChangeStyle } from '../../redux/modules/dataReducer.js'
 import { SliderPicker } from 'react-color'
-import { unwatchFile } from 'fs';
+
 
 class Ticket extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        this.myRef = React.createRef();
+        
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDoneClose = this.handleDoneClose.bind(this);
@@ -18,7 +18,7 @@ class Ticket extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
         this.onChangeColor = this.onChangeColor.bind(this);
-
+       
         this.state = {
             title: '',
             description: '',
@@ -27,7 +27,8 @@ class Ticket extends React.Component {
             type: '',
             show: false,
             doneShow: false,
-            styles: [{'backgroundColor':'ffffff'}]
+            styles: [{'backgroundColor':'#ffffff'}],
+            input: ''
         };
     }
 
@@ -56,7 +57,7 @@ class Ticket extends React.Component {
         });
     }
 
-    handleChange(e) {
+    handleChange(event) {
         let title = document.getElementById('titleEdit').value
         let description = document.getElementById('descEdit').value
         let hours = parseInt(document.getElementById('hoursEdit').value, 10)
@@ -70,6 +71,13 @@ class Ticket extends React.Component {
             type: type,
         })
 
+        this.setState({
+            input: event.target.value
+          });
+          // Checks to see if Type has already been entered before and picks up that color
+          if(this.props.data[0].styles[event.target.value]!==undefined){
+            this.setState({styles: this.props.data[0].styles[event.target.value]})
+          }
 
     }
     //help on general edit handler: 
@@ -94,7 +102,8 @@ class Ticket extends React.Component {
         let ticketNum = this.findLocation()
         this.props.dispatch(handleEditTicket(data, ticketNum, projNumber))
         this.props.dispatch(addTicketFinished())
-
+        this.props.dispatch(handleChangeStyle(this.state.type, this.state.styles[0].backgroundColor))
+        // console.log(this.onChangeColor())
         this.setState({ show: false });
     }
 
@@ -125,12 +134,14 @@ class Ticket extends React.Component {
 
 
     onChangeColor = (color) => {
-        let styles = {"backgroundColor":color.hex}
+        
+        let styles = [{"backgroundColor":color.hex}]
         this.setState({ styles:styles})
+        // this.props.dispatch(handleChangeStyle(color.hex))
     }
 
     getContrastYIQ(hexcolor){
-        console.log(hexcolor)
+        
         var r = parseInt(hexcolor.substr(1,2),16);
         var g = parseInt(hexcolor.substr(3,2),16);
         var b = parseInt(hexcolor.substr(5,2),16);
@@ -139,8 +150,7 @@ class Ticket extends React.Component {
         
     }
 
-    componentDidMount() {
-        
+    componentDidMount() {   
         this.setState({
             title: this.props.dataset.title,
             description: this.props.dataset.description,
@@ -148,15 +158,12 @@ class Ticket extends React.Component {
             status: this.props.dataset.status,
             type: this.props.dataset.type,
             styles: this.props.data[0].styles[this.props.dataset.type]
-        });
-        // this.getContrastYIQ(this.state.styles[0])
-        // if(this.props.data[0].styles[this.props.dataset.type]==!undefined){
-        //     this.setState({styles:this.props.data[0].styles[this.props.dataset.type]})
-        // }
-        
+        });        
     }
 
     render() {
+        let anotherRef = React.createRef()
+        // console.log(this.anotherRef)
         // Defines styles for each ticket - couldnt do in componentDidMount
         // as changing project number didn't create a compDiDMount call.
         // Possible mutability issue with changeProj reducer???
@@ -209,7 +216,7 @@ class Ticket extends React.Component {
 
                         <hr />
 
-                        <SliderPicker color={this.state.background} onChangeComplete={this.onChangeColor} />
+                        <SliderPicker color={this.state.styles[0].backgroundColor} onChangeComplete={this.onChangeColor} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleEdit} bsStyle="primary">Submit</Button>

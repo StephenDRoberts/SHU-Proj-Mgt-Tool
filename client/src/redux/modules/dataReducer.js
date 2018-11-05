@@ -13,6 +13,7 @@ const FINISHED = 'FINISHED'
 const ADD_PROJECT = 'ADD_PROJECT'
 const DELETE_PROJECT = 'DELETE_PROJECT'
 
+const CHANGE_STYLE = 'CHANGE_STYLE'
 
 // ACTION CREATORS
 const fetchDataBegin = () => ({
@@ -75,6 +76,14 @@ const deleteProject = (projNumber) => {
   return {
     type: DELETE_PROJECT,
     projNumber: projNumber
+  }
+}
+
+const changeStyle = (className, style)=>{
+  return {
+    type: CHANGE_STYLE,
+    className: className,
+    style: style
   }
 }
 
@@ -141,6 +150,9 @@ export function handleAddProject(projName) {
 export function handleDeleteProject(projNumber) {
   return dispatch => dispatch(deleteProject(projNumber))
 }
+export function handleChangeStyle(className, style) {
+  return dispatch => dispatch(changeStyle(className, style))
+}
 
 //REDUCER  
 const initialState = {
@@ -203,6 +215,7 @@ export const dataReducer = (state = initialState, action) => {
 
     case DELETE:
       let deleteState = [...state.data]
+      console.log(deleteState)
       deleteState[0].projects[action.projNumber].tasks.splice(action.ticketNum, 1)
       return { data: deleteState }
 
@@ -221,6 +234,17 @@ export const dataReducer = (state = initialState, action) => {
       let deleteProjState = [...state.data]
       deleteProjState[0].projects.splice(action.projNumber, 1)
       return { data: deleteProjState }
+
+    case CHANGE_STYLE:
+    let changeStyleState = [...state.data]
+    let className = action.className
+    if(changeStyleState[0].styles[className]==undefined){
+      changeStyleState[0].styles[className] = [{"backgroundColor":action.style}]
+    } else {
+    changeStyleState[0].styles[className][0].backgroundColor = action.style
+    }
+    // console.log(changeStyleState[action.className])
+    return { data: changeStyleState }
 
     default:
       return state;

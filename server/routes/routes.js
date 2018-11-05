@@ -17,7 +17,7 @@ router = function(app){
     .post(requireLogin, (req,res)=>{myControllers.provideData(app,req,res);})
 
     app.route('/api/saveData')
-    .put(requireLogin, (req,res)=>{myControllers.saveData(app,req,res);})
+    .put((req,res)=>{myControllers.saveData(app,req,res);})
 
     app.route('/api/signup')
     .post((req,res)=>{myControllers.signup(app,req,res);})

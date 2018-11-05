@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Button, Modal, Glyphicon } from 'react-bootstrap';
-import { handleAddTicket, addTicketFinished } from '../../redux/modules/dataReducer.js'
+import { handleAddTicket, addTicketFinished, handleChangeStyle } from '../../redux/modules/dataReducer.js'
 import { SliderPicker } from 'react-color'
 
 class AddTicket extends React.Component {
@@ -11,10 +11,13 @@ class AddTicket extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleAddTicket = this.handleAddTicket.bind(this);
-   
+    this.handleChange = this.handleChange.bind(this)
+    
     this.state = {
       show: false,
-      typeColor: '000000'
+      typeColor: '000000',
+      styles: [{'backgroundColor':'#ffffff'}],
+      input: ''
     };
   }
 
@@ -44,15 +47,34 @@ class AddTicket extends React.Component {
       "type": type,
       "priority": priority,
     }
-    // this.props.addTicket(data)
-    this.setState({ show: false })
+    
+    this.setState({ 
+      show: false,
+      input : ''    
+    })
+
     let projNumber = this.props.projNumber
     this.props.dispatch(handleAddTicket(data, projNumber))
     this.props.dispatch(addTicketFinished())
-
+    this.props.dispatch(handleChangeStyle(type, this.state.styles[0].backgroundColor))
 
   }
-
+  onChangeColor = (color) => {
+        
+    let styles = [{"backgroundColor":color.hex}]
+    this.setState({ styles:styles})
+ 
+}
+handleChange(event) {
+  this.setState({
+    input: event.target.value
+  });
+  // Checks to see if Type has already been entered before and picks up that color
+  if(this.props.data[0].styles[event.target.value]!==undefined){
+    this.setState({styles: this.props.data[0].styles[event.target.value]})
+  }
+  
+}
 
   render() {
     let data = this.props.data
@@ -116,12 +138,12 @@ class AddTicket extends React.Component {
             <hr />
 
             <h4>Type</h4>
-            <input id='typeInput'></input>
+            <input id='typeInput' onChange={this.handleChange}></input>
             
 
             <hr />
 
-            <SliderPicker id="slider" color={this.state.typeColor}/>
+            <SliderPicker color={this.state.styles[0].backgroundColor} onChangeComplete={this.onChangeColor} />
 
 
           </Modal.Body>
