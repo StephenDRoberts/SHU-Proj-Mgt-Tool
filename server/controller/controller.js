@@ -89,7 +89,8 @@ module.exports = {
         let templateData =
         {
             "user": req.body.user,
-            "projects": []
+            "projects": [],
+            "styles": []
         }
 
         app.get('myDb').collection('projects').insertOne(templateData, function (err, docs) {
@@ -145,6 +146,11 @@ module.exports = {
     deleteAccount: function (app, req, res) {
         let user = req.body.user
         app.get('myDb').collection('users').deleteMany({ "user": user }, function (err, docs) {
+            if (err) {
+                console.error(err)
+            }
+        })
+        app.get('myDb').collection('projects').deleteMany({ "user": user }, function (err, docs) {
             if (err) {
                 console.error(err)
             }
