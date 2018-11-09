@@ -10,14 +10,17 @@ import EmptyDisplay from './components/general/EmptyDisplay.js';
 import Header from './components/general/Header.js'
 import { connect } from 'react-redux'
 import { fetchData } from './redux/modules/dataReducer.js'
+import {handleLogin} from './redux/modules/loginReducer.js'
 
-class App extends Component {
-  constructor() {
-    super();
+class App extends Component {  
+  constructor(props) {
+    super(props);
+
+    
     this.changeDisplay = this.changeDisplay.bind(this)
     // this.handleAddTicket = this.handleAddTicket.bind(this)
     // this.handleDeleteTicket = this.handleDeleteTicket.bind(this)
-
+    
     this.state = {
       display: 'Kanban',
       loggedIn: false,
@@ -27,8 +30,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.user)
-    this.props.dispatch(fetchData(this.props.user));
+    this.props.dispatch(fetchData(this.props.user)).then(()=>{
+      if(this.props.data && this.props.data[1]){
+        this.props.dispatch(handleLogin(this.props.data[1]))
+      }
+    })
+    // looks to see if a session user has been saved
+    // only for login/logout button purposes
+    console.log(this.props)
+    
+  
   }
 
 
@@ -38,6 +49,7 @@ class App extends Component {
   }
 
   render() {
+    
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];

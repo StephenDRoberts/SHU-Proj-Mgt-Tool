@@ -95,6 +95,7 @@ export function fetchData(user) {
 
     return fetch("/api/provideData", {
       method: 'post',
+      credentials: 'same-origin',
       body: JSON.stringify({
         user: user,
       }),
@@ -109,6 +110,7 @@ export function fetchData(user) {
         }
       })
       .then(data => {
+        console.log(data)
         dispatch(fetchDataSuccess(data));
         return data;
       })

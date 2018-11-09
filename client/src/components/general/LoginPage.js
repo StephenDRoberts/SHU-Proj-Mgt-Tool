@@ -6,7 +6,6 @@ import {handleLogin} from '../../redux/modules/loginReducer.js'
 import Header from './Header.js';
 
 class LoginPage extends React.Component {
-
     constructor(){
         super()
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -21,6 +20,7 @@ class LoginPage extends React.Component {
         
         fetch(endpoint, {
             method: 'post',
+            credentials: 'same-origin',
             body: JSON.stringify({
                 user: user,
                 password: password

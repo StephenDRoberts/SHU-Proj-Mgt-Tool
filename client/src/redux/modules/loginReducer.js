@@ -61,7 +61,9 @@ export const loginReducer = (state = defaultState, action) => {
             }
 
         case LOGIN:
-            return {
+        console.log('logging in')
+        console.log(action.user)    
+        return {
                 accountState,
                 loggedIn: true,
                 user: action.user
