@@ -1,14 +1,8 @@
-[{
-    "email": "user1",
-    "user": "user1",
-    "password":"user1",
-    "confPassword":"user1"
-},
+[
 {
-    "email": "user2",
-    "user": "user2",
-    "password":"user2",
-    "confPassword":"user2"
+    "email" : "user1", 
+    "user" : "user1", 
+    "hash" : "$2a$10$OSd4V5vsOz7QiB5jgb549OWm55GP0eoGS7qgwpn4CE/Vx2GeATTB2" 
 }
 
 ]

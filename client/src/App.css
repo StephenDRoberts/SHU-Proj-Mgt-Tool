@@ -134,6 +134,18 @@ textarea, input {
   border-radius: 5px 20px 5px;
 }
 
+.searchSign{
+  background-color: #105187;
+  color: white;
+  position: fixed;
+  right: 190px;
+  bottom: 10px;
+  height: 75px;
+  width: 75px;
+  font-size: 20px;
+  border-radius: 5px 20px 5px;
+}
+
 .saveSign:hover{
   background-color: #563d7c;
   color: white;

@@ -110,7 +110,6 @@ export function fetchData(user) {
         }
       })
       .then(data => {
-        console.log(data)
         dispatch(fetchDataSuccess(data));
         return data;
       })

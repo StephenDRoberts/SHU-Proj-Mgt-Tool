@@ -20,8 +20,20 @@ class Header extends React.Component {
     }
 
     handleLogout() {
-        this.props.dispatch(handleLogout())
-        this.props.history.push('/');
+        //sends to logout api route so that we can reset the session
+        let endpoint = '/api/logout'
+        fetch(endpoint, {
+            method: 'post',
+            credentials: 'same-origin',
+          }).then((response)=> {
+            if(response.ok){
+            console.log('logged out')
+            this.props.dispatch(handleLogout())
+            this.props.history.push('/');
+            }
+        })
+
+        
     }
     handleLogin() {
         this.props.history.push('/');
@@ -117,7 +129,6 @@ class Header extends React.Component {
     }
 
     render() {
-        console.log(this.props.accountState)
         if (this.props.accountState.user == "") {
             return (this.loggedOutRender())
         } else {

@@ -5,22 +5,23 @@ import Board from './components/kanban/Board.js';
 import Dashboard from './components/dashboard/Dashboard.js';
 import AddTicket from './components/kanban/AddTicket.js';
 import Save from './components/kanban/Save.js';
+import ProjectSearch from './components/general/ProjectSearch.js';
 import ProjectDropdown from './components/general/ProjectDropdown.js';
 import EmptyDisplay from './components/general/EmptyDisplay.js';
 import Header from './components/general/Header.js'
 import { connect } from 'react-redux'
 import { fetchData } from './redux/modules/dataReducer.js'
-import {handleLogin} from './redux/modules/loginReducer.js'
+import { handleLogin } from './redux/modules/loginReducer.js'
 
-class App extends Component {  
+class App extends Component {
   constructor(props) {
     super(props);
 
-    
+
     this.changeDisplay = this.changeDisplay.bind(this)
     // this.handleAddTicket = this.handleAddTicket.bind(this)
     // this.handleDeleteTicket = this.handleDeleteTicket.bind(this)
-    
+
     this.state = {
       display: 'Kanban',
       loggedIn: false,
@@ -30,16 +31,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchData(this.props.user)).then(()=>{
-      if(this.props.data && this.props.data[1]){
+    this.props.dispatch(fetchData(this.props.user)).then(() => {
+      // looks to see if a session user has been saved
+      // only for login/logout button purposes
+      if (this.props.data && this.props.data[1]) {
         this.props.dispatch(handleLogin(this.props.data[1]))
       }
     })
-    // looks to see if a session user has been saved
-    // only for login/logout button purposes
-    console.log(this.props)
-    
-  
   }
 
 
@@ -49,13 +47,13 @@ class App extends Component {
   }
 
   render() {
-    
+
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
 
-    if (data.length === 0) {
-      data = [{
+    if (data ===undefined || data.length === 0) {
+      data = [{ 
         id: '',
         user: '',
         projects: []
@@ -63,7 +61,7 @@ class App extends Component {
     }
     // else {console.log(data[0].projects.length)}
     else if (data[0].projects.length == 0) {
-      
+
 
       activeTasks = []
     } else {
@@ -71,20 +69,20 @@ class App extends Component {
     }
 
     // RENDER ELEMENTS
-
-     if (data[0].projects.length == 0) {
+  
+    if (data[0].projects.length == 0) {
       return (
         // <Provider store={store}>
 
-          <div className="App">
-            <Header />
-            <Nav parentEvent={this.changeDisplay} />
-            <ProjectDropdown projectList={data[0].projects} />
-            <EmptyDisplay />
-            <Save />
+        <div className="App">
+          <Header />
+          <Nav parentEvent={this.changeDisplay} />
+          <ProjectDropdown projectList={data[0].projects} />
+          <EmptyDisplay />
+          <Save />
 
 
-          </div>
+        </div>
         // </Provider>
       )
     }
@@ -92,15 +90,16 @@ class App extends Component {
       return (
         // <Provider store={store}>
 
-          <div className="App">
-            <Header />
-            <Nav parentEvent={this.changeDisplay} />
-            <ProjectDropdown projectList={data[0].projects} />
-            <Board tasks={activeTasks} deleteTicket={this.handleDeleteTicket} />
-            <Save />
-            <AddTicket />
-            {/* <AddTicket addTicket={this.handleAddTicket} activeProject={this.state.activeProject} activeTasks={this.state.activeTasks}/> */}
-          </div>
+        <div className="App">
+          <Header />
+          <Nav parentEvent={this.changeDisplay} />
+          <ProjectDropdown projectList={data[0].projects} />
+          <Board tasks={activeTasks} deleteTicket={this.handleDeleteTicket} />
+          <ProjectSearch projectList={data[0].projects}/>
+          <Save />
+          <AddTicket />
+          {/* <AddTicket addTicket={this.handleAddTicket} activeProject={this.state.activeProject} activeTasks={this.state.activeTasks}/> */}
+        </div>
         // </Provider>
       );
 

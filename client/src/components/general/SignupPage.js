@@ -28,7 +28,6 @@ class SignupPage extends React.Component {
                 'Content-Type': 'application/json'
             }
         }).then(function (response) {
-            console.log('setup endpoint')
             if (response.ok) {
                 return response.json()
             }
@@ -76,7 +75,6 @@ class SignupPage extends React.Component {
             //if json length !== 0, then we have a user with that username in our db,
             //so we shouldn't proceed with the rest of the sign up and we should
             //alert the user.
-            console.log(myJson)
             if (myJson.length !== 0) {
                 alert("That user name is taken. Please select another.")
                 return [];
@@ -105,7 +103,6 @@ class SignupPage extends React.Component {
                     self.setupAccount()
                     this.props.dispatch(handleSignup(user))
                 }).then(() => {
-                    console.log(user)
                     self.props.history.push('/main')
                 })
             }

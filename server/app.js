@@ -2,10 +2,13 @@ var express = require('express');
 var app = express();
 var routes = require('./routes/routes');
 var session = require('client-sessions')
+var myControllers = require('./controller/controller.js')
+var cookieParser = require('cookie-parser')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(cookieParser())
 
 //SESSION SETUP
 // HELP FROM https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions
@@ -17,8 +20,6 @@ app.use(session({
 }))
 
 app.use(function (req, res, next) {
-    console.log('tyring to garther session data:')
-    console.log(req.session.user)
     if (req.session && req.session.user) {
 
         app.get('myDb').collection('users').find({ "user": req.session.user }).toArray(function (err, docs) {
@@ -33,14 +34,15 @@ app.use(function (req, res, next) {
                 res.locals.user = docs[0].user;
             }
             // finishing processing the middleware and run the route
-            console.log('did we get user data???')
-            console.log(req.session.user)
             next()
         })
     } else {
         next()
     }
 });
+
+// app.route('/api/logout')
+//     .get((req,res)=>{myControllers.logout(app,req,res);})
 
 routes(app)
 

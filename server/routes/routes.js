@@ -14,10 +14,10 @@ function requireLogin(req,res,next){
 router = function(app){
 
     app.route('/api/provideData')
-    .post((req,res)=>{myControllers.provideData(app,req,res);})
+    .post(requireLogin, (req,res)=>{myControllers.provideData(app,req,res);})
 
     app.route('/api/saveData')
-    .put((req,res)=>{myControllers.saveData(app,req,res);})
+    .put(requireLogin, (req,res)=>{myControllers.saveData(app,req,res);})
 
     app.route('/api/signup')
     .post((req,res)=>{myControllers.signup(app,req,res);})
@@ -25,8 +25,11 @@ router = function(app){
     app.route('/api/login')
     .post((req,res)=>{myControllers.login(app,req,res);})
 
+    app.route('/api/logout')
+    .post(requireLogin, (req,res)=>{myControllers.logout(app,req,res);})
+
     app.route('/api/deleteAccount')
-    .post((req,res)=>{myControllers.deleteAccount(app,req,res);})
+    .post(requireLogin, (req,res)=>{myControllers.deleteAccount(app,req,res);})
 
     app.route('/api/setupAccount')
     .post((req,res)=>{myControllers.setupAccount(app,req,res);})
