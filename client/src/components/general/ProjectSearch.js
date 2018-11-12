@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Button, Modal, Glyphicon, MenuItem } from 'react-bootstrap';
-import { handleAddTicket, addTicketFinished, handleChangeStyle } from '../../redux/modules/dataReducer.js'
-
+import { handleProjectToggle } from '../../redux/modules/changeProject.js'
 
 class ProjectSearch extends React.Component {
   constructor(props, context) {
@@ -15,13 +14,14 @@ class ProjectSearch extends React.Component {
 
     this.state = {
       show: false,
-      inputFilter: ''
+      // inputFilter: ''
     };
   }
 
-
   handleClose() {
-    this.setState({ show: false });
+    this.setState({ 
+      show: false, 
+      inputFilter: ''});
   }
 
   handleShow() {
@@ -33,43 +33,34 @@ class ProjectSearch extends React.Component {
       inputFilter: event.target.value
     });
   }
+  changeProject = (num) => {    
+    //CHANGE PROJECT
+    this.props.dispatch(handleProjectToggle(num))
+    this.setState({show: false})
+}
 
   render() {
-    // let data = this.props.data
-    // let activeProject = this.props.projNumber
-    // let activeTasks = [];
 
-    // if (data === undefined || data.length === 0) {
-    //   data = [{
-    //     id: '',
-    //     user: '',
-    //     projects: []
-    //   }]
-    // } else if (data[0].projects.length == 0) {
-
-    //   data = data[0]
-    //   activeTasks = []
-    // } else {
-    //   data = data[0]
-    //   activeTasks = data.projects[activeProject].tasks
-    // }
     let projectList = this.props.projectList
+    let fullProjList = []
+    projectList.forEach((item)=>{fullProjList.push(item.projTitle)})
+
     let projectListAr = []
     let self = this
     //on initial render, projectList is undefined, so set a error capture to set to an empty array
     if (projectList === undefined) {
       projectList = []
     } else {
-      projectListAr = projectList
-      .filter(item => {
-        console.log(item.projTitle)
-        console.log(this.state.inputFilter)
-        !this.state.inputFilter || item.projTitle.toLowerCase().includes(this.state.inputFilter)})
-      .map(function (obj, i) {
-        return <MenuItem eventKey={i} key={i} onSelect={self.changeProject}>{obj.projTitle}</MenuItem>
-      })
+      projectList
+      .filter(item => !this.state.inputFilter || item.projTitle.toLowerCase().includes(this.state.inputFilter.toLowerCase()))
+        .forEach((item, index)=>{
+          let locationInFull = fullProjList.indexOf(item.projTitle)
+          projectListAr.push(
+            <MenuItem eventKey={index} key={index} onSelect={()=>self.changeProject(locationInFull)}>{item.projTitle}</MenuItem>
+          )
+        })
     }
-    console.log(projectListAr)
+    
     return (
 
       <div className='searchProjects'>
@@ -88,7 +79,6 @@ class ProjectSearch extends React.Component {
             {projectListAr}
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="primary">Submit</Button>
             <Button onClick={this.handleClose}>Close</Button>
           </Modal.Footer>
         </Modal>

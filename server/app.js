@@ -27,7 +27,6 @@ app.use(function (req, res, next) {
                 console.error(err)
             }
             if (docs.length !== 0) {
-                
                 req.user = docs[0].user;
                 delete req.user.password; // delete the password from the session
                 req.session.user = docs[0].user;  //refresh the session value
