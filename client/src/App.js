@@ -51,6 +51,7 @@ class App extends Component {
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
+    let currentProject = ''
 
     if (data ===undefined || data.length === 0) {
       data = [{ 
@@ -61,10 +62,9 @@ class App extends Component {
     }
     // else {console.log(data[0].projects.length)}
     else if (data[0].projects.length == 0) {
-
-
       activeTasks = []
     } else {
+      currentProject = data[0].projects[activeProject].projTitle
       activeTasks = data[0].projects[activeProject].tasks
     }
 
@@ -84,13 +84,11 @@ class App extends Component {
     }
     else if (this.state.display === 'Kanban') {
       return (
-        
-
         <div className="App">
           <Header />
           <Nav parentEvent={this.changeDisplay} />
-          <ProjectDropdown projectList={data[0].projects} />
-          <Board tasks={activeTasks} deleteTicket={this.handleDeleteTicket} />
+          <ProjectDropdown projectList={data[0].projects} currentProject={currentProject}/>
+          <Board tasks={activeTasks} deleteTicket={this.handleDeleteTicket}/>
           <ProjectSearch projectList={data[0].projects}/>
           <Save />
           <AddTicket />
@@ -104,7 +102,7 @@ class App extends Component {
         <div className="App">
           <Header />
           <Nav parentEvent={this.changeDisplay} />
-          <ProjectDropdown projectList={data[0].projects} />
+          <ProjectDropdown projectList={data[0].projects} currentProject={currentProject}/>
           <Dashboard tasks={activeTasks} />
         </div>
       );

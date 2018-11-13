@@ -140,10 +140,14 @@ class ProjectDropdown extends React.Component {
                 this.myRef.current.disabled = true;
             }
         }
-
+        let currentProject = ''
+        
+        if(this.props.currentProject!==undefined){
+            currentProject = this.props.currentProject
+        }
         return (
             <div id='projectDropdown'>
-                <DropdownButton title='Project' pullRight id='projdropdown'>
+                <DropdownButton title={currentProject} pullRight id='projdropdown'>
                     {projectListAr}
                     <MenuItem divider />
                     <MenuItem eventKey="100" onSelect={self.changeProject}>Add Project</MenuItem>
