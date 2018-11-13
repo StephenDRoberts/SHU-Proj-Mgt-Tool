@@ -36,7 +36,9 @@ class ProjectSearch extends React.Component {
   changeProject = (num) => {    
     //CHANGE PROJECT
     this.props.dispatch(handleProjectToggle(num))
-    this.setState({show: false})
+    this.setState({
+      show: false,
+      inputFilter: ''})
 }
 
   render() {

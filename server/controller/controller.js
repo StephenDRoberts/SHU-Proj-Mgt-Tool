@@ -153,6 +153,7 @@ module.exports = {
             if (err) {
                 console.error(err)
             }
+            req.session.reset()
             res.json(docs)
         })
     },
