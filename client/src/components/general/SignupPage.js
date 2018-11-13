@@ -37,7 +37,14 @@ class SignupPage extends React.Component {
         })
     }
 
+        //Validation check - email is a correct email type
+        //RegEx taken from:
+        //https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 
+        validateEmail=(email)=>{
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
 
 
     handleSubmit() {
@@ -45,10 +52,10 @@ class SignupPage extends React.Component {
         let user = document.getElementById('usernameInput').value
         let password = document.getElementById('passwordInput').value
         let confPassword = document.getElementById('passwordConfirmInput').value
-
-        //Validation check - passwords match
-        if (password !== confPassword) {
-            alert("Your passwords don't match. Please try again")
+        
+        //Validation check - email is a correct email type
+        if(this.validateEmail(email)===false){
+            alert("Please insert a correct email address")
             return;
         }
 
@@ -107,6 +114,13 @@ class SignupPage extends React.Component {
                 })
             }
         })
+    
+        //Validation check - passwords match
+        if (password !== confPassword) {
+            alert("Your passwords don't match. Please try again")
+            return;
+        }
+    
     }
 
 
@@ -118,7 +132,7 @@ class SignupPage extends React.Component {
                     <form className="login">
 
                         <img id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
-                        <input placeholder='Email Address' className='loginInput' id='emailInput'></input>
+                        <input placeholder='Email Address' className='loginInput' id='emailInput' type='email' name='email'></input>
                         <input placeholder='Username' className='loginInput' id='usernameInput'></input>
                         <input placeholder='Password' type='password' className='loginInput' id='passwordInput'></input>
                         <input placeholder='Confirm password' type='password' className='loginInput' id='passwordConfirmInput'></input>

@@ -41,7 +41,24 @@ class AddTicket extends React.Component {
     // that the style will still come through 
     let trimmedType = type.replace(/\s+/g, '')
     
-    let priority = 2
+    //Validation check - need a title for kanban UI
+        //NB, we've not required a description as that can be optional.
+        if(title===''){
+          alert("Please specify a title for your ticket.");
+          return;
+      }
+      //Validation check - hours must be a number
+     if(isNaN(hours)){
+          alert("Hours must be in whole number format.\nIf you'd like to sepcify 0 hours, please enter 0.")
+          return;
+      }
+
+      //Validation check - need a type otherwise type colours wont work.
+      if(trimmedType === ''){
+          alert("Please enter a type name");
+          return;
+      }
+
 
     let data = {
       "title": title,
@@ -50,7 +67,6 @@ class AddTicket extends React.Component {
       "status": status,
       "type": type,
       "trimmedType": trimmedType,
-      "priority": priority,
     }
     
     this.setState({ 

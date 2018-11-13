@@ -27,7 +27,6 @@ class Header extends React.Component {
             credentials: 'same-origin',
           }).then((response)=> {
             if(response.ok){
-            console.log('logged out')
             this.props.dispatch(handleLogout())
             this.props.history.push('/');
             }
