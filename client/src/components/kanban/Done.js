@@ -23,6 +23,7 @@ class Done extends React.Component {
             hours: parseInt(this.props.data[0].projects[projNumber].tasks[ticketNum].hours, 10),
             status: cat,
             type: this.props.data[0].projects[projNumber].tasks[ticketNum].type,
+            trimmedType: this.props.data[0].projects[projNumber].tasks[ticketNum].trimmedType,
         }
         // dispatches to redux store to edit ticket and re-render application
         this.props.dispatch(handleEditTicket(data, ticketNum, projNumber))

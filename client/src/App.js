@@ -72,23 +72,19 @@ class App extends Component {
   
     if (data[0].projects.length == 0) {
       return (
-        // <Provider store={store}>
-
         <div className="App">
           <Header />
           <Nav parentEvent={this.changeDisplay} />
           <ProjectDropdown projectList={data[0].projects} />
           <EmptyDisplay />
           <Save />
-
-
         </div>
-        // </Provider>
+        
       )
     }
     else if (this.state.display === 'Kanban') {
       return (
-        // <Provider store={store}>
+        
 
         <div className="App">
           <Header />
@@ -98,9 +94,9 @@ class App extends Component {
           <ProjectSearch projectList={data[0].projects}/>
           <Save />
           <AddTicket />
-          {/* <AddTicket addTicket={this.handleAddTicket} activeProject={this.state.activeProject} activeTasks={this.state.activeTasks}/> */}
+          
         </div>
-        // </Provider>
+        
       );
 
     } else {

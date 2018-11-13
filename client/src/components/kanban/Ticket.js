@@ -193,6 +193,7 @@ class Ticket extends React.Component {
         // Defines styles for each ticket - couldnt do in componentDidMount
         // as changing project number didn't create a compDiDMount call.
         // Possible mutability issue with changeProj reducer???
+        console.log(this.props.dataset)
         let styles = this.getContrastYIQ(this.props.data[0].styles[this.props.dataset.trimmedType][0].backgroundColor)
 
         //This is to make css stylings ok - will change when change 'Type' names
