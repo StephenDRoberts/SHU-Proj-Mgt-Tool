@@ -40,9 +40,6 @@ app.use(function (req, res, next) {
     }
 });
 
-// app.route('/api/logout')
-//     .get((req,res)=>{myControllers.logout(app,req,res);})
-
 routes(app)
 
 var MongoClient = require('mongodb').MongoClient

@@ -14,7 +14,6 @@ class ProjectSearch extends React.Component {
 
     this.state = {
       show: false,
-      // inputFilter: ''
     };
   }
 
@@ -58,7 +57,7 @@ class ProjectSearch extends React.Component {
         .forEach((item, index)=>{
           let locationInFull = fullProjList.indexOf(item.projTitle)
           projectListAr.push(
-            <MenuItem eventKey={index} key={index} onSelect={()=>self.changeProject(locationInFull)}>{item.projTitle}</MenuItem>
+            <MenuItem className = "projectSearchResults" eventKey={index} key={index} onSelect={()=>self.changeProject(locationInFull)}>{item.projTitle}</MenuItem>
           )
         })
     }

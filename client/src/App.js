@@ -40,7 +40,6 @@ class App extends Component {
     })
   }
 
-
   //changes display according to Nav item selected
   changeDisplay = (newDisplay) => {
     this.setState({ display: newDisplay })

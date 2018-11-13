@@ -140,10 +140,14 @@ class ProjectDropdown extends React.Component {
                 this.myRef.current.disabled = true;
             }
         }
-        let currentProject = ''
+        let currentProject = 'Project'
         
         if(this.props.currentProject!==undefined){
             currentProject = this.props.currentProject
+        }
+        console.log(currentProject.length)
+        if(currentProject.length>10){
+            currentProject = currentProject.substring(0,10)+'...'
         }
         return (
             <div id='projectDropdown'>

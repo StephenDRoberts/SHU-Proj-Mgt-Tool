@@ -142,7 +142,7 @@ handleChange(event) {
             <hr />
 
             <h4>Description</h4>
-            <input id='descInput'></input>
+            <textarea id='descInput'></textarea>
 
             <hr />
 
