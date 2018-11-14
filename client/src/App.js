@@ -60,7 +60,7 @@ class App extends Component {
       }]
     }
     // else {console.log(data[0].projects.length)}
-    else if (data[0].projects.length == 0) {
+    else if (data[0].projects.length === 0) {
       activeTasks = []
     } else {
       currentProject = data[0].projects[activeProject].projTitle
@@ -69,7 +69,7 @@ class App extends Component {
 
     // RENDER ELEMENTS
   
-    if (data[0].projects.length == 0) {
+    if (data[0].projects.length === 0) {
       return (
         <div className="App">
           <Header />

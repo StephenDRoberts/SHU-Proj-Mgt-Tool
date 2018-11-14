@@ -44,7 +44,7 @@ class Doing extends React.Component {
 
     return (
     <div className = "droppable" onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, 'Doing')}>
-        <h2>In Progress:</h2>
+        <h2>Doing:</h2>
         {doingTicketsAr}
         
     </div>

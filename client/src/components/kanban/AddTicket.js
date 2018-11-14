@@ -12,11 +12,11 @@ class AddTicket extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleAddTicket = this.handleAddTicket.bind(this);
     this.handleChange = this.handleChange.bind(this)
-    
+
     this.state = {
       show: false,
       typeColor: '000000',
-      styles: [{'backgroundColor':'#ffffff'}],
+      styles: [{ 'backgroundColor': '#ffffff' }],
       input: ''
     };
   }
@@ -40,24 +40,24 @@ class AddTicket extends React.Component {
     // trimmedType used to make sure that if user inputs a space in their type name 
     // that the style will still come through 
     let trimmedType = type.replace(/\s+/g, '')
-    
-    //Validation check - need a title for kanban UI
-        //NB, we've not required a description as that can be optional.
-        if(title===''){
-          alert("Please specify a title for your ticket.");
-          return;
-      }
-      //Validation check - hours must be a number
-     if(isNaN(hours)){
-          alert("Hours must be in whole number format.\nIf you'd like to sepcify 0 hours, please enter 0.")
-          return;
-      }
 
-      //Validation check - need a type otherwise type colours wont work.
-      if(trimmedType === ''){
-          alert("Please enter a type name");
-          return;
-      }
+    //Validation check - need a title for kanban UI
+    //NB, we've not required a description as that can be optional.
+    if (title === '') {
+      alert("Please specify a title for your ticket.");
+      return;
+    }
+    //Validation check - hours must be a number
+    if (isNaN(hours)) {
+      alert("Hours must be in whole number format.\nIf you'd like to sepcify 0 hours, please enter 0.")
+      return;
+    }
+
+    //Validation check - need a type otherwise type colours wont work.
+    if (trimmedType === '') {
+      alert("Please enter a type name");
+      return;
+    }
 
 
     let data = {
@@ -68,64 +68,58 @@ class AddTicket extends React.Component {
       "type": type,
       "trimmedType": trimmedType,
     }
-    
-    this.setState({ 
+
+    this.setState({
       show: false,
-      input : ''    
+      input: ''
     })
 
     let projNumber = this.props.projNumber
     this.props.dispatch(handleAddTicket(data, projNumber))
     this.props.dispatch(addTicketFinished())
-    
+
     this.props.dispatch(handleChangeStyle(trimmedType, this.state.styles[0].backgroundColor))
 
   }
   onChangeColor = (color) => {
-        
-    let styles = [{"backgroundColor":color.hex}]
-    this.setState({ styles:styles})
- 
-}
-handleChange(event) {
-  this.setState({
-    input: event.target.value
-  });
-  // Checks to see if Type has already been entered before and picks up that color
-  let trimmedInput = event.target.value.replace(/\s+/g, '')
-  if(this.props.data[0].styles[trimmedInput]!==undefined){
-    this.setState({styles: this.props.data[0].styles[trimmedInput]})
+
+    let styles = [{ "backgroundColor": color.hex }]
+    this.setState({ styles: styles })
+
   }
-  
-}
+  handleChange(event) {
+    this.setState({
+      input: event.target.value
+    });
+    // Checks to see if Type has already been entered before and picks up that color
+    let trimmedInput = event.target.value.replace(/\s+/g, '')
+    if (this.props.data[0].styles[trimmedInput] !== undefined) {
+      this.setState({ styles: this.props.data[0].styles[trimmedInput] })
+    }
+
+  }
 
   render() {
     let data = this.props.data
     let activeProject = this.props.projNumber
     let activeTasks = [];
 
-
     if (data === undefined || data.length === 0) {
       data = [{
         id: '',
         user: '',
         projects: []
-      }]
-    } else if (data[0].projects.length == 0) {
 
+      }]
+    } else if (data[0].projects.length === 0) {
       data = data[0]
       activeTasks = []
     } else {
       data = data[0]
       activeTasks = data.projects[activeProject].tasks
     }
-
-    let typeStyle = {
-      color: this.state.typeColor
-    }
-    
     return (
-      
+
       <div className='addTicket'>
         <Button className='addSign' bsStyle="success" onClick={this.handleShow}>
           <Glyphicon className="glyphicon glyphicon-plus" glyph="" />
@@ -162,7 +156,7 @@ handleChange(event) {
 
             <h4>Type</h4>
             <input id='typeInput' onChange={this.handleChange}></input>
-            
+
 
             <hr />
 

@@ -239,7 +239,7 @@ export const dataReducer = (state = initialState, action) => {
     case CHANGE_STYLE:
     let changeStyleState = [...state.data]
     let className = action.className
-    if(changeStyleState[0].styles[className]==undefined){
+    if(changeStyleState[0].styles[className]===undefined){
       changeStyleState[0].styles[className] = [{"backgroundColor":action.style}]
     } else {
     changeStyleState[0].styles[className][0].backgroundColor = action.style

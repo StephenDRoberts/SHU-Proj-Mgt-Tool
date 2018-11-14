@@ -24,17 +24,15 @@ class Dashboard extends React.Component {
 
         let uniqueTypeNames = this.getUniqueNames(data)
         let allSummaryObject = []
-        let colorArray = [];
-
         
         for (var j = 0; j < uniqueTypeNames.length; j++) {
             let hoursSubTotal = 0
             for (var i = 0; i < data.length; i++) {
 
-                if (data[i].type == uniqueTypeNames[j]) {
+                if (data[i].type === uniqueTypeNames[j]) {
                     hoursSubTotal += parseInt(data[i].hours, 10)
                 }
-                if (i == data.length - 1) {
+                if (i === data.length - 1) {
                     let typeName = uniqueTypeNames[j]
                     allSummaryObject.push({
                         x: typeName, y: hoursSubTotal
@@ -62,7 +60,7 @@ class Dashboard extends React.Component {
         let fullData = this.props.data[0].projects[this.props.projNumber].tasks
         let doneData = []
         for (var i = 0; i < fullData.length; i++) {
-            if (fullData[i].status == 'Done') {
+            if (fullData[i].status === 'Done') {
                 doneData.push(fullData[i])
             }
         }
@@ -71,8 +69,6 @@ class Dashboard extends React.Component {
 
         let fullDataColors = this.colors(fullData)
         let doneDataColors = this.colors(doneData)
-        let padding = {top: 60, bottom: 60}
-        let animation = {duration: 500}
         
         return (
             <div className='pieContainer'>

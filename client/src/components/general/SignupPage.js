@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import {withRouter} from 'react-router'
 import { Button } from 'react-bootstrap';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from './Header.js';
-import { fetchData } from '../../redux/modules/dataReducer.js'
 import { handleSignup } from '../../redux/modules/loginReducer.js'
 
 class SignupPage extends React.Component {
@@ -17,7 +16,6 @@ class SignupPage extends React.Component {
     setupAccount() {
         let endpoint = '/api/setupAccount'
         let user = document.getElementById('usernameInput').value
-        let self = this;
 
         fetch(endpoint, {
             method: 'post',
@@ -40,9 +38,8 @@ class SignupPage extends React.Component {
         //Validation check - email is a correct email type
         //RegEx taken from:
         //https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-
         validateEmail=(email)=>{
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
         }
 
@@ -131,11 +128,11 @@ class SignupPage extends React.Component {
                 <div className='loginWrapper'>
                     <form className="login">
 
-                        <img id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
+                        <img alt="Login avatar"id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
                         <input placeholder='Email Address' className='loginInput' id='emailInput' type='email' name='email'></input>
-                        <input placeholder='Username' className='loginInput' id='usernameInput'></input>
-                        <input placeholder='Password' type='password' className='loginInput' id='passwordInput'></input>
-                        <input placeholder='Confirm password' type='password' className='loginInput' id='passwordConfirmInput'></input>
+                        <input placeholder='Username' autoComplete="username" className='loginInput' id='usernameInput'></input>
+                        <input placeholder='Password' autoComplete="new-password" type='password' className='loginInput' id='passwordInput'></input>
+                        <input placeholder='Confirm password' autoComplete="new-password" type='password' className='loginInput' id='passwordConfirmInput'></input>
                         <Button bsStyle="primary" className='loginInputButton' id='loginButton' onClick={this.handleSubmit}>Sign Up</Button>
 
                     </form>

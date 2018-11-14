@@ -69,13 +69,13 @@ class ProjectSearch extends React.Component {
           <Glyphicon className="glyphicon glyphicon-search" glyph="" />
         </Button>
 
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal show={this.state.show} onHide={this.handleClose} id="searchModal">
           <Modal.Header closeButton>
             <Modal.Title>Search Projects</Modal.Title>
           </Modal.Header>
           <Modal.Body>
 
-            <input id='searchInput' onChange={this.handleChange}></input>
+            <input id='searchInput' placeholder="Type to filter projects" onChange={this.handleChange}></input>
             <hr />
             {projectListAr}
           </Modal.Body>

@@ -136,7 +136,7 @@ class Ticket extends React.Component {
 
 
     changeStatus(ev) {
-        if (ev.target.value == 'Done') {
+        if (ev.target.value === 'Done') {
             this.setState({ doneShow: true })
         }
     }
@@ -146,7 +146,7 @@ class Ticket extends React.Component {
         let fullDataAr = this.props.data[0].projects[projNumber].tasks
         let titleAr = []
         fullDataAr.map(function (obj) {
-            titleAr.push(obj['title'])
+            return titleAr.push(obj['title'])
         })
 
         return titleAr.findIndex(title => title === this.props.dataset["title"])

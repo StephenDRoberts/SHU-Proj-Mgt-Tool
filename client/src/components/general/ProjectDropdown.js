@@ -31,14 +31,14 @@ class ProjectDropdown extends React.Component {
     changeProject = (num) => {
         //100 code = Add Project, 101 code = Delete project.
         //Otherwise all other numbers below 100 are individual projects
-        if (num == 100) {
+        if (num === '100') {
             //ADD PROJECT
             this.setState({ addShow: true, })
-        } else if (num == 101) {
+        } else if (num === '101') {
             //SHARE PROJECT
             this.setState({ shareShow: true })
 
-        } else if (num == 102) {
+        } else if (num === '102') {
             //DELETE PROJECT
             this.setState({ deleteShow: true })
         } else {
@@ -86,7 +86,6 @@ class ProjectDropdown extends React.Component {
             if (myJson.length !== 0) {
                 //successfully found user -> go to save the target user's workspace
                 let otherUsersData = myJson[0]
-                let ourDataToShare = this.props.data[0].projects[this.props.projNumber]
                
                 let endPoint = '/api/saveData';
                 fetch(endPoint, {
@@ -142,7 +141,7 @@ class ProjectDropdown extends React.Component {
                 return <MenuItem eventKey={i} key={i} onSelect={self.changeProject}>{obj.projTitle}</MenuItem>
             })
 
-            if (projectList.length == 0 && this.myRef.current !== null) {
+            if (projectList.length === 0 && this.myRef.current !== null) {
                 this.myRef.current.disabled = true;
             }
         }

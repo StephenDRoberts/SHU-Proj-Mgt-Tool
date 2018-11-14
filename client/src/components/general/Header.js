@@ -44,9 +44,7 @@ class Header extends React.Component {
 
     handleDeleteAccount() {
         let user = this.props.accountState.user
-
         let endpoint = '/api/deleteAccount'
-        let self = this
 
         fetch(endpoint, {
             method: 'post',
@@ -67,6 +65,7 @@ class Header extends React.Component {
             alert("Your account has been deleted")
         }
         )
+        this.props.dispatch(handleDeleteAccount())
         this.props.history.push('/signup')
     }
 
@@ -87,8 +86,7 @@ class Header extends React.Component {
 
            <div className="dropdown">
 
-                    <img className="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
-
+                    <img alt="Login avatar" className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
 
                     <ul className="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <li role="presentation"><a role="menuitem" tabIndex="-1" onClick={this.handleLogout}>Log Out</a></li>
@@ -116,7 +114,7 @@ class Header extends React.Component {
             <div className='header'>SHU Mod 1 Asgmt 2
 
            <div className="dropdown">
-                    <img className="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
+                    <img alt="Login Avatar"className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
                     <ul className="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <li role="presentation"><a role="menuitem" tabIndex="-1" onClick={this.handleLogin}>Log In</a></li>
                         <li role="presentation" className="divider"></li>
@@ -128,7 +126,7 @@ class Header extends React.Component {
     }
 
     render() {
-        if (this.props.accountState.user == "") {
+        if (this.props.accountState.user === "") {
             return (this.loggedOutRender())
         } else {
             return (this.loggedInRender())
