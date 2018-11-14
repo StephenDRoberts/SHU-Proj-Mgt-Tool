@@ -4,20 +4,9 @@ import { connect } from 'react-redux'
 import { handleEditTicket, handleDeleteTicket, addTicketFinished, handleChangeStyle } from '../../redux/modules/dataReducer.js'
 import { SliderPicker } from 'react-color'
 
-
 class Ticket extends React.Component {
-
     constructor(props, context) {
         super(props, context);
-
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleDoneClose = this.handleDoneClose.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.changeStatus = this.changeStatus.bind(this);
-        this.onChangeColor = this.onChangeColor.bind(this);
 
         this.state = {
             title: '',
@@ -27,27 +16,24 @@ class Ticket extends React.Component {
             type: '',
             trimmedType: '',
             show: false,
-            doneShow: false,
             styles: [{ 'backgroundColor': '#ffffff' }],
             input: ''
         };
     }
 
-    handleDelete() {
+    // deletes ticket
+    handleDelete = () => {
         let projNumber = this.props.projNumber
         let ticketNum = this.findLocation()
         this.props.dispatch(handleDeleteTicket(ticketNum, projNumber))
         this.setState({ show: false });
     }
-    handleClose() {
+    // closes main modal
+    handleClose = () => {
         this.setState({ show: false });
     }
-
-    handleDoneClose() {
-        this.setState({ doneShow: false });
-    }
-    handleShow() {
-
+    // shows main modal with information from the saved ticket
+    handleShow = () => {
         this.setState({
             title: this.props.dataset.title,
             description: this.props.dataset.description,
@@ -59,7 +45,7 @@ class Ticket extends React.Component {
         });
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         let title = document.getElementById('titleEdit').value
         let description = document.getElementById('descEdit').value
         let hours = parseInt(document.getElementById('hoursEdit').value, 10)
@@ -84,9 +70,9 @@ class Ticket extends React.Component {
         }
 
     }
-    //help on general edit handler: 
-    handleEdit() {
-        
+
+    // on saving editted changes
+    handleEdit = () => {
         let title = document.getElementById('titleEdit').value
         let description = document.getElementById('descEdit').value
         let hours = parseInt(document.getElementById('hoursEdit').value, 10)
@@ -95,21 +81,21 @@ class Ticket extends React.Component {
         // trimmedType used to make sure that if user inputs a space in their type name 
         // that the style will still come through
         let trimmedType = type.replace(/\s+/g, '')
-        
+
         //Validation check - need a title for kanban UI
         //NB, we've not required a description as that can be optional.
-        if(title===''){
+        if (title === '') {
             alert("Please specify a title for your ticket.");
             return;
         }
         //Validation check - hours must be a number
-       if(isNaN(hours)){
+        if (isNaN(hours)) {
             alert("Hours must be in whole number format.\nIf you'd like to sepcify 0 hours, please enter 0.")
             return;
         }
 
         //Validation check - need a type otherwise type colours wont work.
-        if(trimmedType === ''){
+        if (trimmedType === '') {
             alert("Please enter a type name");
             return;
         }
@@ -121,9 +107,9 @@ class Ticket extends React.Component {
             "status": status,
             "type": type,
             "trimmedType": trimmedType,
-            "priority": 1
         }
 
+        // saves changes to redux store
         let projNumber = this.props.projNumber
         let ticketNum = this.findLocation()
         this.props.dispatch(handleEditTicket(data, ticketNum, projNumber))
@@ -134,21 +120,14 @@ class Ticket extends React.Component {
         this.setState({ show: false });
     }
 
-
-    changeStatus(ev) {
-        if (ev.target.value === 'Done') {
-            this.setState({ doneShow: true })
-        }
-    }
     // finds the location of the ticket in the specific project array 
-    findLocation() {
+    findLocation = () => {
         let projNumber = this.props.projNumber
         let fullDataAr = this.props.data[0].projects[projNumber].tasks
         let titleAr = []
         fullDataAr.map(function (obj) {
             return titleAr.push(obj['title'])
         })
-
         return titleAr.findIndex(title => title === this.props.dataset["title"])
     }
 
@@ -159,25 +138,22 @@ class Ticket extends React.Component {
         ev.dataTransfer.setData('ticketNum', ticketNum)
     }
 
-
     onChangeColor = (color) => {
-
         let styles = [{ "backgroundColor": color.hex }]
         this.setState({ styles: styles })
-        // this.props.dispatch(handleChangeStyle(color.hex))
     }
 
-    getContrastYIQ(hexcolor) {
-
+    // for accessibility - if the type background colour is dark, use a white font & vice-versa
+    getContrastYIQ = (hexcolor) => {
         var r = parseInt(hexcolor.substr(1, 2), 16);
         var g = parseInt(hexcolor.substr(3, 2), 16);
         var b = parseInt(hexcolor.substr(5, 2), 16);
         var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
         return (yiq >= 128) ? { backgroundColor: hexcolor, color: 'black' } : { backgroundColor: hexcolor, color: 'white' };
-
     }
 
     componentDidMount() {
+        // gets initial data for ticket
         this.setState({
             title: this.props.dataset.title,
             description: this.props.dataset.description,
@@ -197,6 +173,7 @@ class Ticket extends React.Component {
 
         //This is to make css stylings ok - will change when change 'Type' names
         let trimmedType = this.props.dataset.type.replace(/\s+/g, '')
+
         return (
             <div className='tickets'>
                 <Button draggable id="ticketDrag" className='openTicket' onClick={this.handleShow}
@@ -229,7 +206,7 @@ class Ticket extends React.Component {
                         <hr />
 
                         <h4 value="Status">Status</h4>
-                        <select id="statusEdit" onChange={this.changeStatus} defaultValue={this.state.status}>
+                        <select id="statusEdit" defaultValue={this.state.status}>
                             <option id="ToDo" value="To-Do">To-Do</option>
                             <option id="Doing" value="Doing">Doing</option>
                             <option id="Done" value="Done">Done</option>
@@ -253,8 +230,6 @@ class Ticket extends React.Component {
             </div>
         )
     }
-
-
 }
 const mapStateToProps = (state) => {
     return {

@@ -1,19 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import {withRouter} from 'react-router'
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Header from './Header.js';
 import { handleSignup } from '../../redux/modules/loginReducer.js'
 
 class SignupPage extends React.Component {
-    constructor() {
-        super()
-        this.handleSubmit = this.handleSubmit.bind(this)
 
-    }
-
-    setupAccount() {
+    setupAccount = () => {
         let endpoint = '/api/setupAccount'
         let user = document.getElementById('usernameInput').value
 
@@ -25,33 +19,34 @@ class SignupPage extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(function (response) {
+        }).then((response) => {
             if (response.ok) {
                 return response.json()
             }
             alert('Something when wrong setting up your account. Please try again')
-        }).then(function (data) {
+        }).then((data) => {
             return data
         })
     }
 
-        //Validation check - email is a correct email type
-        //RegEx taken from:
-        //https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-        validateEmail=(email)=>{
-            var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        }
+    //Validation check - email is a correct email type
+    //RegEx taken from:
+    //https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+    validateEmail = (email) => {
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
 
 
-    handleSubmit() {
+    handleSubmit = () => {
+        // gathers user's inputted data
         let email = document.getElementById('emailInput').value
         let user = document.getElementById('usernameInput').value
         let password = document.getElementById('passwordInput').value
         let confPassword = document.getElementById('passwordConfirmInput').value
-        
+
         //Validation check - email is a correct email type
-        if(this.validateEmail(email)===false){
+        if (this.validateEmail(email) === false) {
             alert("Please insert a correct email address")
             return;
         }
@@ -80,12 +75,12 @@ class SignupPage extends React.Component {
             //so we shouldn't proceed with the rest of the sign up and we should
             //alert the user.
             if (myJson.length !== 0) {
-                alert("That user name is taken. Please select another.")
+                alert("That username is taken. Please select another.")
                 return [];
             } else {
-
+                // sends to routes/controller to save data in DB
                 let endpoint = '/api/signup'
-                let self = this
+
                 fetch(endpoint, {
                     method: 'post',
                     body: JSON.stringify({
@@ -104,22 +99,21 @@ class SignupPage extends React.Component {
                     alert('Your login details were incorrect, please try again')
 
                 }).then(() => {
-                    self.setupAccount()
+                    this.setupAccount()
                     this.props.dispatch(handleSignup(user))
                 }).then(() => {
-                    self.props.history.push('/main')
+                    this.props.history.push('/main')
                 })
             }
         })
-    
+
         //Validation check - passwords match
         if (password !== confPassword) {
             alert("Your passwords don't match. Please try again")
             return;
         }
-    
-    }
 
+    }
 
     render() {
         return (
@@ -128,7 +122,7 @@ class SignupPage extends React.Component {
                 <div className='loginWrapper'>
                     <form className="login">
 
-                        <img alt="Login avatar"id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
+                        <img alt="Login avatar" id='loginAvatar' src={require('../../images/LoginAvatar.png')}></img>
                         <input placeholder='Email Address' className='loginInput' id='emailInput' type='email' name='email'></input>
                         <input placeholder='Username' autoComplete="username" className='loginInput' id='usernameInput'></input>
                         <input placeholder='Password' autoComplete="new-password" type='password' className='loginInput' id='passwordInput'></input>

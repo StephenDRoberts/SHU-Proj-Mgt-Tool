@@ -1,3 +1,4 @@
+// used immer in this instance which helped with state immutability issues
 import produce from 'immer';
 
 // ACTION TYPE CONSTANTS

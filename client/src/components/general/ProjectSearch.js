@@ -7,63 +7,59 @@ class ProjectSearch extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
-    this.handleChange = this.handleChange.bind(this)
-
     this.state = {
       show: false,
     };
   }
 
-  handleClose() {
-    this.setState({ 
-      show: false, 
-      inputFilter: ''});
+  handleClose = () => {
+    this.setState({
+      show: false,
+      inputFilter: ''
+    });
   }
 
-  handleShow() {
+  handleShow = () => {
     this.setState({ show: true });
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({
       inputFilter: event.target.value
     });
   }
-  changeProject = (num) => {    
+  changeProject = (num) => {
     //CHANGE PROJECT
     this.props.dispatch(handleProjectToggle(num))
     this.setState({
       show: false,
-      inputFilter: ''})
-}
+      inputFilter: ''
+    })
+  }
 
   render() {
-
+    // gathers project data to display in modal
     let projectList = this.props.projectList
     let fullProjList = []
-    projectList.forEach((item)=>{fullProjList.push(item.projTitle)})
+    projectList.forEach((item) => { fullProjList.push(item.projTitle) })
 
     let projectListAr = []
-    let self = this
     //on initial render, projectList is undefined, so set a error capture to set to an empty array
     if (projectList === undefined) {
       projectList = []
     } else {
+      // otherwise we filter the list of projects dependent on search keys enterred
       projectList
-      .filter(item => !this.state.inputFilter || item.projTitle.toLowerCase().includes(this.state.inputFilter.toLowerCase()))
-        .forEach((item, index)=>{
+        .filter(item => !this.state.inputFilter || item.projTitle.toLowerCase().includes(this.state.inputFilter.toLowerCase()))
+        .forEach((item, index) => {
           let locationInFull = fullProjList.indexOf(item.projTitle)
           projectListAr.push(
-            <MenuItem className = "projectSearchResults" eventKey={index} key={index} onSelect={()=>self.changeProject(locationInFull)}>{item.projTitle}</MenuItem>
+            <MenuItem className="projectSearchResults" eventKey={index} key={index} onSelect={() => this.changeProject(locationInFull)}>{item.projTitle}</MenuItem>
           )
         })
     }
-    
-    return (
 
+    return (
       <div className='searchProjects'>
         <Button className='searchSign' bsStyle="primary" onClick={this.handleShow}>
           <Glyphicon className="glyphicon glyphicon-search" glyph="" />

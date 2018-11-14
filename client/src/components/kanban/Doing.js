@@ -1,20 +1,20 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import {handleEditTicket} from '../../redux/modules/dataReducer.js' 
-import Ticket from './Ticket.js'; 
+import { connect } from 'react-redux'
+import { handleEditTicket } from '../../redux/modules/dataReducer.js'
+import Ticket from './Ticket.js';
 
 let doingTicketsAr = [];
 
 class Doing extends React.Component {
 
-    onDragOver=(ev)=>{
+    onDragOver = (ev) => {
         ev.preventDefault();
     }
     onDrop = (ev, cat) => {
         // finds the location of the ticket in the project array
         let ticketNum = ev.dataTransfer.getData('ticketNum')
         let projNumber = this.props.projNumber
-        
+
         // sets up our data to edit. only change is the status to match the dropped category
         let data = {
             title: this.props.data[0].projects[projNumber].tasks[ticketNum].title,
@@ -28,30 +28,24 @@ class Doing extends React.Component {
         this.props.dispatch(handleEditTicket(data, ticketNum, projNumber))
     }
 
-    render(){
-       
-     //on initial render, this.props = undefined or is set to be an empty array, so error checked for these values
-     if (this.props===undefined || this.props.length===0 ){
-        
-        //else we pass the todoTickets from props into the Ticket component for rendering
+    render() {
+        //on initial render, this.props = undefined or is set to be an empty array, so error checked for these values
+        if (this.props === undefined || this.props.length === 0) {
+
+            //else we pass the todoTickets from props into the Ticket component for rendering
         } else {
-        
             doingTicketsAr = this.props.tasks.map(function (obj, i) {
                 return <Ticket key={i} dataset={obj}></Ticket>
             })
         }
 
-
-    return (
-    <div className = "droppable" onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, 'Doing')}>
-        <h2>Doing:</h2>
-        {doingTicketsAr}
-        
-    </div>
-    )
-}
-
-
+        return (
+            <div className="droppable" onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, 'Doing')}>
+                <h2>Doing:</h2>
+                {doingTicketsAr}
+            </div>
+        )
+    }
 }
 const mapStateToProps = (state) => {
     return {

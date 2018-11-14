@@ -88,7 +88,7 @@ const changeStyle = (className, style)=>{
 }
 
 
-//FETCH FUNCTION (THUNK???)
+//FETCH FUNCTION (THUNK)
 export function fetchData(user) {
   return dispatch => {
     dispatch(fetchDataBegin());
@@ -216,7 +216,6 @@ export const dataReducer = (state = initialState, action) => {
 
     case DELETE:
       let deleteState = [...state.data]
-      console.log(deleteState)
       deleteState[0].projects[action.projNumber].tasks.splice(action.ticketNum, 1)
       return { data: deleteState }
 
@@ -244,7 +243,6 @@ export const dataReducer = (state = initialState, action) => {
     } else {
     changeStyleState[0].styles[className][0].backgroundColor = action.style
     }
-    // console.log(changeStyleState[action.className])
     return { data: changeStyleState }
 
     default:

@@ -4,6 +4,7 @@ import App from './App.js'
 import LoginPage from './components/general/LoginPage.js';
 import SignupPage from './components/general/SignupPage.js';
 
+// routing for our app
 const AppContainer = () => (
     <main className='container'>
         <Switch>

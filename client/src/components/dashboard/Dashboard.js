@@ -11,7 +11,8 @@ class Dashboard extends React.Component {
         return self.indexOf(value) === index;
     }
 
-    getUniqueNames(data){
+    // filters list of Type names into unique types
+    getUniqueNames(data) {
         let allTypeNames = []
 
         for (var i = 0; i < data.length; i++) {
@@ -20,11 +21,12 @@ class Dashboard extends React.Component {
         let uniqueTypeNames = allTypeNames.filter(this.onlyUnique)
         return uniqueTypeNames
     }
+    // fetches hours summary for all data in kanban board
+    // this data is filtered in render to seperate for done tasks
     allDataHoursSummary(data) {
-
         let uniqueTypeNames = this.getUniqueNames(data)
         let allSummaryObject = []
-        
+
         for (var j = 0; j < uniqueTypeNames.length; j++) {
             let hoursSubTotal = 0
             for (var i = 0; i < data.length; i++) {
@@ -43,19 +45,22 @@ class Dashboard extends React.Component {
         return allSummaryObject
     }
 
-    colors(data){
+    // fetches the colour styles for each unique type name so that the colours map across correctly
+    // between kanban board and Pie chart.
+    colors(data) {
         let uniqueTypeNames = this.getUniqueNames(data)
         let colors = []
-        
-        for(var i =0; i<uniqueTypeNames.length; i++){
+
+        for (var i = 0; i < uniqueTypeNames.length; i++) {
             let toTrim = uniqueTypeNames[i]
             let trimmedType = toTrim.replace(/\s+/g, '')
-            
-            let color = this.props.data[0].styles[trimmedType][0].backgroundColor            
+
+            let color = this.props.data[0].styles[trimmedType][0].backgroundColor
             colors.push(color)
         }
         return colors
     }
+
     render() {
         let fullData = this.props.data[0].projects[this.props.projNumber].tasks
         let doneData = []
@@ -69,12 +74,12 @@ class Dashboard extends React.Component {
 
         let fullDataColors = this.colors(fullData)
         let doneDataColors = this.colors(doneData)
-        
+
         return (
             <div className='pieContainer'>
                 <Container>
                     <Row>
-                    <Col md={5} className='indPies'>
+                        <Col md={5} className='indPies'>
                             <h4 className='timeTitle'>Planned Time</h4>
                             <VictoryPie
                                 data={fullDataSummary}
@@ -96,8 +101,6 @@ class Dashboard extends React.Component {
             </div>
         )
     }
-
-
 }
 const mapStateToProps = (state) => {
     return {

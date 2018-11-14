@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// Display if the user either is not logged in or has no open projects saved
 class EmptyDisplay extends React.Component {
 
     render() {

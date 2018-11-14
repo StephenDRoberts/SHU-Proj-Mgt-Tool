@@ -8,11 +8,6 @@ class AddTicket extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleAddTicket = this.handleAddTicket.bind(this);
-    this.handleChange = this.handleChange.bind(this)
-
     this.state = {
       show: false,
       typeColor: '000000',
@@ -21,16 +16,15 @@ class AddTicket extends React.Component {
     };
   }
 
-
-  handleClose() {
+  handleClose = () => {
     this.setState({ show: false });
   }
 
-  handleShow() {
+  handleShow = () => {
     this.setState({ show: true });
   }
 
-  handleAddTicket() {
+  handleAddTicket = () => {
 
     let title = document.getElementById('titleInput').value
     let description = document.getElementById('descInput').value
@@ -59,7 +53,6 @@ class AddTicket extends React.Component {
       return;
     }
 
-
     let data = {
       "title": title,
       "description": description,
@@ -75,34 +68,34 @@ class AddTicket extends React.Component {
     })
 
     let projNumber = this.props.projNumber
+
+    // sends data to redux store (adding extra ticket to data and updating styles)
     this.props.dispatch(handleAddTicket(data, projNumber))
     this.props.dispatch(addTicketFinished())
-
     this.props.dispatch(handleChangeStyle(trimmedType, this.state.styles[0].backgroundColor))
-
   }
-  onChangeColor = (color) => {
 
+  //on changing of type colour
+  onChangeColor = (color) => {
     let styles = [{ "backgroundColor": color.hex }]
     this.setState({ styles: styles })
-
   }
-  handleChange(event) {
+
+  // handles the type input so that we can find the current colour already set for that type (if matched)
+  handleChange = (event) => {
     this.setState({
       input: event.target.value
     });
+
     // Checks to see if Type has already been entered before and picks up that color
     let trimmedInput = event.target.value.replace(/\s+/g, '')
     if (this.props.data[0].styles[trimmedInput] !== undefined) {
       this.setState({ styles: this.props.data[0].styles[trimmedInput] })
     }
-
   }
 
   render() {
     let data = this.props.data
-    let activeProject = this.props.projNumber
-    let activeTasks = [];
 
     if (data === undefined || data.length === 0) {
       data = [{
@@ -113,10 +106,8 @@ class AddTicket extends React.Component {
       }]
     } else if (data[0].projects.length === 0) {
       data = data[0]
-      activeTasks = []
     } else {
       data = data[0]
-      activeTasks = data.projects[activeProject].tasks
     }
     return (
 

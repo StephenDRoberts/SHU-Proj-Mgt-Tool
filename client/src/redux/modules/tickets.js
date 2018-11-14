@@ -46,9 +46,7 @@ export const ticketReducer=(state=defaultState, action)=>{
         return {...state,
             data: state.concat(action.ticket)}
 
-        //.concat(action.ticket)
         case FINISHED:
-        console.log(state) 
         return state
     
         default:

@@ -7,42 +7,37 @@ import { withRouter } from 'react-router-dom';
 class Header extends React.Component {
     constructor(props) {
         super(props);
-        this.handleLogout = this.handleLogout.bind(this)
-        this.handleLogin = this.handleLogin.bind(this)
-        this.handleSignup = this.handleSignup.bind(this)
-        this.handleDeleteAccount = this.handleDeleteAccount.bind(this)
-        this.handleShowDelete = this.handleShowDelete.bind(this)
-        this.handleCloseDelete = this.handleCloseDelete.bind(this)
 
         this.state = {
             showDelete: false
         }
     }
 
-    handleLogout() {
+    handleLogout = () => {
         //sends to logout api route so that we can reset the session
         let endpoint = '/api/logout'
         fetch(endpoint, {
             method: 'post',
             credentials: 'same-origin',
-          }).then((response)=> {
-            if(response.ok){
-            this.props.dispatch(handleLogout())
-            this.props.history.push('/');
+        }).then((response) => {
+            if (response.ok) {
+                this.props.dispatch(handleLogout())
+                this.props.history.push('/');
             }
         })
 
-        
+
     }
-    handleLogin() {
+    handleLogin = () => {
         this.props.history.push('/');
     }
 
-    handleSignup() {
+    handleSignup = () => {
         this.props.history.push('/signup');
     }
 
-    handleDeleteAccount() {
+    handleDeleteAccount = () => {
+        // Deletes account from database
         let user = this.props.accountState.user
         let endpoint = '/api/deleteAccount'
 
@@ -54,40 +49,37 @@ class Header extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(function (response) {
+        }).then((response) => {
             if (response.ok) {
                 return response.json()
             }
             alert('Something went wrong, please try again')
 
-        }).then(()=>{
+        }).then(() => {
             // this.props.dispatch(handleDeleteAccount())
             alert("Your account has been deleted")
         }
         )
+        // lets the redux store know the user has deleted their acocunt and logs them out from the store
         this.props.dispatch(handleDeleteAccount())
         this.props.history.push('/signup')
     }
 
-    handleCloseDelete() {
+    handleCloseDelete = () => {
         this.setState({ showDelete: false });
     }
 
-    handleShowDelete() {
+    handleShowDelete = () => {
         this.setState({ showDelete: true });
     }
 
-
-
     // RENDER OPTIONS
-    loggedInRender() {
+    loggedInRender = () => {
         return (
             <div className='header'>SHU Mod 1 Asgmt 2
 
            <div className="dropdown">
-
                     <img alt="Login avatar" className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
-
                     <ul className="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <li role="presentation"><a role="menuitem" tabIndex="-1" onClick={this.handleLogout}>Log Out</a></li>
                         <li role="presentation" className="divider"></li>
@@ -104,17 +96,16 @@ class Header extends React.Component {
                         <Button onClick={this.handleCloseDelete}>Close</Button>
                     </Modal.Footer>
                 </Modal>
-
             </div>
         )
     }
 
-    loggedOutRender() {
+    loggedOutRender = () => {
         return (
             <div className='header'>SHU Mod 1 Asgmt 2
 
            <div className="dropdown">
-                    <img alt="Login Avatar"className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
+                    <img alt="Login Avatar" className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id='smallAvatar' src={require('../../images/LoginAvatar.png')}></img>
                     <ul className="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <li role="presentation"><a role="menuitem" tabIndex="-1" onClick={this.handleLogin}>Log In</a></li>
                         <li role="presentation" className="divider"></li>

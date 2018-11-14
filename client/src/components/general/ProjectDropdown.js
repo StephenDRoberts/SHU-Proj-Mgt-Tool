@@ -8,15 +8,6 @@ class ProjectDropdown extends React.Component {
 
     constructor(props) {
         super(props)
-        this.myRef = React.createRef()
-
-        this.handleAddClose = this.handleAddClose.bind(this)
-        this.handleShareClose = this.handleShareClose.bind(this)
-        this.handleDeleteClose = this.handleDeleteClose.bind(this)
-        this.handleDelete = this.handleDelete.bind(this)
-        this.handleAdd = this.handleAdd.bind(this)
-        this.handleShare = this.handleShare.bind(this)
-        this.changeProject = this.changeProject.bind(this)
 
         this.state = {
             addShow: false,
@@ -25,7 +16,6 @@ class ProjectDropdown extends React.Component {
             addProjName: '',
             deleteProjShow: true
         }
-
     }
 
     changeProject = (num) => {
@@ -46,7 +36,7 @@ class ProjectDropdown extends React.Component {
             this.props.dispatch(handleProjectToggle(num))
         }
     }
-    handleAdd() {
+    handleAdd=()=>{
         let projectName = document.getElementById('addProjInput').value
         let trimmedName = projectName.replace(/\s+/g, '')
         if(trimmedName===""){
@@ -55,12 +45,13 @@ class ProjectDropdown extends React.Component {
         }
         this.props.dispatch(handleAddProject(trimmedName))
         this.props.dispatch(handleProjectToggle(this.props.projectList.length - 1))
+        
         this.setState({
             addShow: false,
         })
     }
 
-    handleShare() {
+    handleShare=()=>{
         //first check to see if the user entered is a valid user
         let targetUser = document.getElementById('shareProjInput').value
         let endpoint = '/api/shareCheck'
@@ -81,12 +72,19 @@ class ProjectDropdown extends React.Component {
             return [];
 
         }).then((myJson) => {
-            console.log('The original data from other user')
-
             if (myJson.length !== 0) {
+                
                 //successfully found user -> go to save the target user's workspace
                 let otherUsersData = myJson[0]
-               
+                
+                let activeProject = this.props.projNumber
+                let projectToShare = this.props.data[0].projects[activeProject]
+                let stylesToShare = this.props.data[0].styles
+                
+                otherUsersData.projects.push(projectToShare)
+                otherUsersData.styles = stylesToShare               
+                
+                // saves receiving user's records
                 let endPoint = '/api/saveData';
                 fetch(endPoint, {
                     method: 'put',
@@ -104,28 +102,26 @@ class ProjectDropdown extends React.Component {
                     }
                     return Promise.reject("Oops. Something went wrong trying to save. Please try again.")
                 })
-
             } else {
                 alert("I'm sorry, we couldn't find that user. Please try again.")
             }
         })
     }
 
-    handleDelete() {
+    handleDelete=()=>{
         this.props.dispatch(handleDeleteProject(this.props.projNumber))
         this.props.dispatch(handleProjectToggle(0))
         this.setState({ deleteShow: false })
     }
-    handleAddClose() {
+    handleAddClose=()=>{
         this.setState({ addShow: false })
     }
-    handleShareClose() {
+    handleShareClose=()=>{
         this.setState({ shareShow: false })
     }
-    handleDeleteClose() {
+    handleDeleteClose=()=>{
         this.setState({ deleteShow: false })
     }
-
 
 
     render() {
@@ -140,10 +136,6 @@ class ProjectDropdown extends React.Component {
             projectListAr = projectList.map(function (obj, i) {
                 return <MenuItem eventKey={i} key={i} onSelect={self.changeProject}>{obj.projTitle}</MenuItem>
             })
-
-            if (projectList.length === 0 && this.myRef.current !== null) {
-                this.myRef.current.disabled = true;
-            }
         }
         let currentProject = 'Project'
         
@@ -151,6 +143,8 @@ class ProjectDropdown extends React.Component {
             currentProject = this.props.currentProject
         }
         
+        // changes project name length in dropdown in case too long
+        /// for responsive design issues
         if(currentProject.length>10){
             currentProject = currentProject.substring(0,10)+'...'
         }

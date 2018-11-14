@@ -1,20 +1,20 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import {handleEditTicket} from '../../redux/modules/dataReducer.js' 
+import { connect } from 'react-redux'
+import { handleEditTicket } from '../../redux/modules/dataReducer.js'
 import Ticket from './Ticket.js';
 
 let todoTicketsAr = [];
 
 class Todo extends React.Component {
 
-    onDragOver=(ev)=>{
+    onDragOver = (ev) => {
         ev.preventDefault();
     }
     onDrop = (ev, cat) => {
         // finds the location of the ticket in the project array
         let ticketNum = ev.dataTransfer.getData('ticketNum')
         let projNumber = this.props.projNumber
-        
+
         // sets up our data to edit. only change is the status to match the dropped category
         let data = {
             title: this.props.data[0].projects[projNumber].tasks[ticketNum].title,
@@ -26,40 +26,35 @@ class Todo extends React.Component {
         }
         // dispatches to redux store to edit ticket and re-render application
         this.props.dispatch(handleEditTicket(data, ticketNum, projNumber))
-        
-    
     }
     render() {
-        
+
         //on initial render, this.props = undefined or is set to be an empty array, so error checked for these values
-        if (this.props===undefined || this.props.length===0 ){
-        
-        //else we pass the todoTickets from props into the Ticket component for rendering
+        if (this.props === undefined || this.props.length === 0) {
+
+            //else we pass the todoTickets from props into the Ticket component for rendering
         } else {
-        
             todoTicketsAr = this.props.tasks.map(function (obj, i) {
                 return <Ticket key={i} dataset={obj} ></Ticket>
             })
         }
 
         return (
-            <div className = "droppable" onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, 'To-do')}>
+            <div className="droppable" onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, 'To-do')}>
                 <h2>To do:</h2>
                 {todoTicketsAr}
-
             </div>
         )
     }
 
 
 }
-const mapStateToProps = (state)=>{
-    return{
-      data: state.dataReducer.data,
-      projNumber: state.changeProjectReducer.projNumber
+const mapStateToProps = (state) => {
+    return {
+        data: state.dataReducer.data,
+        projNumber: state.changeProjectReducer.projNumber
     }
-  }
-  
-  export default connect(mapStateToProps)(Todo)
-  
-  
+}
+
+export default connect(mapStateToProps)(Todo)
+
