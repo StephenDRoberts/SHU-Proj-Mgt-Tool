@@ -47,7 +47,13 @@ class ProjectDropdown extends React.Component {
         }
     }
     handleAdd() {
-        this.props.dispatch(handleAddProject(document.getElementById('addProjInput').value))
+        let projectName = document.getElementById('addProjInput').value
+        let trimmedName = projectName.replace(/\s+/g, '')
+        if(trimmedName===""){
+            alert("Please enter a project name")
+            return;
+        }
+        this.props.dispatch(handleAddProject(trimmedName))
         this.props.dispatch(handleProjectToggle(this.props.projectList.length - 1))
         this.setState({
             addShow: false,
@@ -145,7 +151,7 @@ class ProjectDropdown extends React.Component {
         if(this.props.currentProject!==undefined){
             currentProject = this.props.currentProject
         }
-        console.log(currentProject.length)
+        
         if(currentProject.length>10){
             currentProject = currentProject.substring(0,10)+'...'
         }
