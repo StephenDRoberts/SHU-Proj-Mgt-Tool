@@ -12,7 +12,6 @@ export const deleteTicket=()=>{
 }
 
 export const addTicket=(ticket)=>{
-    console.log(ticket)
     return{
         type: ADD,
         ticket: ticket 
@@ -42,7 +41,6 @@ export const ticketReducer=(state=defaultState, action)=>{
              return deleteState
              
         case ADD:
-        
         return {...state,
             data: state.concat(action.ticket)}
 

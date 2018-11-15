@@ -82,7 +82,8 @@ class ProjectDropdown extends React.Component {
                 let stylesToShare = this.props.data[0].styles
                 
                 otherUsersData.projects.push(projectToShare)
-                otherUsersData.styles = stylesToShare               
+                let newStyles = Object.assign({},otherUsersData.styles,stylesToShare)
+                otherUsersData.styles = newStyles
                 
                 // saves receiving user's records
                 let endPoint = '/api/saveData';
